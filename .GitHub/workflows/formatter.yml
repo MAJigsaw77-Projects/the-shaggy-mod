@@ -1,0 +1,26 @@
+name: Formatter
+on: workflow_dispatch
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: latest
+
+      - name: Installing Libraries
+        run: haxelib install formatter --quiet
+
+      - name: Formatting
+        run: haxelib run formatter -s source --check
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: Source-Files
+          path: source
+          if-no-files-found: error
