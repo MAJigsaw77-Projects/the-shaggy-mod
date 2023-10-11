@@ -112,6 +112,7 @@ class ClientPrefs
 		FlxG.save.data.hideTime = hideTime;
 
 		var achieves:Array<String> = [];
+
 		for (i in 0...Achievements.achievementsUnlocked.length)
 		{
 			if (Achievements.achievementsUnlocked[i][1])
@@ -119,14 +120,16 @@ class ClientPrefs
 				achieves.push(Achievements.achievementsUnlocked[i][0]);
 			}
 		}
+
 		FlxG.save.data.achievementsUnlocked = achieves;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls', 'shaggymod'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls');
 		save.data.customControls = lastControls;
-		save.flush();
+		save.close();
+
 		FlxG.log.add("Settings saved!");
 	}
 
@@ -178,12 +181,6 @@ class ClientPrefs
 				FlxG.updateFramerate = framerate;
 			}
 		}
-		/*if(FlxG.save.data.cursing != null) {
-				cursing = FlxG.save.data.cursing;
-			}
-			if(FlxG.save.data.violence != null) {
-				violence = FlxG.save.data.violence;
-		}*/
 		if (FlxG.save.data.camZooms != null)
 		{
 			camZooms = FlxG.save.data.camZooms;
@@ -215,11 +212,12 @@ class ClientPrefs
 		}
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls', 'shaggymod');
+		save.bind('controls');
 		if (save != null && save.data.customControls != null)
 		{
 			reloadControls(save.data.customControls);
 		}
+		save.destroy();
 
 		if (FlxG.save.data.language == null)
 			FlxG.save.data.languaje = 0;
