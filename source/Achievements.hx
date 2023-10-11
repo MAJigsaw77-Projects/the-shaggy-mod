@@ -1,3 +1,5 @@
+package;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
@@ -147,7 +149,6 @@ class AchievementObject extends FlxSpriteGroup
 		super(x, y);
 
 		ClientPrefs.saveSettings();
-		remove(this);
 
 		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
 		achievementBG.scrollFactor.set();
@@ -201,12 +202,11 @@ class AchievementObject extends FlxSpriteGroup
 		});
 	}
 
-	override function destroy()
+	override function destroy():Void
 	{
 		if (alphaTween != null)
-		{
 			alphaTween.cancel();
-		}
+
 		super.destroy();
 	}
 }
