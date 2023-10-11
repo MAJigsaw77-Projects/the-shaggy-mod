@@ -133,10 +133,10 @@ class MASKstate extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		dtBg = new FlxBackdrop(null, 1, 1, true, true);
+		dtBg = new FlxBackdrop(null, XY, 1, 1);
 		dtBg.loadGraphic(Paths.image('MASK/menu/grid', 'shared'));
 
-		dtBgBg = new FlxBackdrop(null, 1, 1, true, true);
+		dtBgBg = new FlxBackdrop(null, XY, 1, 1);
 		dtBgBg.x += 20;
 		dtBgBg.loadGraphic(Paths.image('MASK/menu/grid', 'shared'));
 		dtBgBg.alpha = 0.5;
