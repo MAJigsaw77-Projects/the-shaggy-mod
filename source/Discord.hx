@@ -1,87 +1,72 @@
 package;
 
-import Sys.sleep;
-import discord_rpc.DiscordRpc;
-
-using StringTools;
+#if FEATURE_DISCORD
+import hxdiscord_rpc.Discord as RichPresence;
+import hxdiscord_rpc.Types;
+import openfl.Lib;
+import sys.thread.Thread;
 
 class DiscordClient
 {
-	public function new()
+	public static function initialize():Void
 	{
-		trace("Discord Client starting...");
-		DiscordRpc.start({
-			clientID: "863222024192262205",
-			onReady: onReady,
-			onError: onError,
-			onDisconnected: onDisconnected
-		});
-		trace("Discord Client started.");
+		var handlers:DiscordEventHandlers = DiscordEventHandlers.create();
+		handlers.ready = cpp.Function.fromStaticFunction(onReady);
+		handlers.disconnected = cpp.Function.fromStaticFunction(onDisconnected);
+		handlers.errored = cpp.Function.fromStaticFunction(onError);
+		RichPresence.Initialize("863222024192262205", cpp.RawPointer.addressOf(handlers), 1, null);
 
-		while (true)
+		// Daemon Thread
+		Thread.create(function()
 		{
-			DiscordRpc.process();
-			sleep(2);
-			// trace("Discord Client Update");
-		}
+			while (true)
+			{
+				#if FEATURE_DISCORD_DISABLE_IO_THREAD
+				RichPresence.UpdateConnection();
+				#end
+				RichPresence.RunCallbacks();
 
-		DiscordRpc.shutdown();
-	}
-
-	public static function shutdown()
-	{
-		DiscordRpc.shutdown();
-	}
-
-	static function onReady()
-	{
-		DiscordRpc.presence({
-			details: "In the Menus",
-			state: null,
-			largeImageKey: 'icon',
-			largeImageText: "Psych Engine"
+				// Wait 2 seconds until the next loop...
+				Sys.sleep(2);
+			}
 		});
-	}
 
-	static function onError(_code:Int, _message:String)
-	{
-		trace('Error! $_code : $_message');
-	}
+		Lib.application.onExit.add((exitCode:Int) -> RichPresence.Shutdown());
 
-	static function onDisconnected(_code:Int, _message:String)
-	{
-		trace('Disconnected! $_code : $_message');
-	}
-
-	public static function initialize()
-	{
-		var DiscordDaemon = sys.thread.Thread.create(() ->
-		{
-			new DiscordClient();
-		});
 		trace("Discord Client initialized");
 	}
 
-	public static function changePresence(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float)
+	public static function changePresence(details:String, state:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float):Void
 	{
-		var startTimestamp:Float = if (hasStartTimestamp) Date.now().getTime() else 0;
+		var startTimestamp:Float = hasStartTimestamp ? Date.now().getTime() : 0;
 
 		if (endTimestamp > 0)
-		{
 			endTimestamp = startTimestamp + endTimestamp;
-		}
 
-		DiscordRpc.presence({
-			details: details,
-			state: state,
-			largeImageKey: 'icon',
-			largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion,
-			smallImageKey: smallImageKey,
-			// Obtained times are in milliseconds so they are divided so Discord can use it
-			startTimestamp: Std.int(startTimestamp / 1000),
-			endTimestamp: Std.int(endTimestamp / 1000)
-		});
+		var discordPresence:DiscordRichPresence = DiscordRichPresence.create();
+		discordPresence.details = details;
+		discordPresence.state = state;
+		discordPresence.largeImageKey = "icon";
+		discordPresence.largeImageText = "Engine Version: " + MainMenuState.psychEngineVersion;
+		discordPresence.smallImageKey = smallImageKey;
+		discordPresence.startTimestamp = Std.int(startTimestamp / 1000);
+		discordPresence.endTimestamp = Std.int(endTimestamp / 1000);
+		RichPresence.UpdatePresence(cpp.RawConstPointer.addressOf(discordPresence));
+	}
 
-		// trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
+	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void
+	{
+		Discord.changePresence('In the Menus', null);
+	}
+
+	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void
+	{
+		trace('Disconnected! $errorCode : ${cast (message, String)}');
+	}
+
+	private static function onError(errorCode:Int, message:cpp.ConstCharStar):Void
+	{
+		trace('Error! $errorCode : ${cast (message, String)}');
 	}
 }
+#end
