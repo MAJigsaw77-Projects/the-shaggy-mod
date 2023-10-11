@@ -170,6 +170,7 @@ class ClientPrefs
 		if (FlxG.save.data.framerate != null)
 		{
 			framerate = FlxG.save.data.framerate;
+
 			if (framerate > FlxG.drawFramerate)
 			{
 				FlxG.updateFramerate = framerate;
@@ -180,6 +181,8 @@ class ClientPrefs
 				FlxG.drawFramerate = framerate;
 				FlxG.updateFramerate = framerate;
 			}
+
+			FlxG.game.focusLostFramerate = framerate;
 		}
 		if (FlxG.save.data.camZooms != null)
 		{
