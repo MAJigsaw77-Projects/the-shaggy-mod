@@ -16,7 +16,7 @@ using StringTools;
 class Paths
 {
 	#if MODS_ALLOWED
-	public static var customImagesLoaded:Map<String, FlxGraphic> = new Map();
+	public static var customImagesLoaded:Map<String, FlxGraphic> = [];
 	#end
 
 	private static var currentLevel:String;

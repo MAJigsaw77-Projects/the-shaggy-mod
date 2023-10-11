@@ -1,6 +1,6 @@
 package;
 
-#if desktop
+#if DISCORD_ALLOWED
 import Discord.DiscordClient;
 import sys.thread.Thread;
 #end
@@ -97,7 +97,7 @@ class TitleState extends MusicBeatState
 		}
 		else
 		{
-			#if desktop
+			#if DISCORD_ALLOWED
 			DiscordClient.initialize();
 			Application.current.onExit.add(function(exitCode)
 			{

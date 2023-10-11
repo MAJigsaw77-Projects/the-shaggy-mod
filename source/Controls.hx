@@ -239,11 +239,7 @@ class Controls extends FlxActionSet
 	var _b8R = new FlxActionDigital(Action.B8_R);
 	var _b9R = new FlxActionDigital(Action.B9_R);
 
-	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
-	#else
-	var byName:Map<String, FlxActionDigital> = new Map<String, FlxActionDigital>();
-	#end
 
 	public var gamepadsAdded:Array<Int> = [];
 	public var keyboardScheme = KeyboardScheme.None;

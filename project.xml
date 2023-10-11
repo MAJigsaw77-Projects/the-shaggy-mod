@@ -59,6 +59,7 @@
 	<haxelib name="flixel-ui" />
 
 	<haxelib name="hscript" />
+
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED" />
 	<haxelib name="hxlua" if="LUA_ALLOWED" />
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED" />

@@ -1,6 +1,6 @@
 package;
 
-#if desktop
+#if DISCORD_ALLOWED
 import Discord.DiscordClient;
 #end
 import flixel.FlxG;
@@ -871,7 +871,7 @@ class CharacterEditorState extends MusicBeatState
 
 	function reloadCharacterDropDown()
 	{
-		var charsLoaded:Map<String, Bool> = new Map();
+		var charsLoaded:Map<String, Bool> = [];
 
 		#if MODS_ALLOWED
 		characterList = [];
@@ -914,7 +914,7 @@ class CharacterEditorState extends MusicBeatState
 
 	function updatePresence()
 	{
-		#if desktop
+		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Character Editor", "Character: " + daAnim, leHealthIcon.getCharacter());
 		#end

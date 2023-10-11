@@ -23,8 +23,8 @@ using StringTools;
 
 class FunkinLua
 {
-	public static var Function_Stop = 1;
-	public static var Function_Continue = 0;
+	public static var Function_Stop:Int = 1;
+	public static var Function_Continue:Int = 0;
 
 	#if LUA_ALLOWED
 	private var lua:State = null;
@@ -32,17 +32,10 @@ class FunkinLua
 
 	var lePlayState:PlayState = null;
 
-	#if (haxe >= "4.0.0")
-	public var tweens:Map<String, FlxTween> = new Map();
-	public var sprites:Map<String, LuaSprite> = new Map();
-	public var accessedProps:Map<String, Dynamic> = new Map();
-	public var timers:Map<String, FlxTimer> = new Map();
-	#else
-	public var tweens:Map<String, FlxTween> = new Map<String, FlxTween>();
-	public var sprites:Map<String, LuaSprite> = new Map<String, Dynamic>();
-	public var accessedProps:Map<String, Dynamic> = new Map<String, Dynamic>();
-	public var timers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
-	#end
+	public var tweens:Map<String, FlxTween> = [];
+	public var sprites:Map<String, LuaSprite> = [];
+	public var accessedProps:Map<String, Dynamic> = [];
+	public var timers:Map<String, FlxTimer> = [];
 
 	public function new(script:String)
 	{
