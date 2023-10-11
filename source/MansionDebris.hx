@@ -9,7 +9,6 @@ using StringTools;
 
 class MansionDebris extends FlxSprite
 {
-	
 	var sc:Float = 1;
 	var tF:Float = 1;
 	var tD:Float = 1;
@@ -18,6 +17,7 @@ class MansionDebris extends FlxSprite
 	var sy:Float = 0;
 
 	var time:Float = 0;
+
 	public function new(sX:Float, sY:Float, debName:String, scroll:Float, tFactor:Float, tDelay:Float, posFactor:Float)
 	{
 		sx = sX;
@@ -31,7 +31,7 @@ class MansionDebris extends FlxSprite
 		pF = posFactor;
 		frames = Paths.getSparrowAtlas('god_bg');
 		animation.addByPrefix('c', "deb_" + debName, 30);
-		//bgcloud.setGraphicSize(Std.int(bgcloud.width * 0.8));
+		// bgcloud.setGraphicSize(Std.int(bgcloud.width * 0.8));
 		animation.play('c');
 		scrollFactor.set(sc, sc);
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -43,9 +43,10 @@ class MansionDebris extends FlxSprite
 	var grav:Float = 0.15;
 	var vsp:Float = -20;
 	var hsp:Float = 0;
+
 	override function update(elapsed:Float)
 	{
-		time ++;
+		time++;
 		if (tD != -4)
 		{
 			x = sx;

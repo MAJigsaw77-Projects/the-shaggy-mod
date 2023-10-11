@@ -26,17 +26,17 @@ class StoryMenuState extends MusicBeatState
 	// playing just the modded week then delete it.
 	// defaults to True
 	public static var weekUnlocked:Array<Bool> = [
-		true,	//Tutorial
-		true,	//Week 1
-		true,	//Week 2
-		true,	//Week 3
-		true,	//Week 4
-		true,	//Week 5
-		true,	//Week 6
+		true, // Tutorial
+		true, // Week 1
+		true, // Week 2
+		true, // Week 3
+		true, // Week 4
+		true, // Week 5
+		true, // Week 6
 		true
 	];
 
-	//It works like this:
+	// It works like this:
 	// ['Left character', 'Center character', 'Right character']
 	var weekCharacters:Array<Dynamic> = [
 		['shaggy', 'bf', 'gf'],
@@ -48,7 +48,7 @@ class StoryMenuState extends MusicBeatState
 		['', 'bf', 'gf']
 	];
 
-	//The week's name, displayed on top-right
+	// The week's name, displayed on top-right
 	var weekNames:Array<String> = [
 		"First encounter",
 		"The rematch",
@@ -59,17 +59,9 @@ class StoryMenuState extends MusicBeatState
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	];
 
-	//Background asset name, the background files are stored on assets/preload/menubackgrounds/
-	var weekBackground:Array<String> = [
-		'halloween',		
-		'halloween',
-		'sky',
-		'boxin',
-		'outside',
-		'lava',
-		'blank'
-	];
-	
+	// Background asset name, the background files are stored on assets/preload/menubackgrounds/
+	var weekBackground:Array<String> = ['halloween', 'halloween', 'sky', 'boxin', 'outside', 'lava', 'blank'];
+
 	var scoreText:FlxText;
 
 	private static var curDifficulty:Int = 1;
@@ -151,8 +143,10 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		var zInclude = 0;
-		if (MASKstate.getProgress() > 0 && FlxG.save.data.p_progress[4] == 0) zInclude = 1;
-		if (FlxG.save.data.ending[2]) zInclude = 0;
+		if (MASKstate.getProgress() > 0 && FlxG.save.data.p_progress[4] == 0)
+			zInclude = 1;
+		if (FlxG.save.data.ending[2])
+			zInclude = 0;
 
 		for (i in 0...(WeekData.songsNames.length - (1 - zInclude)))
 		{
@@ -161,7 +155,8 @@ class StoryMenuState extends MusicBeatState
 			weekThing.targetY = i;
 			grpWeekText.add(weekThing);
 
-			if (i == 6) zephGfx = weekThing;
+			if (i == 6)
+				zephGfx = weekThing;
 
 			weekThing.screenCenter(X);
 			weekThing.antialiasing = ClientPrefs.globalAntialiasing;
@@ -202,9 +197,10 @@ class StoryMenuState extends MusicBeatState
 		sprDifficultyGroup = new FlxTypedGroup<FlxSprite>();
 		add(sprDifficultyGroup);
 
-		
-		for (i in 0...CoolUtil.difficultyStuff.length) {
-			var sprDifficulty:FlxSprite = new FlxSprite(leftArrow.x + 35, leftArrow.y).loadGraphic(Paths.image('menudifficulties/' + CoolUtil.difficultyStuff[i][0].toLowerCase()));
+		for (i in 0...CoolUtil.difficultyStuff.length)
+		{
+			var sprDifficulty:FlxSprite = new FlxSprite(leftArrow.x + 35,
+				leftArrow.y).loadGraphic(Paths.image('menudifficulties/' + CoolUtil.difficultyStuff[i][0].toLowerCase()));
 			sprDifficulty.x += (308 - sprDifficulty.width) / 2;
 			sprDifficulty.ID = i;
 			sprDifficulty.antialiasing = ClientPrefs.globalAntialiasing;
@@ -261,25 +257,28 @@ class StoryMenuState extends MusicBeatState
 		super.create();
 	}
 
-	override function closeSubState() {
+	override function closeSubState()
+	{
 		persistentUpdate = true;
 		changeWeek();
 		super.closeSubState();
 	}
 
 	var ztime = 0;
+
 	override function update(elapsed:Float)
 	{
 		Main.skipDes = false;
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 30, 0, 1)));
-		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
+		if (Math.abs(intendedScore - lerpScore) < 10)
+			lerpScore = intendedScore;
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
 		if (zephMenu != null)
 		{
-			ztime ++;
+			ztime++;
 			zephMenu.x = 800;
 			zephMenu.y = 40 + Math.sin(ztime / 60) * 10;
 		}
@@ -288,13 +287,16 @@ class StoryMenuState extends MusicBeatState
 		if (curWeek == 1)
 		{
 			moNotice.text = "First song has copyright :(\nPress P for drums cover\n";
-			if (Main.drums) moNotice.text += "(drums cover active)\n";
+			if (Main.drums)
+				moNotice.text += "(drums cover active)\n";
 
 			if (FlxG.keys.justPressed.P)
 			{
 				Main.drums = !Main.drums;
-				if (Main.drums) FlxG.sound.play(Paths.sound('cancelMenu'));
-				else FlxG.sound.play(Paths.sound('scrollMenu'));
+				if (Main.drums)
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+				else
+					FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 		}
 
@@ -340,7 +342,7 @@ class StoryMenuState extends MusicBeatState
 			{
 				selectWeek();
 			}
-			else if(controls.RESET)
+			else if (controls.RESET)
 			{
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
@@ -360,13 +362,16 @@ class StoryMenuState extends MusicBeatState
 			zephGfx.scale.x = 0.2 + 0.5 * Math.random();
 			zephGfx.scale.y = 0.75 + 0.5 * Math.random();
 
-			if (Math.random() > 0.5) zephGfx.scale.x *= -1;
-			if (Math.random() > 0.5) zephGfx.scale.y *= -1;
-			
+			if (Math.random() > 0.5)
+				zephGfx.scale.x *= -1;
+			if (Math.random() > 0.5)
+				zephGfx.scale.y *= -1;
+
 			if (FlxG.save.data.p_progress[0] == 0)
-			if (Math.random() > 0.9) zephGfx.scale.y *= 4;
+				if (Math.random() > 0.9)
+					zephGfx.scale.y *= 4;
 		}
-		//bullShit ++;
+		// bullShit ++;
 
 		super.update(elapsed);
 	}
@@ -407,7 +412,8 @@ class StoryMenuState extends MusicBeatState
 							leWeek = WeekData.maniaSongs[curWeek];
 						}
 
-						for (i in 0...leWeek.length) {
+						for (i in 0...leWeek.length)
+						{
 							songArray.push(leWeek[i]);
 						}
 
@@ -417,7 +423,8 @@ class StoryMenuState extends MusicBeatState
 						selectedWeek = true;
 
 						var diffic = CoolUtil.difficultyStuff[curDifficulty][1];
-						if(diffic == null) diffic = '';
+						if (diffic == null)
+							diffic = '';
 
 						PlayState.storyDifficulty = curDifficulty;
 
@@ -441,7 +448,7 @@ class StoryMenuState extends MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = CoolUtil.difficultyStuff.length-1;
+			curDifficulty = CoolUtil.difficultyStuff.length - 1;
 		if (curDifficulty >= CoolUtil.difficultyStuff.length)
 			curDifficulty = 0;
 
@@ -449,11 +456,13 @@ class StoryMenuState extends MusicBeatState
 		{
 			updateText();
 		}
-		//updateText();
+		// updateText();
 
-		sprDifficultyGroup.forEach(function(spr:FlxSprite) {
+		sprDifficultyGroup.forEach(function(spr:FlxSprite)
+		{
 			spr.visible = false;
-			if(curDifficulty == spr.ID) {
+			if (curDifficulty == spr.ID)
+			{
 				spr.visible = true;
 				spr.alpha = 0;
 				spr.y = leftArrow.y - 15;
@@ -474,8 +483,10 @@ class StoryMenuState extends MusicBeatState
 		curWeek += change;
 
 		var zSub = 1;
-		if (MASKstate.getProgress() > 0 && FlxG.save.data.p_progress[4] == 0) zSub = 0;
-		if (FlxG.save.data.ending[2]) zSub = 1;
+		if (MASKstate.getProgress() > 0 && FlxG.save.data.p_progress[4] == 0)
+			zSub = 0;
+		if (FlxG.save.data.ending[2])
+			zSub = 1;
 
 		if (curWeek > WeekData.songsNames.length - 1 - zSub)
 			curWeek = 0;
@@ -483,7 +494,8 @@ class StoryMenuState extends MusicBeatState
 			curWeek = WeekData.songsNames.length - 1 - zSub;
 
 		var leName:String = '';
-		if(curWeek < weekNames.length) {
+		if (curWeek < weekNames.length)
+		{
 			leName = weekNames[curWeek];
 		}
 
@@ -504,7 +516,8 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		var assetName:String = weekBackground[0];
-		if(curWeek < weekBackground.length) assetName = weekBackground[curWeek];
+		if (curWeek < weekBackground.length)
+			assetName = weekBackground[curWeek];
 
 		bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
 		updateText();
@@ -513,9 +526,11 @@ class StoryMenuState extends MusicBeatState
 	function updateText()
 	{
 		var weekArray:Array<String> = weekCharacters[0];
-		if(curWeek < weekCharacters.length) weekArray = weekCharacters[curWeek];
+		if (curWeek < weekCharacters.length)
+			weekArray = weekCharacters[curWeek];
 
-		for (i in 0...grpWeekCharacters.length) {
+		for (i in 0...grpWeekCharacters.length)
+		{
 			grpWeekCharacters.members[i].changeCharacter(weekArray[i]);
 		}
 

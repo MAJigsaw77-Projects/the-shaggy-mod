@@ -41,7 +41,11 @@ class MASKstate extends MusicBeatState
 	var maskY:Float;
 	var maskPartName = ['frame', 'horn', 'eye', 'mouth'];
 	var maskExpNames = ['n', 'h', 's'];
-	var maskExpAnim = [['normal', 'trauma', 'con', 'sad', 'happy'], ['normal', 'sad', 'happy'], ['normal', 'con', 'angry']];
+	var maskExpAnim = [
+		['normal', 'trauma', 'con', 'sad', 'happy'],
+		['normal', 'sad', 'happy'],
+		['normal', 'con', 'angry']
+	];
 
 	var gfxPart = [];
 	var wFlash:FlxSprite;
@@ -58,10 +62,9 @@ class MASKstate extends MusicBeatState
 	var goodMenu:FlxSound;
 	var badMenu:FlxSound;
 	var musicIsGood = true;
-	public static var nid:Map<String, Int> = [
-		'FacePartsIntro' => 0,
-		'backstory' => 1
-	];
+
+	public static var nid:Map<String, Int> = ['FacePartsIntro' => 0, 'backstory' => 1];
+
 	var chucha = false;
 	var collectAmmo = 0;
 
@@ -105,6 +108,7 @@ class MASKstate extends MusicBeatState
 
 	var marks:Array<FlxSprite> = [];
 	var mVis = [false, false, false];
+
 	override function create()
 	{
 		#if desktop
@@ -146,7 +150,6 @@ class MASKstate extends MusicBeatState
 		var bBorder = new FlxSprite(0, frameY).makeGraphic(2000, 5, 0xFF0064C9);
 		add(bBorder);
 
-
 		optsText = new FlxText(80, frameY + 50, 2000, '', 32);
 		optsText.font = 'Pixel Arial 11 Bold';
 		optsText.color = 0xFFFFFFFF;
@@ -173,21 +176,21 @@ class MASKstate extends MusicBeatState
 		add(optsText);
 		add(bfCursor);
 
-		//0064c9
+		// 0064c9
 
 		/*
-		mask = new FlxSprite(0, 0);
-		mask.frames = Paths.getSparrowAtlas('MASK/exp/ph_mask_old', 'shared');
-		for (i in 0...maskExpNames.length)
-		{
-			for (j in 0...maskExpAnim[i].length)
+			mask = new FlxSprite(0, 0);
+			mask.frames = Paths.getSparrowAtlas('MASK/exp/ph_mask_old', 'shared');
+			for (i in 0...maskExpNames.length)
 			{
-				var name = maskExpNames[i] + '_' + maskExpAnim[i][j];
-				mask.animation.addByPrefix(name, name);
+				for (j in 0...maskExpAnim[i].length)
+				{
+					var name = maskExpNames[i] + '_' + maskExpAnim[i][j];
+					mask.animation.addByPrefix(name, name);
+				}
 			}
-		}
-		mask.animation.play('n_normal', true);
-		*/
+			mask.animation.play('n_normal', true);
+		 */
 
 		maskP = [];
 		for (i in 0...4)
@@ -205,14 +208,15 @@ class MASKstate extends MusicBeatState
 					maskP[i].animation.addByIndices(name + '_f', maskPartName[i] + '_f0', [an], "", 30, false);
 					maskP[i].animation.addByIndices(name + '_e', maskPartName[i] + '_e0', [an], "", 30, false);
 
-					an ++;
+					an++;
 				}
 			}
 			add(maskP[i]);
 		}
 		maskPosSet();
 		maskPlay('n_normal');
-		if (FlxG.save.data.p_progress[0] == 1) maskPlay('s_normal');
+		if (FlxG.save.data.p_progress[0] == 1)
+			maskPlay('s_normal');
 
 		add(wFlash);
 
@@ -241,7 +245,7 @@ class MASKstate extends MusicBeatState
 
 	function maskPlay(animName:String)
 	{
-		var corr = [3 => 0, 0 => 1, 1 => 2, 2 => 3]; //xddddd
+		var corr = [3 => 0, 0 => 1, 1 => 2, 2 => 3]; // xddddd
 		var ang = 0;
 		if (animName.startsWith('h'))
 			ang = -45;
@@ -265,11 +269,10 @@ class MASKstate extends MusicBeatState
 
 			maskP[i].animation.play(play);
 
-			
 			maskP[i].angle = ang;
 		}
 	}
-	
+
 	var mainSelect:Int = 0;
 	var optSelect:Int = 0;
 
@@ -280,23 +283,17 @@ class MASKstate extends MusicBeatState
 	var instList:Array<String> = ['', ''];
 	var txtSpeed:Float = 0.3;
 
-	//mask movement
+	// mask movement
 	var mTalk = false;
 	var mExp = 'n_normal';
 	var mChange = false;
 
-	//prompt
+	// prompt
 	var bfCursor:FlxSprite;
 	var renderOptions:Array<String> = ['yes', 'no'];
 	var optAlpha:Float = 0;
 
-	var optList:Array<Dynamic> = [
-		[],
-		[],
-		[],
-		[],
-		[]
-	];
+	var optList:Array<Dynamic> = [[], [], [], [], []];
 
 	var optID:Array<String> = ['C1', 'C2', 'C3', 'parts', 'exit'];
 
@@ -316,7 +313,7 @@ class MASKstate extends MusicBeatState
 		{
 			maskP[i].x = maskX;
 			maskP[i].y = maskY + Math.sin(dtBg.y / 10) * 10;
-			//maskP[i].angle ++;
+			// maskP[i].angle ++;
 
 			if (mTalk)
 			{
@@ -333,7 +330,7 @@ class MASKstate extends MusicBeatState
 		super.update(elapsed);
 
 		optAlpha = 0;
-		
+
 		for (i in 0...marks.length)
 		{
 			marks[i].alpha = 0;
@@ -343,8 +340,10 @@ class MASKstate extends MusicBeatState
 				var o = i + 1;
 				var optShown = FlxG.save.data.p_progress[o];
 
-				if (optShown > getProgress() - 1) optShown = getProgress() - 1;
-				if (optShown > 2) optShown = 2;
+				if (optShown > getProgress() - 1)
+					optShown = getProgress() - 1;
+				if (optShown > 2)
+					optShown = 2;
 
 				var condition = false;
 				if (i < 3)
@@ -356,7 +355,7 @@ class MASKstate extends MusicBeatState
 					var target = 0;
 					while (target < 4 && FlxG.save.data.p_maskGot[target])
 					{
-						target ++;
+						target++;
 					}
 					if (target < 4)
 					{
@@ -375,22 +374,22 @@ class MASKstate extends MusicBeatState
 				}
 			}
 		}
-		//Statin baby
+		// Statin baby
 		switch (state)
 		{
-			case 0: //lil pause before anything
-				introWait --;
+			case 0: // lil pause before anything
+				introWait--;
 				if (introWait <= 0)
 				{
 					state = 1;
 				}
-			case 1: //intro texts
+			case 1: // intro texts
 				loadData('intro');
 				textSetup();
-			case 2: //dialogue running
+			case 2: // dialogue running
 				textStep();
-			case 3: //Main question menu
-				//trace('cock');
+			case 3: // Main question menu
+				// trace('cock');
 
 				mainSelect = optSelect;
 
@@ -403,8 +402,10 @@ class MASKstate extends MusicBeatState
 				{
 					var o = optSelect + 1;
 					var optShown = FlxG.save.data.p_progress[o];
-					if (optShown > getProgress() - 1) optShown = getProgress() - 1;
-					if (optShown > 2) optShown = 2;
+					if (optShown > getProgress() - 1)
+						optShown = getProgress() - 1;
+					if (optShown > 2)
+						optShown = 2;
 
 					var selS = 'q' + (optSelect + 1) + '-' + (optShown + 1);
 					switch (optID[optSelect])
@@ -416,12 +417,12 @@ class MASKstate extends MusicBeatState
 							textSetup();
 						default:
 							if (FlxG.save.data.p_progress[o] < getProgress())
-								FlxG.save.data.p_progress[o] ++;
+								FlxG.save.data.p_progress[o]++;
 							loadData('answers/' + selS);
 							textSetup();
 					}
 				}
-			case 4: //Prompt menu
+			case 4: // Prompt menu
 				if (controls.ACCEPT)
 				{
 					loadData(afterData[optSelect + 2]);
@@ -438,8 +439,8 @@ class MASKstate extends MusicBeatState
 					g.offset.set(g.width / 2, g.height / 2);
 					add(g);
 					gfxPart.push(g);
-					FlxG.save.data.p_partsGiven ++;
-					collectAmmo ++;
+					FlxG.save.data.p_partsGiven++;
+					collectAmmo++;
 				}
 				for (i in 0...4)
 				{
@@ -448,7 +449,7 @@ class MASKstate extends MusicBeatState
 				gTimer = 0;
 				state = 6;
 			case 6:
-				gTimer ++;
+				gTimer++;
 				for (i in 0...gfxPart.length)
 				{
 					var g = gfxPart[i];
@@ -474,16 +475,16 @@ class MASKstate extends MusicBeatState
 					}
 				}
 			case 7:
-				gTimer ++;
+				gTimer++;
 				if (gTimer >= 200)
 				{
 					loadData('howManyLeft');
 					textSetup();
 				}
 		}
-		switch (state) //shared shit
+		switch (state) // shared shit
 		{
-			case 3 | 4: //Cursored menus
+			case 3 | 4: // Cursored menus
 				optAlpha = 1;
 				bfCursor.y = optsText.y + optSelect * 44;
 
@@ -492,14 +493,16 @@ class MASKstate extends MusicBeatState
 					oMov = 1;
 				else if (controls.UI_UP_P)
 					oMov = -1;
-				
+
 				if (oMov != 0)
 				{
 					optSelect += oMov;
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 
-					if (optSelect > renderOptions.length - 1) optSelect = 0;
-					if (optSelect < 0) optSelect = renderOptions.length - 1;
+					if (optSelect > renderOptions.length - 1)
+						optSelect = 0;
+					if (optSelect < 0)
+						optSelect = renderOptions.length - 1;
 				}
 		}
 		bfCursor.alpha = optAlpha;
@@ -538,6 +541,7 @@ class MASKstate extends MusicBeatState
 			songTime %= goodMenu.length;
 		}
 	}
+
 	function hintLoad()
 	{
 		var file = '';
@@ -554,7 +558,7 @@ class MASKstate extends MusicBeatState
 			var target = 0;
 			while (target < 4 && FlxG.save.data.p_maskGot[target])
 			{
-				target ++;
+				target++;
 			}
 			if (target < 4)
 			{
@@ -567,13 +571,16 @@ class MASKstate extends MusicBeatState
 			}
 			else
 			{
-				if (FlxG.save.data.p_partsGiven > 0) file += 'last';
-				else file += 'notSure';
+				if (FlxG.save.data.p_partsGiven > 0)
+					file += 'last';
+				else
+					file += 'notSure';
 			}
 		}
 		loadData(file);
 		textSetup();
 	}
+
 	function musicInit()
 	{
 		FlxG.sound.playMusic(Paths.music('MASK/phantomMenu'));
@@ -614,7 +621,8 @@ class MASKstate extends MusicBeatState
 
 	override public function onFocusLost():Void
 	{
-		if (badMenu != null) badMenu.volume = 0;
+		if (badMenu != null)
+			badMenu.volume = 0;
 		super.onFocusLost();
 	}
 
@@ -652,7 +660,7 @@ class MASKstate extends MusicBeatState
 
 	function textNext()
 	{
-		txtInd ++;
+		txtInd++;
 		if (txtInd < dial.length)
 		{
 			read = dial[txtInd];
@@ -725,8 +733,10 @@ class MASKstate extends MusicBeatState
 					for (i in 0...optList.length)
 					{
 						var ind = FlxG.save.data.p_progress[i + 1];
-						if (ind > p - 1) ind = p - 1;
-						if (ind > 2) ind = 2;
+						if (ind > p - 1)
+							ind = p - 1;
+						if (ind > 2)
+							ind = 2;
 						renderOptions.push(optList[i][ind]);
 					}
 					updateOptions();
@@ -737,7 +747,8 @@ class MASKstate extends MusicBeatState
 						state = 5;
 					}
 
-					if (afterAction == 'markReplace') FlxG.save.data.p_first[nid[afterData[0]]] = false;
+					if (afterAction == 'markReplace')
+						FlxG.save.data.p_first[nid[afterData[0]]] = false;
 				case 'prompt':
 					renderOptions = [afterData[0], afterData[1]];
 					updateOptions();
@@ -747,7 +758,7 @@ class MASKstate extends MusicBeatState
 					loadData(afterData[0]);
 					textSetup();
 
-				//hardcode argghh >>>>>:((((
+				// hardcode argghh >>>>>:((((
 				case 'facePartsIntro':
 					hintLoad();
 				case 'forgotPart':
@@ -763,9 +774,9 @@ class MASKstate extends MusicBeatState
 		for (i in 0...FlxG.save.data.p_maskGot.length)
 		{
 			if (FlxG.save.data.p_maskGot[i])
-				p ++;
+				p++;
 		}
-		return(p);
+		return (p);
 	}
 
 	function getInterest():Int
@@ -775,19 +786,21 @@ class MASKstate extends MusicBeatState
 		{
 			p += FlxG.save.data.p_progress[i];
 		}
-		return(Std.int(p));
+		return (Std.int(p));
 	}
+
 	var pause = 0;
 	var vc:FlxSound;
+
 	function textStep()
 	{
-		//Advancing text if there's no current pause
+		// Advancing text if there's no current pause
 		if (pause <= 0)
 		{
 			charInd += txtSpeed;
 			mTalk = true;
 
-			//Limiting
+			// Limiting
 			if (charInd > read.length - 1)
 			{
 				mTalk = false;
@@ -796,16 +809,16 @@ class MASKstate extends MusicBeatState
 		}
 		else
 		{
-			pause --;
+			pause--;
 		}
 		intChar = Std.int(Math.floor(charInd));
 
-		//Helpful strings
+		// Helpful strings
 		var newtxt = read.substr(0, intChar + 1);
 		var charat = read.substr(intChar, 1);
 		var nextChar = read.substr(intChar + 1, 1);
 
-		//Pauses, sounds, etc
+		// Pauses, sounds, etc
 		if (intChar > lChar)
 		{
 			switch (charat)
@@ -826,15 +839,15 @@ class MASKstate extends MusicBeatState
 				vc = new FlxSound().loadEmbedded(Paths.sound('voice/defB', 'shared'));
 				vc.play();
 			}
-		}	
+		}
 
-		//Updating display text
+		// Updating display text
 		onScreenText.text = newtxt;
 
-		//xd
+		// xd
 		lChar = intChar;
 
-		//Press start to pair bluetooth device is ready to peir
+		// Press start to pair bluetooth device is ready to peir
 		if (FlxG.keys.justPressed.ANY)
 		{
 			if (intChar == read.length - 1)
@@ -857,7 +870,7 @@ class MASKstate extends MusicBeatState
 
 	function pathGet():String
 	{
-		return(TextData.getLanPrefix() + '_phantom/');
+		return (TextData.getLanPrefix() + '_phantom/');
 	}
 
 	function loadData(index:String):Int
@@ -899,7 +912,7 @@ class MASKstate extends MusicBeatState
 				}
 				else
 				{
-					//I am never going to code something like this ever again (maybe)
+					// I am never going to code something like this ever again (maybe)
 					if (collectAmmo == 1)
 					{
 						path += left + 'left';
@@ -949,7 +962,7 @@ class MASKstate extends MusicBeatState
 				else
 				{
 					loadData(after[2]);
-					return(0);
+					return (0);
 				}
 			default:
 				afterData = [];
@@ -1007,7 +1020,7 @@ class MASKstate extends MusicBeatState
 					if (data[2] == 'addNext')
 					{
 						addNext = true;
-						readSkip ++;
+						readSkip++;
 					}
 				}
 				else
@@ -1017,6 +1030,6 @@ class MASKstate extends MusicBeatState
 			}
 		}
 
-		return(0);
+		return (0);
 	}
 }

@@ -13,10 +13,14 @@ import flixel.util.FlxGradient;
 import flixel.FlxSubState;
 import flixel.FlxSprite;
 
-class CustomFadeTransition extends MusicBeatSubstate {
+class CustomFadeTransition extends MusicBeatSubstate
+{
 	public static var finishCallback:Void->Void;
+
 	private var leTween:FlxTween = null;
-	public function new(duration:Float, isTransIn:Bool) {
+
+	public function new(duration:Float, isTransIn:Bool)
+	{
 		super();
 
 		var zoom:Float = CoolUtil.boundTo(FlxG.camera.zoom, 0.05, 1);
@@ -33,27 +37,45 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		transGradient.x -= (width - FlxG.width) / 2;
 		transBlack.x = transGradient.x;
 
-		if(isTransIn) {
+		if (isTransIn)
+		{
 			transGradient.y = transBlack.y - transBlack.height;
-			FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {onUpdate: function(twn:FlxTween) {
-				transBlack.y = transGradient.y + transGradient.height;
-			}, onComplete: function(twn:FlxTween) {
-				close();
-			}, ease: FlxEase.linear});
-		} else {
+			FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {
+				onUpdate: function(twn:FlxTween)
+				{
+					transBlack.y = transGradient.y + transGradient.height;
+				},
+				onComplete: function(twn:FlxTween)
+				{
+					close();
+				},
+				ease: FlxEase.linear
+			});
+		}
+		else
+		{
 			transGradient.y = -transGradient.height;
 			transBlack.y = transGradient.y - transBlack.height + 50;
-			leTween = FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {onUpdate: function(twn:FlxTween) {
-				transBlack.y = transBlack.y = transGradient.y - transBlack.height + 50;
-				if(transBlack.y > 0) transBlack.y = 0;
-			}, onComplete: function(twn:FlxTween) {
-				finishCallback();
-			}, ease: FlxEase.linear});
+			leTween = FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {
+				onUpdate: function(twn:FlxTween)
+				{
+					transBlack.y = transBlack.y = transGradient.y - transBlack.height + 50;
+					if (transBlack.y > 0)
+						transBlack.y = 0;
+				},
+				onComplete: function(twn:FlxTween)
+				{
+					finishCallback();
+				},
+				ease: FlxEase.linear
+			});
 		}
 	}
 
-	override function destroy() {
-		if(leTween != null) {
+	override function destroy()
+	{
+		if (leTween != null)
+		{
 			finishCallback();
 			leTween.cancel();
 		}

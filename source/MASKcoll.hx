@@ -14,7 +14,6 @@ using StringTools;
 
 class MASKcoll extends FlxSprite
 {
-	
 	var mType:Int = 1;
 	var imgName:String = 'none';
 
@@ -34,17 +33,17 @@ class MASKcoll extends FlxSprite
 
 	public var state = 0;
 
-	//maskframe
+	// maskframe
 	var vsp:Float = -10;
 
-	//mouth
+	// mouth
 	var mVsp:Float = 0;
 	var wait:Int = 1000;
 
-	//eye
+	// eye
 	var eVsp:Float = -10;
 
-	//sheeeee
+	// sheeeee
 	var clickX:Float;
 	var clickY:Float;
 
@@ -70,8 +69,8 @@ class MASKcoll extends FlxSprite
 			case 0:
 			case 1:
 			case 2:
-				//offset.set(width / 2, height / 2);
-				//scrollFactor.set(sc, sc);
+			// offset.set(width / 2, height / 2);
+			// scrollFactor.set(sc, sc);
 			case 3:
 		}
 		mouseSpr = new FlxSprite(0, 0).loadGraphic(Paths.image('MASK/picker'));
@@ -123,7 +122,7 @@ class MASKcoll extends FlxSprite
 				}
 				else
 				{
-					wait --;
+					wait--;
 				}
 			case 2:
 				switch (state)
@@ -140,9 +139,8 @@ class MASKcoll extends FlxSprite
 							y = iniY;
 						}
 					case 1:
-						
 				}
-				//scrollFactor.set(sc, sc);
+			// scrollFactor.set(sc, sc);
 			case 3:
 				var wSize = cam.width / 2;
 				x = wSize + (wSize - 200) * Math.cos(-FlxG.camera.angle * Math.PI / 180);

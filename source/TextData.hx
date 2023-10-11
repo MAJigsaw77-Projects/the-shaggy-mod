@@ -1,47 +1,39 @@
 package;
+
 import StringTools;
 import flixel.FlxG;
 
-class TextData {
-	
+class TextData
+{
 	public static var defaultText:Array<Dynamic> = [
-		[
-			'sample text 1',
-			'sample text 2',
-			'sample text 3'
-		],
-		[
-			'sh',
-			'bf',
-			'sh'
-		],
-		[
-			'normal',
-			'scared',
-			'ang'
-		],
+		['sample text 1', 'sample text 2', 'sample text 3'],
+		['sh', 'bf', 'sh'],
+		['normal', 'scared', 'ang'],
 		[1, -1, 1]
 	];
 
 	public static function getLanNumber():Int
 	{
-		return(CoolUtil.coolTextFile(Paths.txt('languages')).length);
+		return (CoolUtil.coolTextFile(Paths.txt('languages')).length);
 	}
+
 	public static function getLanAtt():Array<String>
 	{
 		var lanList = CoolUtil.coolTextFile(Paths.txt('languages'));
 		var lanAtt = lanList[FlxG.save.data.language].split(":");
 		trace(lanAtt);
-		return(lanAtt);
+		return (lanAtt);
 	}
-	//espanio
+
+	// espanio
 	public static function getLanPrefix():String
 	{
 		var prefix = 'z';
 		prefix = getLanAtt()[1];
-		return(prefix);
+		return (prefix);
 	}
-	//xd
+
+	// xd
 	public static function getText(dataIndex:String):Array<Dynamic>
 	{
 		var data:Array<Dynamic> = [[], [], [], []];
@@ -70,32 +62,32 @@ class TextData {
 		{
 			case 'bf' | 'gf' | 'scooby' | 'zp':
 				snd = 'defB';
-			/*
-			case ('bf'):
-				switch (emote)
-				{
-					case 'burn' | 'scared':
-						snd = 'bf_a';
-					case 'a':
-						snd = 'bf_o';
-					default:
-						snd = 'bf_bee';
-				}
-			case ('sh' | 'rsh'):
-				switch (emote)
-				{
-					case 'kill':
-						snd = 'sh_eh';
-					case 'smug' | 'pens':
-						snd = 'sh_ee';
-					case 'happy':
-						snd = 'sh_oh';
-					case 'ang' | 'sad' | 'ser':
-						snd = 'sh_low_do';
-					default:
-						snd = 'sh_do';
-				}
-				*/
+				/*
+					case ('bf'):
+						switch (emote)
+						{
+							case 'burn' | 'scared':
+								snd = 'bf_a';
+							case 'a':
+								snd = 'bf_o';
+							default:
+								snd = 'bf_bee';
+						}
+					case ('sh' | 'rsh'):
+						switch (emote)
+						{
+							case 'kill':
+								snd = 'sh_eh';
+							case 'smug' | 'pens':
+								snd = 'sh_ee';
+							case 'happy':
+								snd = 'sh_oh';
+							case 'ang' | 'sad' | 'ser':
+								snd = 'sh_low_do';
+							default:
+								snd = 'sh_do';
+						}
+				 */
 		}
 		return Paths.sound('voice/' + snd);
 	}

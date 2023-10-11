@@ -19,7 +19,14 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Botplay', 'Exit to menu'];
+	var menuItemsOG:Array<String> = [
+		'Resume',
+		'Restart Song',
+		'Change Difficulty',
+		'Toggle Practice Mode',
+		'Botplay',
+		'Exit to menu'
+	];
 	var difficultyChoices = ['MANIA', 'EASY', 'CANON', 'BACK'];
 	var curSelected:Int = 0;
 
@@ -32,11 +39,12 @@ class PauseSubState extends MusicBeatSubstate
 		super();
 		menuItems = menuItemsOG;
 
-		for (i in 0...CoolUtil.difficultyStuff.length) {
+		for (i in 0...CoolUtil.difficultyStuff.length)
+		{
 			/*
-			var diff:String = '' + CoolUtil.difficultyStuff[i][0];
-			difficultyChoices.push(diff);
-			*/
+				var diff:String = '' + CoolUtil.difficultyStuff[i][0];
+				difficultyChoices.push(diff);
+			 */
 		}
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
@@ -70,11 +78,13 @@ class PauseSubState extends MusicBeatSubstate
 		var controlArray = ClientPrefs.lastControls.copy();
 		for (i in 0...Main.ammo[PlayState.mania])
 		{
-			if (PlayState.mania == 1 && i == 3) cj[1] ++;
+			if (PlayState.mania == 1 && i == 3)
+				cj[1]++;
 
 			controls.text += InputFormatter.getKeyName(controlArray[(cj[PlayState.mania] + i) * 2]);
 
-			if (i != Main.ammo[PlayState.mania] - 1) controls.text += '|';
+			if (i != Main.ammo[PlayState.mania] - 1)
+				controls.text += '|';
 		}
 
 		controls.scrollFactor.set();
@@ -160,8 +170,10 @@ class PauseSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
-			for (i in 0...difficultyChoices.length-1) {
-				if(difficultyChoices[i] == daSelected) {
+			for (i in 0...difficultyChoices.length - 1)
+			{
+				if (difficultyChoices[i] == daSelected)
+				{
 					var name:String = PlayState.SONG.song.toLowerCase();
 					var poop = Highscore.formatSong(name, curSelected);
 					PlayState.SONG = Song.loadFromJson(poop, name);
@@ -172,7 +184,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.cpuControlled = false;
 					return;
 				}
-			} 
+			}
 
 			switch (daSelected)
 			{
@@ -186,7 +198,8 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.usedPractice = true;
 					practiceText.visible = PlayState.practiceMode;
 
-					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode) System.exit(0);
+					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode)
+						System.exit(0);
 				case "Restart Song":
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
@@ -195,13 +208,17 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.usedPractice = true;
 					botplayText.visible = PlayState.cpuControlled;
 
-					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode) System.exit(0);
+					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode)
+						System.exit(0);
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
-					if(PlayState.isStoryMode) {
+					if (PlayState.isStoryMode)
+					{
 						MusicBeatState.switchState(new StoryMenuState());
-					} else {
+					}
+					else
+					{
 						MusicBeatState.switchState(new FreeplayState());
 					}
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -210,7 +227,8 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.cpuControlled = false;
 
 					trace('COCKCKCKC');
-					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode) System.exit(0);
+					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode)
+						System.exit(0);
 
 				case 'BACK':
 					menuItems = menuItemsOG;
@@ -253,11 +271,14 @@ class PauseSubState extends MusicBeatSubstate
 		}
 	}
 
-	function regenMenu():Void {
-		for (i in 0...grpMenuShit.members.length) {
+	function regenMenu():Void
+	{
+		for (i in 0...grpMenuShit.members.length)
+		{
 			this.grpMenuShit.remove(this.grpMenuShit.members[0], true);
 		}
-		for (i in 0...menuItems.length) {
+		for (i in 0...menuItems.length)
+		{
 			var item = new Alphabet(0, 70 * i + 30, menuItems[i], true, false);
 			item.isMenuItem = true;
 			item.targetY = i;

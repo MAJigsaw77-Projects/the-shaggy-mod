@@ -9,13 +9,13 @@ using StringTools;
 
 class BGElement extends FlxSprite
 {
-	
 	var sc:Float = 1;
 	var sz:Float = 1;
 	var movID:Int = 0;
 	var imgName:String = 'none';
 
 	var time:Float = 0;
+
 	public function new(image:String, sX:Float, sY:Float, scroll:Float, size:Float, movid:Int)
 	{
 		movID = movid;

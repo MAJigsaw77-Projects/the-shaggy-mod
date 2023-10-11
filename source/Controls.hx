@@ -67,7 +67,6 @@ enum abstract Action(String) to String from String
 	var A6_R = 'a6-release';
 	var A7_R = 'a7-release';
 
-
 	var B1 = 'b1';
 	var B2 = 'b2';
 	var B3 = 'b3';
@@ -154,7 +153,6 @@ abstract Action(String) to String from String
 	var A5_R = 'a5-release';
 	var A6_R = 'a6-release';
 	var A7_R = 'a7-release';
-
 
 	var B1 = 'b1';
 	var B2 = 'b2';
@@ -299,7 +297,6 @@ class Controls extends FlxActionSet
 	var _a5R = new FlxActionDigital(Action.A5_R);
 	var _a6R = new FlxActionDigital(Action.A6_R);
 	var _a7R = new FlxActionDigital(Action.A7_R);
-
 
 	var _b1 = new FlxActionDigital(Action.B1);
 	var _b2 = new FlxActionDigital(Action.B2);
@@ -480,60 +477,341 @@ class Controls extends FlxActionSet
 	inline function get_RESET()
 		return _reset.check();
 
-	public var A1(get, never):Bool; inline function get_A1() {return _a1.check();}
-	public var A2(get, never):Bool; inline function get_A2() {return _a2.check();}
-	public var A3(get, never):Bool; inline function get_A3() {return _a3.check();}
-	public var A4(get, never):Bool; inline function get_A4() {return _a4.check();}
-	public var A5(get, never):Bool; inline function get_A5() {return _a5.check();}
-	public var A6(get, never):Bool; inline function get_A6() {return _a6.check();}
-	public var A7(get, never):Bool; inline function get_A7() {return _a7.check();}
+	public var A1(get, never):Bool;
 
-	public var A1_P(get, never):Bool; inline function get_A1_P() {return _a1P.check();}
-	public var A2_P(get, never):Bool; inline function get_A2_P() {return _a2P.check();}
-	public var A3_P(get, never):Bool; inline function get_A3_P() {return _a3P.check();}
-	public var A4_P(get, never):Bool; inline function get_A4_P() {return _a4P.check();}
-	public var A5_P(get, never):Bool; inline function get_A5_P() {return _a5P.check();}
-	public var A6_P(get, never):Bool; inline function get_A6_P() {return _a6P.check();}
-	public var A7_P(get, never):Bool; inline function get_A7_P() {return _a7P.check();}
+	inline function get_A1()
+	{
+		return _a1.check();
+	}
 
-	public var A1_R(get, never):Bool; inline function get_A1_R() {return _a1R.check();}
-	public var A2_R(get, never):Bool; inline function get_A2_R() {return _a2R.check();}
-	public var A3_R(get, never):Bool; inline function get_A3_R() {return _a3R.check();}
-	public var A4_R(get, never):Bool; inline function get_A4_R() {return _a4R.check();}
-	public var A5_R(get, never):Bool; inline function get_A5_R() {return _a5R.check();}
-	public var A6_R(get, never):Bool; inline function get_A6_R() {return _a6R.check();}
-	public var A7_R(get, never):Bool; inline function get_A7_R() {return _a7R.check();}
+	public var A2(get, never):Bool;
 
+	inline function get_A2()
+	{
+		return _a2.check();
+	}
 
-	public var B1(get, never):Bool; inline function get_B1() {return _b1.check();}
-	public var B2(get, never):Bool; inline function get_B2() {return _b2.check();}
-	public var B3(get, never):Bool; inline function get_B3() {return _b3.check();}
-	public var B4(get, never):Bool; inline function get_B4() {return _b4.check();}
-	public var B5(get, never):Bool; inline function get_B5() {return _b5.check();}
-	public var B6(get, never):Bool; inline function get_B6() {return _b6.check();}
-	public var B7(get, never):Bool; inline function get_B7() {return _b7.check();}
-	public var B8(get, never):Bool; inline function get_B8() {return _b8.check();}
-	public var B9(get, never):Bool; inline function get_B9() {return _b9.check();}
+	public var A3(get, never):Bool;
 
-	public var B1_P(get, never):Bool; inline function get_B1_P() {return _b1P.check();}
-	public var B2_P(get, never):Bool; inline function get_B2_P() {return _b2P.check();}
-	public var B3_P(get, never):Bool; inline function get_B3_P() {return _b3P.check();}
-	public var B4_P(get, never):Bool; inline function get_B4_P() {return _b4P.check();}
-	public var B5_P(get, never):Bool; inline function get_B5_P() {return _b5P.check();}
-	public var B6_P(get, never):Bool; inline function get_B6_P() {return _b6P.check();}
-	public var B7_P(get, never):Bool; inline function get_B7_P() {return _b7P.check();}
-	public var B8_P(get, never):Bool; inline function get_B8_P() {return _b8P.check();}
-	public var B9_P(get, never):Bool; inline function get_B9_P() {return _b9P.check();}
+	inline function get_A3()
+	{
+		return _a3.check();
+	}
 
-	public var B1_R(get, never):Bool; inline function get_B1_R() {return _b1R.check();}
-	public var B2_R(get, never):Bool; inline function get_B2_R() {return _b2R.check();}
-	public var B3_R(get, never):Bool; inline function get_B3_R() {return _b3R.check();}
-	public var B4_R(get, never):Bool; inline function get_B4_R() {return _b4R.check();}
-	public var B5_R(get, never):Bool; inline function get_B5_R() {return _b5R.check();}
-	public var B6_R(get, never):Bool; inline function get_B6_R() {return _b6R.check();}
-	public var B7_R(get, never):Bool; inline function get_B7_R() {return _b7R.check();}
-	public var B8_R(get, never):Bool; inline function get_B8_R() {return _b8R.check();}
-	public var B9_R(get, never):Bool; inline function get_B9_R() {return _b9R.check();}
+	public var A4(get, never):Bool;
+
+	inline function get_A4()
+	{
+		return _a4.check();
+	}
+
+	public var A5(get, never):Bool;
+
+	inline function get_A5()
+	{
+		return _a5.check();
+	}
+
+	public var A6(get, never):Bool;
+
+	inline function get_A6()
+	{
+		return _a6.check();
+	}
+
+	public var A7(get, never):Bool;
+
+	inline function get_A7()
+	{
+		return _a7.check();
+	}
+
+	public var A1_P(get, never):Bool;
+
+	inline function get_A1_P()
+	{
+		return _a1P.check();
+	}
+
+	public var A2_P(get, never):Bool;
+
+	inline function get_A2_P()
+	{
+		return _a2P.check();
+	}
+
+	public var A3_P(get, never):Bool;
+
+	inline function get_A3_P()
+	{
+		return _a3P.check();
+	}
+
+	public var A4_P(get, never):Bool;
+
+	inline function get_A4_P()
+	{
+		return _a4P.check();
+	}
+
+	public var A5_P(get, never):Bool;
+
+	inline function get_A5_P()
+	{
+		return _a5P.check();
+	}
+
+	public var A6_P(get, never):Bool;
+
+	inline function get_A6_P()
+	{
+		return _a6P.check();
+	}
+
+	public var A7_P(get, never):Bool;
+
+	inline function get_A7_P()
+	{
+		return _a7P.check();
+	}
+
+	public var A1_R(get, never):Bool;
+
+	inline function get_A1_R()
+	{
+		return _a1R.check();
+	}
+
+	public var A2_R(get, never):Bool;
+
+	inline function get_A2_R()
+	{
+		return _a2R.check();
+	}
+
+	public var A3_R(get, never):Bool;
+
+	inline function get_A3_R()
+	{
+		return _a3R.check();
+	}
+
+	public var A4_R(get, never):Bool;
+
+	inline function get_A4_R()
+	{
+		return _a4R.check();
+	}
+
+	public var A5_R(get, never):Bool;
+
+	inline function get_A5_R()
+	{
+		return _a5R.check();
+	}
+
+	public var A6_R(get, never):Bool;
+
+	inline function get_A6_R()
+	{
+		return _a6R.check();
+	}
+
+	public var A7_R(get, never):Bool;
+
+	inline function get_A7_R()
+	{
+		return _a7R.check();
+	}
+
+	public var B1(get, never):Bool;
+
+	inline function get_B1()
+	{
+		return _b1.check();
+	}
+
+	public var B2(get, never):Bool;
+
+	inline function get_B2()
+	{
+		return _b2.check();
+	}
+
+	public var B3(get, never):Bool;
+
+	inline function get_B3()
+	{
+		return _b3.check();
+	}
+
+	public var B4(get, never):Bool;
+
+	inline function get_B4()
+	{
+		return _b4.check();
+	}
+
+	public var B5(get, never):Bool;
+
+	inline function get_B5()
+	{
+		return _b5.check();
+	}
+
+	public var B6(get, never):Bool;
+
+	inline function get_B6()
+	{
+		return _b6.check();
+	}
+
+	public var B7(get, never):Bool;
+
+	inline function get_B7()
+	{
+		return _b7.check();
+	}
+
+	public var B8(get, never):Bool;
+
+	inline function get_B8()
+	{
+		return _b8.check();
+	}
+
+	public var B9(get, never):Bool;
+
+	inline function get_B9()
+	{
+		return _b9.check();
+	}
+
+	public var B1_P(get, never):Bool;
+
+	inline function get_B1_P()
+	{
+		return _b1P.check();
+	}
+
+	public var B2_P(get, never):Bool;
+
+	inline function get_B2_P()
+	{
+		return _b2P.check();
+	}
+
+	public var B3_P(get, never):Bool;
+
+	inline function get_B3_P()
+	{
+		return _b3P.check();
+	}
+
+	public var B4_P(get, never):Bool;
+
+	inline function get_B4_P()
+	{
+		return _b4P.check();
+	}
+
+	public var B5_P(get, never):Bool;
+
+	inline function get_B5_P()
+	{
+		return _b5P.check();
+	}
+
+	public var B6_P(get, never):Bool;
+
+	inline function get_B6_P()
+	{
+		return _b6P.check();
+	}
+
+	public var B7_P(get, never):Bool;
+
+	inline function get_B7_P()
+	{
+		return _b7P.check();
+	}
+
+	public var B8_P(get, never):Bool;
+
+	inline function get_B8_P()
+	{
+		return _b8P.check();
+	}
+
+	public var B9_P(get, never):Bool;
+
+	inline function get_B9_P()
+	{
+		return _b9P.check();
+	}
+
+	public var B1_R(get, never):Bool;
+
+	inline function get_B1_R()
+	{
+		return _b1R.check();
+	}
+
+	public var B2_R(get, never):Bool;
+
+	inline function get_B2_R()
+	{
+		return _b2R.check();
+	}
+
+	public var B3_R(get, never):Bool;
+
+	inline function get_B3_R()
+	{
+		return _b3R.check();
+	}
+
+	public var B4_R(get, never):Bool;
+
+	inline function get_B4_R()
+	{
+		return _b4R.check();
+	}
+
+	public var B5_R(get, never):Bool;
+
+	inline function get_B5_R()
+	{
+		return _b5R.check();
+	}
+
+	public var B6_R(get, never):Bool;
+
+	inline function get_B6_R()
+	{
+		return _b6R.check();
+	}
+
+	public var B7_R(get, never):Bool;
+
+	inline function get_B7_R()
+	{
+		return _b7R.check();
+	}
+
+	public var B8_R(get, never):Bool;
+
+	inline function get_B8_R()
+	{
+		return _b8R.check();
+	}
+
+	public var B9_R(get, never):Bool;
+
+	inline function get_B9_R()
+	{
+		return _b9R.check();
+	}
 
 	#if (haxe >= "4.0.0")
 	public function new(name, scheme = None)
@@ -592,7 +870,6 @@ class Controls extends FlxActionSet
 		add(_a5R);
 		add(_a6R);
 		add(_a7R);
-
 
 		add(_b1);
 		add(_b2);
@@ -687,7 +964,6 @@ class Controls extends FlxActionSet
 		add(_a6R);
 		add(_a7R);
 
-
 		add(_b1);
 		add(_b2);
 		add(_b3);
@@ -720,7 +996,7 @@ class Controls extends FlxActionSet
 
 		for (action in digitalActions)
 			byName[action.name] = action;
-			
+
 		if (scheme == null)
 			scheme = None;
 		setKeyboardScheme(scheme, false);
@@ -782,7 +1058,6 @@ class Controls extends FlxActionSet
 			case A5: _a5;
 			case A6: _a6;
 			case A7: _a7;
-
 
 			case B1: _b1;
 			case B2: _b2;
@@ -882,7 +1157,6 @@ class Controls extends FlxActionSet
 				func(_a7P, JUST_PRESSED);
 				func(_a7R, JUST_RELEASED);
 
-
 			case B1:
 				func(_b1, PRESSED);
 				func(_b1P, JUST_PRESSED);
@@ -961,7 +1235,7 @@ class Controls extends FlxActionSet
 			for (input in action.inputs)
 			{
 				if (device == null || isDevice(input, device))
-				byName[name].add(cast input);
+					byName[name].add(cast input);
 			}
 		}
 		#end
@@ -977,7 +1251,7 @@ class Controls extends FlxActionSet
 				#else
 				for (gamepad in controls.gamepadsAdded)
 					if (gamepadsAdded.indexOf(gamepad) == -1)
-					  gamepadsAdded.push(gamepad);
+						gamepadsAdded.push(gamepad);
 				#end
 
 				mergeKeyboardScheme(controls.keyboardScheme);
@@ -1015,8 +1289,10 @@ class Controls extends FlxActionSet
 	public function bindKeys(control:Control, keys:Array<FlxKey>)
 	{
 		var copyKeys:Array<FlxKey> = keys.copy();
-		for (i in 0...copyKeys.length) {
-			if(i == NONE) copyKeys.remove(i);
+		for (i in 0...copyKeys.length)
+		{
+			if (i == NONE)
+				copyKeys.remove(i);
 		}
 
 		#if (haxe >= "4.0.0")
@@ -1033,8 +1309,10 @@ class Controls extends FlxActionSet
 	public function unbindKeys(control:Control, keys:Array<FlxKey>)
 	{
 		var copyKeys:Array<FlxKey> = keys.copy();
-		for (i in 0...copyKeys.length) {
-			if(i == NONE) copyKeys.remove(i);
+		for (i in 0...copyKeys.length)
+		{
+			if (i == NONE)
+				copyKeys.remove(i);
 		}
 
 		#if (haxe >= "4.0.0")
@@ -1047,7 +1325,7 @@ class Controls extends FlxActionSet
 	inline static function addKeys(action:FlxActionDigital, keys:Array<FlxKey>, state:FlxInputState)
 	{
 		for (key in keys)
-			if(key != NONE)
+			if (key != NONE)
 				action.addKey(key, state);
 	}
 
@@ -1068,7 +1346,7 @@ class Controls extends FlxActionSet
 			removeKeyboard();
 
 		keyboardScheme = scheme;
-		
+
 		#if (haxe >= "4.0.0")
 		switch (scheme)
 		{
@@ -1084,7 +1362,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
 				inline bindKeys(Control.BACK, [X, BACKSPACE, ESCAPE]);
 				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				//inline bindKeys(Control.RESET, []);
+			// inline bindKeys(Control.RESET, []);
 			case Duo(true):
 				inline bindKeys(Control.UI_UP, [W]);
 				inline bindKeys(Control.UI_DOWN, [S]);
@@ -1097,7 +1375,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.ACCEPT, [G, Z]);
 				inline bindKeys(Control.BACK, [H, X]);
 				inline bindKeys(Control.PAUSE, [ONE]);
-				//inline bindKeys(Control.RESET, [R]);
+			// inline bindKeys(Control.RESET, [R]);
 			case Duo(false):
 				inline bindKeys(Control.UI_UP, [FlxKey.UP]);
 				inline bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -1110,7 +1388,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.ACCEPT, [O]);
 				inline bindKeys(Control.BACK, [P]);
 				inline bindKeys(Control.PAUSE, [ENTER]);
-				//inline bindKeys(Control.RESET, [BACKSPACE]);
+			// inline bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
 			case Custom: // nothing
 		}
@@ -1129,7 +1407,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				//bindKeys(Control.RESET, [R]);
+			// bindKeys(Control.RESET, [R]);
 			case Duo(true):
 				bindKeys(Control.UI_UP, [W]);
 				bindKeys(Control.UI_DOWN, [S]);
@@ -1142,7 +1420,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.ACCEPT, [G, Z]);
 				bindKeys(Control.BACK, [H, X]);
 				bindKeys(Control.PAUSE, [ONE]);
-				//bindKeys(Control.RESET, [R]);
+			// bindKeys(Control.RESET, [R]);
 			case Duo(false):
 				bindKeys(Control.UI_UP, [FlxKey.UP]);
 				bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -1155,7 +1433,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.ACCEPT, [O]);
 				bindKeys(Control.BACK, [P]);
 				bindKeys(Control.PAUSE, [ENTER]);
-				//bindKeys(Control.RESET, [BACKSPACE]);
+			// bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
 			case Custom: // nothing
 		}
@@ -1179,7 +1457,7 @@ class Controls extends FlxActionSet
 	public function addGamepad(id:Int, ?buttonMap:Map<Control, Array<FlxGamepadInputID>>):Void
 	{
 		gamepadsAdded.push(id);
-		
+
 		#if (haxe >= "4.0.0")
 		for (control => buttons in buttonMap)
 			inline bindButtons(control, id, buttons);
@@ -1237,7 +1515,7 @@ class Controls extends FlxActionSet
 		]);
 		#else
 		addGamepadLiteral(id, [
-			//Swap A and B for switch
+			// Swap A and B for switch
 			Control.ACCEPT => [B],
 			Control.BACK => [A],
 			Control.UI_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP],
@@ -1249,7 +1527,7 @@ class Controls extends FlxActionSet
 			Control.NOTE_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT],
 			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT],
 			Control.PAUSE => [START],
-			//Swap Y and X for switch
+			// Swap Y and X for switch
 			Control.RESET => [Y],
 		]);
 		#end

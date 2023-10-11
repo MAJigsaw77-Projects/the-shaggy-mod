@@ -6,8 +6,9 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
-class ClientPrefs {
-	//TO DO: Redo ClientPrefs in a way that isn't too stupid
+class ClientPrefs
+{
+	// TO DO: Redo ClientPrefs in a way that isn't too stupid
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var showFPS:Bool = true;
@@ -27,57 +28,50 @@ class ClientPrefs {
 	public static var hideTime:Bool = false;
 
 	public static var defaultKeys:Array<FlxKey> = [
-		A, LEFT,			//Note Left
-		S, DOWN,			//Note Down
-		W, UP,				//Note Up
-		D, RIGHT,			//Note Right
-
-		A, LEFT,			//UI Left
-		S, DOWN,			//UI Down
-		W, UP,				//UI Up
-		D, RIGHT,			//UI Right
-
-		NONE, NONE,			//Reset
-		SPACE, ENTER,		//Accept
-		BACKSPACE, ESCAPE,	//Back
-		ENTER, ESCAPE,		//Pause
-
-		S, NONE,
-		D, NONE,
-		F, NONE,
-		SPACE, NONE,
-		J, LEFT,
-		K, DOWN,
-		L, RIGHT,
-
-		A, NONE,
-		S, NONE,
-		D, NONE,
-		F, NONE,
-		SPACE, NONE,
-		H, NONE,
-		J, NONE,
-		K, NONE,
-		L, NONE
+		        A,   LEFT, // Note Left
+		        S,   DOWN, // Note Down
+		        W,       UP, // Note Up
+		        D, RIGHT, // Note Right
+		        A,     LEFT, // UI Left
+		        S,     DOWN, // UI Down
+		        W,         UP, // UI Up
+		        D,   RIGHT, // UI Right
+		     NONE,       NONE, // Reset
+		    SPACE,     ENTER, // Accept
+		BACKSPACE,      ESCAPE, // Back
+		    ENTER,     ESCAPE, // Pause
+		        S,               NONE,
+		        D,               NONE,
+		        F,               NONE,
+		    SPACE,               NONE,
+		        J,               LEFT,
+		        K,               DOWN,
+		        L,              RIGHT,
+		        A,               NONE,
+		        S,               NONE,
+		        D,               NONE,
+		        F,               NONE,
+		    SPACE,               NONE,
+		        H,               NONE,
+		        J,               NONE,
+		        K,               NONE,
+		        L,               NONE
 	];
-	//Every key has two binds, these binds are defined on defaultKeys! If you want your control to be changeable, you have to add it on ControlsSubState (inside OptionsState)'s list
+	// Every key has two binds, these binds are defined on defaultKeys! If you want your control to be changeable, you have to add it on ControlsSubState (inside OptionsState)'s list
 	public static var keyBinds:Array<Dynamic> = [
-		//Key Bind, Name for ControlsSubState
+		// Key Bind, Name for ControlsSubState
 		[Control.NOTE_LEFT, 'Left'],
 		[Control.NOTE_DOWN, 'Down'],
 		[Control.NOTE_UP, 'Up'],
 		[Control.NOTE_RIGHT, 'Right'],
-
-		[Control.UI_LEFT, 'Left '],		//Added a space for not conflicting on ControlsSubState
-		[Control.UI_DOWN, 'Down '],		//Added a space for not conflicting on ControlsSubState
-		[Control.UI_UP, 'Up '],			//Added a space for not conflicting on ControlsSubState
-		[Control.UI_RIGHT, 'Right '],	//Added a space for not conflicting on ControlsSubState
-
+		[Control.UI_LEFT, 'Left '], // Added a space for not conflicting on ControlsSubState
+		[Control.UI_DOWN, 'Down '], // Added a space for not conflicting on ControlsSubState
+		[Control.UI_UP, 'Up '], // Added a space for not conflicting on ControlsSubState
+		[Control.UI_RIGHT, 'Right '], // Added a space for not conflicting on ControlsSubState
 		[Control.RESET, 'Reset'],
 		[Control.ACCEPT, 'Accept'],
 		[Control.BACK, 'Back'],
 		[Control.PAUSE, 'Pause'],
-
 		[Control.A1, 'Left 1'],
 		[Control.A2, 'Up  '],
 		[Control.A3, 'Right 1'],
@@ -85,7 +79,6 @@ class ClientPrefs {
 		[Control.A5, 'Left 2'],
 		[Control.A6, 'Down  '],
 		[Control.A7, 'Right 2'],
-
 		[Control.B1, 'Left 1 '],
 		[Control.B2, 'Down 1'],
 		[Control.B3, 'Up 1'],
@@ -98,7 +91,8 @@ class ClientPrefs {
 	];
 	public static var lastControls:Array<FlxKey> = defaultKeys.copy();
 
-	public static function saveSettings() {
+	public static function saveSettings()
+	{
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.showFPS = showFPS;
@@ -118,8 +112,10 @@ class ClientPrefs {
 		FlxG.save.data.hideTime = hideTime;
 
 		var achieves:Array<String> = [];
-		for (i in 0...Achievements.achievementsUnlocked.length) {
-			if(Achievements.achievementsUnlocked[i][1]) {
+		for (i in 0...Achievements.achievementsUnlocked.length)
+		{
+			if (Achievements.achievementsUnlocked[i][1])
+			{
 				achieves.push(Achievements.achievementsUnlocked[i][0]);
 			}
 		}
@@ -128,83 +124,105 @@ class ClientPrefs {
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls', 'shaggymod'); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls', 'shaggymod'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = lastControls;
 		save.flush();
 		FlxG.log.add("Settings saved!");
 	}
 
-	public static function loadPrefs() {
-		if(FlxG.save.data.downScroll != null) {
+	public static function loadPrefs()
+	{
+		if (FlxG.save.data.downScroll != null)
+		{
 			downScroll = FlxG.save.data.downScroll;
 		}
-		if(FlxG.save.data.middleScroll != null) {
+		if (FlxG.save.data.middleScroll != null)
+		{
 			middleScroll = FlxG.save.data.middleScroll;
 		}
-		if(FlxG.save.data.showFPS != null) {
+		if (FlxG.save.data.showFPS != null)
+		{
 			showFPS = FlxG.save.data.showFPS;
-			if(Main.fpsVar != null) {
+			if (Main.fpsVar != null)
+			{
 				Main.fpsVar.visible = showFPS;
 			}
 		}
-		if(FlxG.save.data.flashing != null) {
+		if (FlxG.save.data.flashing != null)
+		{
 			flashing = FlxG.save.data.flashing;
 		}
-		if(FlxG.save.data.globalAntialiasing != null) {
+		if (FlxG.save.data.globalAntialiasing != null)
+		{
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
 		}
-		if(FlxG.save.data.noteSplashes != null) {
+		if (FlxG.save.data.noteSplashes != null)
+		{
 			noteSplashes = FlxG.save.data.noteSplashes;
 		}
-		if(FlxG.save.data.lowQuality != null) {
+		if (FlxG.save.data.lowQuality != null)
+		{
 			lowQuality = FlxG.save.data.lowQuality;
 		}
-		if(FlxG.save.data.framerate != null) {
+		if (FlxG.save.data.framerate != null)
+		{
 			framerate = FlxG.save.data.framerate;
-			if(framerate > FlxG.drawFramerate) {
+			if (framerate > FlxG.drawFramerate)
+			{
 				FlxG.updateFramerate = framerate;
 				FlxG.drawFramerate = framerate;
-			} else {
+			}
+			else
+			{
 				FlxG.drawFramerate = framerate;
 				FlxG.updateFramerate = framerate;
 			}
 		}
 		/*if(FlxG.save.data.cursing != null) {
-			cursing = FlxG.save.data.cursing;
-		}
-		if(FlxG.save.data.violence != null) {
-			violence = FlxG.save.data.violence;
+				cursing = FlxG.save.data.cursing;
+			}
+			if(FlxG.save.data.violence != null) {
+				violence = FlxG.save.data.violence;
 		}*/
-		if(FlxG.save.data.camZooms != null) {
+		if (FlxG.save.data.camZooms != null)
+		{
 			camZooms = FlxG.save.data.camZooms;
 		}
-		if(FlxG.save.data.hideHud != null) {
+		if (FlxG.save.data.hideHud != null)
+		{
 			hideHud = FlxG.save.data.hideHud;
 		}
-		if(FlxG.save.data.noteOffset != null) {
+		if (FlxG.save.data.noteOffset != null)
+		{
 			noteOffset = FlxG.save.data.noteOffset;
 		}
-		if(FlxG.save.data.arrowHSV != null) {
+		if (FlxG.save.data.arrowHSV != null)
+		{
 			arrowHSV = FlxG.save.data.arrowHSV;
 		}
-		if(FlxG.save.data.imagesPersist != null) {
+		if (FlxG.save.data.imagesPersist != null)
+		{
 			imagesPersist = FlxG.save.data.imagesPersist;
 			FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 		}
-		if(FlxG.save.data.ghostTapping != null) {
+		if (FlxG.save.data.ghostTapping != null)
+		{
 			ghostTapping = FlxG.save.data.ghostTapping;
 		}
-		if(FlxG.save.data.hideTime != null) {
+		if (FlxG.save.data.hideTime != null)
+		{
 			hideTime = FlxG.save.data.hideTime;
 		}
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls', 'shaggymod');
-		if(save != null && save.data.customControls != null) {
+		if (save != null && save.data.customControls != null)
+		{
 			reloadControls(save.data.customControls);
 		}
 
-		if (FlxG.save.data.language == null) FlxG.save.data.languaje = 0;
+		if (FlxG.save.data.language == null)
+			FlxG.save.data.languaje = 0;
 
 		FlxG.updateFramerate = framerate;
 		FlxG.drawFramerate = framerate;
@@ -221,36 +239,48 @@ class ClientPrefs {
 		}
 	}
 
-	public static function reloadControls(newKeys:Array<FlxKey>) {
+	public static function reloadControls(newKeys:Array<FlxKey>)
+	{
 		ClientPrefs.removeControls(ClientPrefs.lastControls);
 		ClientPrefs.lastControls = newKeys.copy();
 		ClientPrefs.loadControls(ClientPrefs.lastControls);
 	}
 
-	private static function removeControls(controlArray:Array<FlxKey>) {
-		for (i in 0...keyBinds.length) {
-			var controlValue:Int = i*2;
+	private static function removeControls(controlArray:Array<FlxKey>)
+	{
+		for (i in 0...keyBinds.length)
+		{
+			var controlValue:Int = i * 2;
 			var controlsToRemove:Array<FlxKey> = [];
-			for (j in 0...2) {
-				if(controlArray[controlValue+j] != NONE) {
-					controlsToRemove.push(controlArray[controlValue+j]);
+			for (j in 0...2)
+			{
+				if (controlArray[controlValue + j] != NONE)
+				{
+					controlsToRemove.push(controlArray[controlValue + j]);
 				}
 			}
-			if(controlsToRemove.length > 0) {
+			if (controlsToRemove.length > 0)
+			{
 				PlayerSettings.player1.controls.unbindKeys(keyBinds[i][0], controlsToRemove);
 			}
 		}
 	}
-	private static function loadControls(controlArray:Array<FlxKey>) {
-		for (i in 0...keyBinds.length) {
-			var controlValue:Int = i*2;
+
+	private static function loadControls(controlArray:Array<FlxKey>)
+	{
+		for (i in 0...keyBinds.length)
+		{
+			var controlValue:Int = i * 2;
 			var controlsToAdd:Array<FlxKey> = [];
-			for (j in 0...2) {
-				if(controlArray[controlValue+j] != NONE) {
-					controlsToAdd.push(controlArray[controlValue+j]);
+			for (j in 0...2)
+			{
+				if (controlArray[controlValue + j] != NONE)
+				{
+					controlsToAdd.push(controlArray[controlValue + j]);
 				}
 			}
-			if(controlsToAdd.length > 0) {
+			if (controlsToAdd.length > 0)
+			{
 				PlayerSettings.player1.controls.bindKeys(keyBinds[i][0], controlsToAdd);
 			}
 		}

@@ -41,12 +41,14 @@ class Alphabet extends FlxSpriteGroup
 	var splitWords:Array<String> = [];
 
 	var isBold:Bool = false;
+
 	public var lettersArray:Array<AlphaCharacter> = [];
 
 	public var finishedText:Bool = false;
 	public var typed:Bool = false;
 
 	public var typingSpeed:Float = 0.05;
+
 	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
 	{
 		super(x, y);
@@ -68,14 +70,17 @@ class Alphabet extends FlxSpriteGroup
 			{
 				addText();
 			}
-		} else {
+		}
+		else
+		{
 			finishedText = true;
 		}
 	}
 
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
 	{
-		for (i in 0...lettersArray.length) {
+		for (i in 0...lettersArray.length)
+		{
 			var letter = lettersArray[0];
 			remove(letter);
 			lettersArray.remove(letter);
@@ -95,18 +100,24 @@ class Alphabet extends FlxSpriteGroup
 		x = 0;
 		_finalText = newText;
 		text = newText;
-		if(newTypingSpeed != -1) {
+		if (newTypingSpeed != -1)
+		{
 			typingSpeed = newTypingSpeed;
 		}
 
-		if (text != "") {
+		if (text != "")
+		{
 			if (typed)
 			{
 				startTypedText(typingSpeed);
-			} else {
+			}
+			else
+			{
 				addText();
 			}
-		} else {
+		}
+		else
+		{
 			finishedText = true;
 		}
 		x = lastX;
@@ -156,7 +167,7 @@ class Alphabet extends FlxSpriteGroup
 					}
 					else if (isSymbol)
 					{
-						if(character != '-')
+						if (character != '-')
 							letter.createBoldSymbol(character);
 					}
 					else
@@ -202,6 +213,7 @@ class Alphabet extends FlxSpriteGroup
 	var consecutiveSpaces:Int = 0;
 
 	var typeTimer:FlxTimer = null;
+
 	public function startTypedText(speed:Float):Void
 	{
 		_finalText = text;
@@ -209,26 +221,35 @@ class Alphabet extends FlxSpriteGroup
 
 		// trace(arrayShit);
 
-		if(speed <= 0) {
-			while(loopNum < splitWords.length) {
+		if (speed <= 0)
+		{
+			while (loopNum < splitWords.length)
+			{
 				timerCheck();
 			}
 			finishedText = true;
-			if(dialogueSound != null) dialogueSound.stop();
+			if (dialogueSound != null)
+				dialogueSound.stop();
 			dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
-		} else {
-			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer) {
-				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer) {
+		}
+		else
+		{
+			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer)
+			{
+				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer)
+				{
 					timerCheck(tmr);
 				}, 0);
 			});
 		}
 	}
 
-	public function timerCheck(?tmr:FlxTimer = null) {
-		if (loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum+1] == "n")
+	public function timerCheck(?tmr:FlxTimer = null)
+	{
+		if (loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum + 1] == "n")
 		{
-			if(tmr != null) tmr.loops -= 2;
+			if (tmr != null)
+				tmr.loops -= 2;
 			loopNum += 2;
 			yMulti += 1;
 			xPosResetted = true;
@@ -236,7 +257,8 @@ class Alphabet extends FlxSpriteGroup
 			curRow += 1;
 		}
 
-		if(loopNum <= splitWords.length) {
+		if (loopNum <= splitWords.length)
+		{
 			var spaceChar:Bool = (splitWords[loopNum] == " " || splitWords[loopNum] == "-" || splitWords[loopNum] == "_");
 			if (spaceChar)
 			{
@@ -302,8 +324,10 @@ class Alphabet extends FlxSpriteGroup
 				}
 				letter.x += 90;
 
-				if(tmr != null) {
-					if(dialogueSound != null) dialogueSound.stop();
+				if (tmr != null)
+				{
+					if (dialogueSound != null)
+						dialogueSound.stop();
 					dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
 				}
 
@@ -314,7 +338,8 @@ class Alphabet extends FlxSpriteGroup
 		}
 
 		loopNum += 1;
-		if(loopNum >= splitWords.length && tmr != null) {
+		if (loopNum >= splitWords.length && tmr != null)
+		{
 			typeTimer = null;
 			tmr.cancel();
 			tmr.destroy();
@@ -330,9 +355,12 @@ class Alphabet extends FlxSpriteGroup
 
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
 			y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);
-			if(forceX != Math.NEGATIVE_INFINITY) {
+			if (forceX != Math.NEGATIVE_INFINITY)
+			{
 				x = forceX;
-			} else {
+			}
+			else
+			{
 				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
 			}
 		}
@@ -340,8 +368,10 @@ class Alphabet extends FlxSpriteGroup
 		super.update(elapsed);
 	}
 
-	public function killTheTimer() {
-		if(typeTimer != null) {
+	public function killTheTimer()
+	{
+		if (typeTimer != null)
+		{
 			typeTimer.cancel();
 			typeTimer.destroy();
 		}

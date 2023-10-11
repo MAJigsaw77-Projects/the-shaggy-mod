@@ -6,6 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 class MenuCharacter extends FlxSprite
 {
 	public var character:String;
+
 	var ang = 0;
 	var sY = 60;
 
@@ -15,9 +16,10 @@ class MenuCharacter extends FlxSprite
 
 		changeCharacter(character);
 	}
+
 	override function update(elapsed:Float)
 	{
-		ang ++;
+		ang++;
 		switch (character)
 		{
 			case 'wbshaggy':
@@ -28,16 +30,20 @@ class MenuCharacter extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function changeCharacter(?character:String = 'bf') {
+	public function changeCharacter(?character:String = 'bf')
+	{
 		alpha = 1;
-		if (character == '') alpha = 0;
-		
-		if(character == this.character) return;
-	
+		if (character == '')
+			alpha = 0;
+
+		if (character == this.character)
+			return;
+
 		this.character = character;
 		antialiasing = ClientPrefs.globalAntialiasing;
 
-		switch(character) {
+		switch (character)
+		{
 			case 'bf':
 				frames = Paths.getSparrowAtlas('menucharacters/Menu_BF');
 				animation.addByPrefix('idle', "M BF Idle", 24);
@@ -74,7 +80,8 @@ class MenuCharacter extends FlxSprite
 		animation.play('idle');
 		updateHitbox();
 
-		switch(character) {
+		switch (character)
+		{
 			case 'bf':
 				offset.set(15, -40);
 

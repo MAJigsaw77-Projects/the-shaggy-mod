@@ -8,20 +8,26 @@ using StringTools;
 class StrumNote extends FlxSprite
 {
 	private var colorSwap:ColorSwap;
+
 	public var resetAnim:Float = 0;
+
 	private var noteData:Int = 0;
 
-	public function new(x:Float, y:Float, leData:Int) {
+	public function new(x:Float, y:Float, leData:Int)
+	{
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
 		noteData = leData;
 		super(x, y);
 	}
 
-	override function update(elapsed:Float) {
-		if(resetAnim > 0) {
+	override function update(elapsed:Float)
+	{
+		if (resetAnim > 0)
+		{
 			resetAnim -= elapsed;
-			if(resetAnim <= 0) {
+			if (resetAnim <= 0)
+			{
 				playAnim('static');
 				resetAnim = 0;
 			}
@@ -30,7 +36,8 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false) {
+	public function playAnim(anim:String, ?force:Bool = false)
+	{
 		animation.play(anim, force);
 		updateHitbox();
 		offset.x = frameWidth / 2;
@@ -38,22 +45,22 @@ class StrumNote extends FlxSprite
 
 		offset.x -= 156 * Note.scales[PlayState.SONG.mania] / 2;
 		offset.y -= 156 * Note.scales[PlayState.SONG.mania] / 2;
-		//centerOffsets();
+		// centerOffsets();
 		/*
-		if(animation.curAnim.name == 'static') {
-			colorSwap.hue = 0;
-			colorSwap.saturation = 0;
-			colorSwap.brightness = 0;
-		} else {
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+			if(animation.curAnim.name == 'static') {
+				colorSwap.hue = 0;
+				colorSwap.saturation = 0;
+				colorSwap.brightness = 0;
+			} else {
+				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 
-			if(animation.curAnim.name == 'confirm' && !PlayState.curStage.startsWith('school')) {
-				offset.x -= 13;
-				offset.y -= 13;
+				if(animation.curAnim.name == 'confirm' && !PlayState.curStage.startsWith('school')) {
+					offset.x -= 13;
+					offset.y -= 13;
+				}
 			}
-		}
-		*/
+		 */
 	}
 }
