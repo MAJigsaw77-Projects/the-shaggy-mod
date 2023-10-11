@@ -51,10 +51,9 @@ class Achievements {
 	public static var henchmenDeath:Int = 0;
 	public static function unlockAchievement(id:Int):Void {
 		achievementsUnlocked[id][1] = true;
-		/*
+
 		FlxG.log.add('Completed achievement "' + achievementsStuff[id][0] +'"');
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		*/
 	}
 
 	public static function loadAchievements():Void {
@@ -93,8 +92,6 @@ class AttachedAchievement extends FlxSprite {
 	public var sprTracker:FlxSprite;
 	public function new(x:Float = 0, y:Float = 0, id:Int = 0) {
 		super(x, y);
-		/*
-		super(x, y);
 
 		if(Achievements.achievementsUnlocked[id][1]) {
 			loadGraphic(Paths.image('achievementgrid'), true, 150, 150);
@@ -106,7 +103,6 @@ class AttachedAchievement extends FlxSprite {
 		setGraphicSize(Std.int(width * 0.7));
 		updateHitbox();
 		antialiasing = ClientPrefs.globalAntialiasing;
-		*/
 	}
 
 	override function update(elapsed:Float) {
@@ -123,9 +119,10 @@ class AchievementObject extends FlxSpriteGroup {
 	public function new(id:Int, ?camera:FlxCamera = null)
 	{
 		super(x, y);
+
 		ClientPrefs.saveSettings();
 		remove(this);
-		/*
+
 		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
 		achievementBG.scrollFactor.set();
 
@@ -169,7 +166,6 @@ class AchievementObject extends FlxSpriteGroup {
 				}
 			});
 		}});
-		*/
 	}
 
 	override function destroy() {
