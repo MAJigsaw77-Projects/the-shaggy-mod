@@ -176,11 +176,9 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
-		#if PRELOAD_ALL
+
 		var leText:String = "Press SPACE to listen to this Song / Press RESET to Reset your Score and Accuracy.";
-		#else
-		var leText:String = "Press RESET to Reset your Score and Accuracy.";
-		#end
+
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, 18);
 		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
@@ -264,7 +262,6 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		#if PRELOAD_ALL
 		if (space && instPlaying != curSelected)
 		{
 			destroyFreeplayVocals();
@@ -283,8 +280,7 @@ class FreeplayState extends MusicBeatState
 			vocals.volume = 0.7;
 			instPlaying = curSelected;
 		}
-		else
-		#end if (accepted && (curDifficulty != 0 || WeekData.songHasMania[songs[curSelected].songName]))
+		else if (accepted && (curDifficulty != 0 || WeekData.songHasMania[songs[curSelected].songName]))
 	{
 			var songLowercase:String = songs[curSelected].songName.toLowerCase();
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
