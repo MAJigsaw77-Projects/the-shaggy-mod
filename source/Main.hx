@@ -1,25 +1,40 @@
 package;
 
+#if android
+import android.content.Context;
+#end
+import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.Assets;
-import openfl.Lib;
+import haxe.io.Path;
+import haxe.CallStack;
+import haxe.Exception;
+import haxe.Log;
+#if hl
+import hl.Api;
+#end
+import lime.system.System;
 import openfl.display.FPS;
 import openfl.display.Sprite;
-import openfl.events.Event;
+import openfl.errors.Error;
+import openfl.events.ErrorEvent;
+import openfl.events.UncaughtErrorEvent;
+import openfl.system.System;
+import openfl.utils.AssetCache;
+import openfl.utils.Assets;
+import openfl.Lib;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
+
+using StringTools;
 
 class Main extends Sprite
 {
-	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
-	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
-	var framerate:Int = 60; // How many frames per second the game should run at.
-	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
-	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
-
 	public static var fpsVar:FPS;
+
 	public static var drums:Bool = false;
 	public static var menuBad:Bool = false;
 	public static var menuMusPlay:Bool = false;
@@ -51,66 +66,182 @@ class Main extends Sprite
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
-	public static function main():Void
-	{
-		Lib.current.addChild(new Main());
-	}
-
-	public function new()
+	public function new():Void
 	{
 		super();
 
-		if (stage != null)
-		{
-			init();
-		}
-		else
-		{
-			addEventListener(Event.ADDED_TO_STAGE, init);
-		}
-	}
-
-	private function init(?E:Event):Void
-	{
-		if (hasEventListener(Event.ADDED_TO_STAGE))
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
-
-		setupGame();
-	}
-
-	private function setupGame():Void
-	{
-		var stageWidth:Int = Lib.current.stage.stageWidth;
-		var stageHeight:Int = Lib.current.stage.stageHeight;
-
-		if (zoom == -1)
-		{
-			var ratioX:Float = stageWidth / gameWidth;
-			var ratioY:Float = stageHeight / gameHeight;
-			zoom = Math.min(ratioX, ratioY);
-			gameWidth = Math.ceil(stageWidth / zoom);
-			gameHeight = Math.ceil(stageHeight / zoom);
-		}
-
-		#if !debug
-		initialState = TitleState;
+		#if android
+		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		#elseif (ios || switch)
+		Sys.setCwd(System.applicationStorageDirectory);
 		#end
 
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onUncaughtError);
+
+		#if (mobile || switch)
+		Storage.copyNecessaryFiles();
+		#end
+
+		#if hl
+		Api.setErrorHandler(onCriticalError);
+		#elseif cpp
+		untyped __global__.__hxcpp_set_critical_error_handler(onCriticalError);
+		#end
+
+		FlxG.signals.gameResized.add(onResizeGame);
+		FlxG.signals.preStateCreate.add(onPreStateCreate);
+
+		// Run the garbage colector after the state switched...
+		FlxG.signals.postStateSwitch.add(System.gc);
+
+		addChild(new FlxGame(1280, 720, TitleState, 60, 60, true, false));
+
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
+		#if (mobile || switch)
+		fpsVar.scaleX = fps.scaleY = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
+		#end
 		addChild(fpsVar);
 
 		if (fpsVar != null)
-		{
 			fpsVar.visible = ClientPrefs.showFPS;
+	}
+
+	private inline function onUncaughtError(event:UncaughtErrorEvent):Void
+	{
+		event.preventDefault();
+		event.stopImmediatePropagation();
+
+		final log:Array<String> = [];
+
+		if (Std.isOfType(event.error, Error))
+			log.push(cast(event.error, Error).message);
+		else if (Std.isOfType(event.error, ErrorEvent))
+			log.push(cast(event.error, ErrorEvent).text);
+		else
+			log.push(Std.string(event.error));
+
+		for (item in CallStack.exceptionStack(true))
+		{
+			switch (item)
+			{
+				case CFunction:
+					log.push('C Function');
+				case Module(m):
+					log.push('Module [$m]');
+				case FilePos(s, file, line, column):
+					log.push('$file [line $line]');
+				case Method(classname, method):
+					log.push('$classname [method $method]');
+				case LocalFunction(name):
+					log.push('Local Function [$name]');
+			}
 		}
 
-		#if html5
-		FlxG.autoPause = false;
-		FlxG.mouse.visible = false;
+		final msg:String = log.join('\n');
+
+		#if sys
+		try
+		{
+			if (!FileSystem.exists('errors'))
+				FileSystem.createDirectory('errors');
+
+			File.saveContent('errors/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', msg);
+		}
+		catch (e:Exception)
+			Log.trace('Couldn\'t save error message "${e.message}"', null);
 		#end
+
+		Log.trace(msg, null);
+		Lib.application.window.alert(msg, 'Error!');
+		System.exit(1);
+	}
+
+	private inline function onCriticalError(error:Dynamic):Void
+	{
+		final log:Array<String> = [Std.isOfType(error, String) ? error : Std.string(error)];
+
+		for (item in CallStack.exceptionStack(true))
+		{
+			switch (item)
+			{
+				case CFunction:
+					log.push('C Function');
+				case Module(m):
+					log.push('Module [$m]');
+				case FilePos(s, file, line, column):
+					log.push('$file [line $line]');
+				case Method(classname, method):
+					log.push('$classname [method $method]');
+				case LocalFunction(name):
+					log.push('Local Function [$name]');
+			}
+		}
+
+		final msg:String = log.join('\n');
+
+		#if sys
+		try
+		{
+			if (!FileSystem.exists('errors'))
+				FileSystem.createDirectory('errors');
+
+			File.saveContent('errors/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', msg);
+		}
+		catch (e:Exception)
+			Log.trace('Couldn\'t save error message "${e.message}"', null);
+		#end
+
+		Log.trace(msg, null);
+		Lib.application.window.alert(msg, 'Error!');
+		System.exit(1);
+	}
+
+	private inline function onResizeGame(width:Int, height:Int):Void
+	{
+		if (FlxG.cameras != null && (FlxG.cameras.list != null && FlxG.cameras.list.length > 0))
+		{
+			for (camera in FlxG.cameras.list)
+			{
+				if (camera != null && (camera.filters != null && camera.filters.length > 0))
+				{
+					// Shout out to Ne_Eo for bringing this to my attention.
+					@:privateAccess
+					if (camera.flashSprite != null)
+					{
+						camera.flashSprite.__cacheBitmap = null;
+						camera.flashSprite.__cacheBitmapData = null;
+					}
+				}
+			}
+		}
+
+		@:privateAccess
+		if (FlxG.game != null)
+		{
+			FlxG.game.__cacheBitmap = null;
+			FlxG.game.__cacheBitmapData = null;
+		}
+	}
+
+	private inline function onPreStateCreate(state:FlxState):Void
+	{
+		var cache:AssetCache = cast(Assets.cache, AssetCache);
+
+		// Clear the loaded graphics if they are no longer in flixel cache...
+		for (key in cache.bitmapData.keys())
+			if (!FlxG.bitmap.checkCache(key))
+				cache.bitmapData.remove(key);
+
+		// Clear all the loaded sounds from the cache...
+		for (key in cache.sound.keys())
+			cache.sound.remove(key);
+
+		// Clear all the loaded fonts from the cache...
+		for (key in cache.font.keys())
+			cache.font.remove(key);
 	}
 }
