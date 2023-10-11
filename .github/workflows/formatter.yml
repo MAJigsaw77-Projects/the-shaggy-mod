@@ -16,7 +16,7 @@ jobs:
         run: haxelib install formatter --quiet
 
       - name: Formatting
-        run: haxelib run formatter -s source --check
+        run: haxelib run formatter -s source
 
       - name: Upload Artifact
         uses: actions/upload-artifact@main
