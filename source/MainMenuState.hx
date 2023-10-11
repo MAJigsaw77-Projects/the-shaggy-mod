@@ -99,7 +99,7 @@ class MainMenuState extends MusicBeatState
 			star[i].x += (i - 1) * 90;
 			star[i].scale.x = 0.75;
 			star[i].scale.y = 0.75;
-			star[i].antialiasing = true;
+			star[i].antialiasing = ClientPrefs.globalAntialiasing;
 			add(star[i]);
 		}
 

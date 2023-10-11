@@ -34,7 +34,7 @@ class MansionDebris extends FlxSprite
 		//bgcloud.setGraphicSize(Std.int(bgcloud.width * 0.8));
 		animation.play('c');
 		scrollFactor.set(sc, sc);
-		antialiasing = true;
+		antialiasing = ClientPrefs.globalAntialiasing;
 		setGraphicSize(Std.int(frameWidth * (sc / 0.75)));
 
 		updateHitbox();

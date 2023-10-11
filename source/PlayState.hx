@@ -359,7 +359,7 @@ class PlayState extends MusicBeatState
 				curStage = 'mansion';
 				var bg:FlxSprite = new FlxSprite(-400, -160).loadGraphic(Paths.image('bg_lemon'));
 				bg.setGraphicSize(Std.int(bg.width * 1.5));
-				bg.antialiasing = true;
+				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.scrollFactor.set(0.95, 0.95);
 				bg.active = false;
 				add(bg);
@@ -373,7 +373,7 @@ class PlayState extends MusicBeatState
 				sky.setGraphicSize(Std.int(sky.width * 0.8));
 				sky.animation.play('sky');
 				sky.scrollFactor.set(0.1, 0.1);
-				sky.antialiasing = true;
+				sky.antialiasing = ClientPrefs.globalAntialiasing;
 				add(sky);
 
 				var bgcloud = new FlxSprite(-850, -1250);
@@ -382,7 +382,7 @@ class PlayState extends MusicBeatState
 				//bgcloud.setGraphicSize(Std.int(bgcloud.width * 0.8));
 				bgcloud.animation.play('c');
 				bgcloud.scrollFactor.set(0.3, 0.3);
-				bgcloud.antialiasing = true;
+				bgcloud.antialiasing = ClientPrefs.globalAntialiasing;
 				add(bgcloud);
 
 				add(new MansionDebris(300, -800, 'norm', 0.4, 1, 0, 1));
@@ -411,12 +411,12 @@ class PlayState extends MusicBeatState
 				//bgcloud.setGraphicSize(Std.int(bgcloud.width * 0.8));
 				fgcloud.animation.play('c');
 				fgcloud.scrollFactor.set(0.9, 0.9);
-				fgcloud.antialiasing = true;
+				fgcloud.antialiasing = ClientPrefs.globalAntialiasing;
 				add(fgcloud);
 
 				var bg:FlxSprite = new FlxSprite(-400, -160).loadGraphic(Paths.image('bg_lemon'));
 				bg.setGraphicSize(Std.int(bg.width * 1.5));
-				bg.antialiasing = true;
+				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.scrollFactor.set(0.95, 0.95);
 				bg.active = false;
 				add(bg);
@@ -427,7 +427,7 @@ class PlayState extends MusicBeatState
 				techo.setGraphicSize(Std.int(techo.frameWidth * 1.5));
 				techo.animation.play('r');
 				techo.scrollFactor.set(0.95, 0.95);
-				techo.antialiasing = true;
+				techo.antialiasing = ClientPrefs.globalAntialiasing;
 				add(techo);
 
 				gf_rock = new FlxSprite(20, 20);
@@ -435,7 +435,7 @@ class PlayState extends MusicBeatState
 				gf_rock.animation.addByPrefix('rock', "gf_rock", 30);
 				gf_rock.animation.play('rock');
 				gf_rock.scrollFactor.set(0.8, 0.8);
-				gf_rock.antialiasing = true;
+				gf_rock.antialiasing = ClientPrefs.globalAntialiasing;
 				add(gf_rock);
 
 				rock = new FlxSprite(20, 20);
@@ -443,7 +443,7 @@ class PlayState extends MusicBeatState
 				rock.animation.addByPrefix('rock', "rock", 30);
 				rock.animation.play('rock');
 				rock.scrollFactor.set(1, 1);
-				rock.antialiasing = true;
+				rock.antialiasing = ClientPrefs.globalAntialiasing;
 				add(rock);
 
 				//god eater legs
@@ -451,7 +451,7 @@ class PlayState extends MusicBeatState
 				legs.frames = Paths.getSparrowAtlas('characters/pshaggy');
 				legs.animation.addByPrefix('legs', "solo_legs", 30);
 				legs.animation.play('legs');
-				legs.antialiasing = true;
+				legs.antialiasing = ClientPrefs.globalAntialiasing;
 				legs.updateHitbox();
 				legs.offset.set(legs.frameWidth / 2, 10);
 				legs.alpha = 0;
@@ -607,7 +607,7 @@ class PlayState extends MusicBeatState
 		{
 			zeph = new FlxSprite().loadGraphic(Paths.image('MASK/zephyrus', 'shared'));
 			zeph.updateHitbox();
-			zeph.antialiasing = true;
+			zeph.antialiasing = ClientPrefs.globalAntialiasing;
 			zeph.x = -2000;
 			zephScreen = new FlxSprite().makeGraphic(4000, 4000, FlxColor.BLACK);
 			zephScreen.scrollFactor.set(0, 0);
@@ -663,7 +663,7 @@ class PlayState extends MusicBeatState
 		doorFrame.updateHitbox();
 		doorFrame.setGraphicSize(1);
 		doorFrame.alpha = 0;
-		doorFrame.antialiasing = true;
+		doorFrame.antialiasing = ClientPrefs.globalAntialiasing;
 		doorFrame.scrollFactor.set(1, 1);
 		doorFrame.active = false;
 		add(doorFrame);
@@ -1381,7 +1381,7 @@ class PlayState extends MusicBeatState
 		}
 		fsprite = new FlxSprite(tb_x + Std.int(tbox.width / 2) + jx, tb_y - tb_fy, Paths.image('face/f_' + fimage));
 		fsprite.centerOffsets(true);
-		fsprite.antialiasing = true;
+		fsprite.antialiasing = ClientPrefs.globalAntialiasing;
 		fsprite.updateHitbox();
 		fsprite.scrollFactor.set();
 		add(fsprite);
@@ -1409,7 +1409,7 @@ class PlayState extends MusicBeatState
 					burst.animation.addByPrefix('burst', "burst", 30);
 					burst.animation.play('burst');
 					//burst.setGraphicSize(Std.int(burst.width * 1.5));
-					burst.antialiasing = true;
+					burst.antialiasing = ClientPrefs.globalAntialiasing;
 					add(burst);
 
 					FlxG.sound.play(Paths.sound('powerup'), 1);
@@ -1776,7 +1776,7 @@ class PlayState extends MusicBeatState
 		burst.animation.addByPrefix('burst', "burst", 30);
 		burst.animation.play('burst');
 		//burst.setGraphicSize(Std.int(burst.width * 1.5));
-		burst.antialiasing = true;
+		burst.antialiasing = ClientPrefs.globalAntialiasing;
 		add(burst);
 		new FlxTimer().start(0.5, function(rem:FlxTimer)
 		{
@@ -2453,7 +2453,7 @@ class PlayState extends MusicBeatState
 						remove(zeph);
 						zeph = new FlxSprite().loadGraphic(Paths.image('MASK/possessed', 'shared'));
 						zeph.updateHitbox();
-						zeph.antialiasing = true;
+						zeph.antialiasing = ClientPrefs.globalAntialiasing;
 						camFollow.x = zeph.getMidpoint().x;
 						camFollow.y = zeph.getMidpoint().y;
 						camFollowPos.x = camFollow.x;
@@ -4950,26 +4950,26 @@ class PlayState extends MusicBeatState
 					sh_head.animation.addByPrefix('idle2', "bsh_head2_still", 30);
 					sh_head.animation.play('turn');
 					sh_head.animation.play('idle');
-					sh_head.antialiasing = true;
+					sh_head.antialiasing = ClientPrefs.globalAntialiasing;
 
 					sh_ang = new FlxSprite(0, 0);
 					sh_ang.frames = Paths.getSparrowAtlas('bshaggy');
 					sh_ang.animation.addByPrefix('idle', "bsh_angry", 30);
 					sh_ang.animation.play('idle');
-					sh_ang.antialiasing = true;
+					sh_ang.antialiasing = ClientPrefs.globalAntialiasing;
 
 					sh_ang_eyes = new FlxSprite(0, 0);
 					sh_ang_eyes.frames = Paths.getSparrowAtlas('bshaggy');
 					sh_ang_eyes.animation.addByPrefix('stare', "bsh_eyes", 30);
 					sh_ang_eyes.animation.play('stare');
-					sh_ang_eyes.antialiasing = true;
+					sh_ang_eyes.antialiasing = ClientPrefs.globalAntialiasing;
 
 					cs_bg = new FlxSprite(-500, -80);
 					cs_bg.frames = Paths.getSparrowAtlas('cs_bg');
 					cs_bg.animation.addByPrefix('back', "cs_back_bg", 30);
 					cs_bg.animation.addByPrefix('stare', "cs_bg", 30);
 					cs_bg.animation.play('back');
-					cs_bg.antialiasing = true;
+					cs_bg.antialiasing = ClientPrefs.globalAntialiasing;
 					cs_bg.setGraphicSize(Std.int(cs_bg.width * 1.1));
 
 					cs_sfx = FlxG.sound.load(Paths.sound('powerup'));
@@ -4981,7 +4981,7 @@ class PlayState extends MusicBeatState
 					sh_body.frames = Paths.getSparrowAtlas('bshaggy');
 					sh_body.animation.addByPrefix('idle', "bshaggy_body_still", 30);
 					sh_body.animation.play('idle');
-					sh_body.antialiasing = true;
+					sh_body.antialiasing = ClientPrefs.globalAntialiasing;
 					add(sh_body);
 
 					cs_mus = FlxG.sound.load(Paths.sound('cs_cagaste'));
@@ -5236,7 +5236,7 @@ class PlayState extends MusicBeatState
 		{
 			title = new FlxSprite(FlxG.width / 2 - 400, FlxG.height / 2 - 300).loadGraphic(Paths.image('sh_title'));
 			title.setGraphicSize(Std.int(title.width * 1.2));
-			title.antialiasing = true;
+			title.antialiasing = ClientPrefs.globalAntialiasing;
 			title.scrollFactor.set();
 			title.centerOffsets();
 			//title.active = false;

@@ -229,7 +229,7 @@ class StoryMenuState extends MusicBeatState
 			zephMenu = new FlxSprite(200, 40).loadGraphic(Paths.image('menucharacters/zephyrus'));
 			zephMenu.scale.x = 0.75;
 			zephMenu.scale.y = 0.75;
-			zephMenu.antialiasing = true;
+			zephMenu.antialiasing = ClientPrefs.globalAntialiasing;
 			add(zephMenu);
 		}
 

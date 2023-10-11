@@ -156,7 +156,7 @@ class MASKstate extends MusicBeatState
 		bfCursor = new FlxSprite(10, 0).loadGraphic(Paths.image('bfIcon'));
 		bfCursor.scale.x = 0.5;
 		bfCursor.scale.y = 0.5;
-		bfCursor.antialiasing = true;
+		bfCursor.antialiasing = ClientPrefs.globalAntialiasing;
 		bfCursor.updateHitbox();
 		bfCursor.alpha = 0;
 
@@ -194,7 +194,7 @@ class MASKstate extends MusicBeatState
 		{
 			maskP[i] = new FlxSprite(0, 0);
 			maskP[i].frames = Paths.getSparrowAtlas('MASK/exp/ph_mask', 'shared');
-			maskP[i].antialiasing = true;
+			maskP[i].antialiasing = ClientPrefs.globalAntialiasing;
 
 			var an = 0;
 			for (j in 0...maskExpNames.length)

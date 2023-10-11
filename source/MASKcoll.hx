@@ -62,7 +62,7 @@ class MASKcoll extends FlxSprite
 		imgName = 'MASK/coll/' + mType;
 		loadGraphic(Paths.image(imgName));
 		updateHitbox();
-		antialiasing = true;
+		antialiasing = ClientPrefs.globalAntialiasing;
 
 		offset.set(width / 2, height / 2);
 		switch (mType)
@@ -75,7 +75,7 @@ class MASKcoll extends FlxSprite
 			case 3:
 		}
 		mouseSpr = new FlxSprite(0, 0).loadGraphic(Paths.image('MASK/picker'));
-		mouseSpr.antialiasing = true;
+		mouseSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		mouseSpr.offset.set(10, 10);
 		mouseSpr.alpha = 0;
 		PlayState.maskMouseHud.add(mouseSpr);

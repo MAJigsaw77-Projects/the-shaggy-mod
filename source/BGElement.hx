@@ -26,7 +26,7 @@ class BGElement extends FlxSprite
 		imgName = image;
 		loadGraphic(Paths.image(imgName));
 		scrollFactor.set(sc, sc);
-		antialiasing = true;
+		antialiasing = ClientPrefs.globalAntialiasing;
 		setGraphicSize(Std.int(width * (size)));
 
 		updateHitbox();
