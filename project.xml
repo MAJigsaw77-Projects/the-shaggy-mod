@@ -22,12 +22,24 @@
 
 	<window fullscreen="true" resizable="false" if="mobile || switch" />
 
+	<!--Defines-->
+
+	<section if="cpp">
+		<define name="DISCORD_ALLOWED" if="desktop" />
+		<define name="LUA_ALLOWED" />
+		<define name="VIDEOS_ALLOWED" if="desktop || android" />
+	</section>
+
+	<define name="MODS_ALLOWED" umless="web" />
+
 	<!--Path Settings-->
 
 	<assets path="art/readme.txt" rename="do NOT readme.txt" />
 
 	<assets path="assets/fonts" />
 	<assets path="assets/preload" rename="assets" />
+	<assets path="assets/videos" if="VIDEOS_ALLOWED" />
+
 	<assets path="assets/vpad" if="mobile" />
 
 	<library name="songs" preload="true" />
@@ -40,16 +52,6 @@
 
 	<source name="source" />
 
-	<!--Defines-->
-
-	<section if="cpp">
-		<define name="DISCORD_ALLOWED" if="desktop" />
-		<define name="LUA_ALLOWED" />
-		<define name="VIDEOS_ALLOWED" if="desktop || android" />
-	</section>
-
-	<define name="MODS_ALLOWED" umless="web" />
-
 	<!--Libraries-->
 
 	<haxelib name="flixel" />
@@ -57,9 +59,9 @@
 	<haxelib name="flixel-ui" />
 
 	<haxelib name="hscript" />
-	<haxelib name="hxdiscord_rpc" if="FEATURE_DISCORD" />
-	<haxelib name="hxlua" if="FEATURE_LUA" />
-	<haxelib name="hxvlc" if="FEATURE_VIDEOS" />
+	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED" />
+	<haxelib name="hxlua" if="LUA_ALLOWED" />
+	<haxelib name="hxvlc" if="VIDEOS_ALLOWED" />
 
 	<haxelib name="extension-androidtools" if="android" />
 
