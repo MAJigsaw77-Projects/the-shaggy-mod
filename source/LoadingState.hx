@@ -5,7 +5,7 @@ import flixel.FlxState;
 
 class LoadingState
 {
-	inline static public function loadAndSwitchState(target:FlxState, stopMusic:Bool = false)
+	public static inline function loadAndSwitchState(target:FlxState, stopMusic:Bool = false)
 	{
 		Paths.setCurrentLevel(WeekData.getWeekDirectory());
 
