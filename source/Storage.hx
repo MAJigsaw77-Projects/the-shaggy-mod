@@ -3,6 +3,7 @@ package;
 import haxe.io.Path;
 import haxe.Exception;
 import lime.utils.Assets;
+import openfl.system.System;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -14,6 +15,21 @@ class Storage
 {
 	public static function copyNecessaryFiles():Void
 	{
+		#if MODS_ALLOWED
+		for (file in Assets.list().filter(folder -> folder.startsWith('assets/characters')))
+		{
+			if (Path.extension(file) == 'json')
+			{
+				// Ment for FNF's libraries system...
+				final shit:String = file.replace(file.substring(0, file.indexOf('/', 0) + 1), '');
+				final library:String = shit.replace(shit.substring(shit.indexOf('/', 0), shit.length), '');
+
+				@:privateAccess
+				Storage.copyFile(Assets.libraryPaths.exists(library) ? '$library:$file' : file, file);
+			}
+		}
+		#end
+
 		#if LUA_ALLOWED
 		for (file in Assets.list().filter(folder -> folder.startsWith('assets/data')))
 		{
@@ -43,6 +59,20 @@ class Storage
 			}
 		}
 		#end
+
+		#if MODS_ALLOWED
+		for (file in Assets.list().filter(folder -> folder.startsWith('mods')))
+		{
+			// Ment for FNF's libraries system...
+			final shit:String = file.replace(file.substring(0, file.indexOf('/', 0) + 1), '');
+			final library:String = shit.replace(shit.substring(shit.indexOf('/', 0), shit.length), '');
+
+			@:privateAccess
+			Storage.copyFile(Assets.libraryPaths.exists(library) ? '$library:$file' : file, file);
+		}
+		#end
+
+		System.gc();
 	}
 
 	/**
