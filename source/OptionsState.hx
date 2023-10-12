@@ -1086,6 +1086,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					{
 						case 'Framerate':
 							ClientPrefs.framerate += add;
+
 							if (ClientPrefs.framerate < 60)
 								ClientPrefs.framerate = 60;
 							else if (ClientPrefs.framerate > 120)
@@ -1101,6 +1102,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 								FlxG.drawFramerate = ClientPrefs.framerate;
 								FlxG.updateFramerate = ClientPrefs.framerate;
 							}
+
+							FlxG.game.focusLostFramerate = ClientPrefs.framerate;
 						case 'Note Delay':
 							var mult:Int = 1;
 							if (holdTime > 1.5)
@@ -1153,7 +1156,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		switch (options[curSelected])
 		{
 			case 'Framerate':
-				daText = "ONLY lower this from 120 if your pc\nis having severe issues loading stuff.";
+				daText = "Pretty self explanatory, isn't it?\nDefault value is display's framerate.";
 			case 'Note Delay':
 				daText = "Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.";
 			case 'FPS Counter':
