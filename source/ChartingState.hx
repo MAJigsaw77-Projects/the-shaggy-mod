@@ -357,11 +357,8 @@ class ChartingState extends MusicBeatState
 		{
 			var songName:String = _song.song.toLowerCase();
 			var file:String = Paths.json(songName + '/events');
-			#if sys
-			if (sys.FileSystem.exists(file))
-			#else
+
 			if (OpenFlAssets.exists(file))
-			#end
 			{
 				PlayState.SONG = Song.loadFromJson('events', songName);
 				MusicBeatState.resetState();

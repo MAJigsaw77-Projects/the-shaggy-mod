@@ -1712,13 +1712,9 @@ class PlayState extends MusicBeatState
 
 		var songName:String = SONG.song.toLowerCase();
 		var file:String = Paths.json(songName + '/events');
-		#if sys
-		if (sys.FileSystem.exists(file))
-		{
-		#else
+
 		if (OpenFlAssets.exists(file))
 		{
-		#end
 			var eventsData:Array<SwagSection> = Song.loadFromJson('events', songName).notes;
 			for (section in eventsData)
 			{
