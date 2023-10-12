@@ -4768,7 +4768,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	override function destroy()
+	override function destroy():Void
 	{
 		for (i in 0...luaArray.length)
 		{
@@ -4777,6 +4777,7 @@ class PlayState extends MusicBeatState
 		}
 
 		#if LUA_ALLOWED
+		@:privateAccess
 		FunkinLua.callbacks.clear();
 		#end
 
