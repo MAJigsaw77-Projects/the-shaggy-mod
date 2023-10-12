@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import openfl.Lib;
 import Controls;
 
 class ClientPrefs
@@ -147,9 +148,7 @@ class ClientPrefs
 		{
 			showFPS = FlxG.save.data.showFPS;
 			if (Main.fpsVar != null)
-			{
 				Main.fpsVar.visible = showFPS;
-			}
 		}
 		if (FlxG.save.data.flashing != null)
 		{
@@ -170,6 +169,33 @@ class ClientPrefs
 		if (FlxG.save.data.framerate != null)
 		{
 			framerate = FlxG.save.data.framerate;
+
+			if (framerate > FlxG.drawFramerate)
+			{
+				FlxG.updateFramerate = framerate;
+				FlxG.drawFramerate = framerate;
+			}
+			else
+			{
+				FlxG.drawFramerate = framerate;
+				FlxG.updateFramerate = framerate;
+			}
+
+			FlxG.game.focusLostFramerate = framerate;
+		}
+		else
+		{
+			var refreshRate:Int = Lib.application.window.displayMode.refreshRate;
+
+			if (framerate != refreshRate)
+			{
+				framerate = refreshRate;
+
+				if (framerate < 60)
+					framerate = 60;
+				else if (framerate > 120)
+					framerate = 120;
+			}
 
 			if (framerate > FlxG.drawFramerate)
 			{
