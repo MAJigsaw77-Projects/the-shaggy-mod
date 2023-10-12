@@ -437,21 +437,21 @@ class ChartingState extends MusicBeatState
 		player1DropDown.selectedLabel = _song.player1;
 		blockPressWhileScrolling.push(player1DropDown);
 
-		var player3DropDown = new FlxUIDropDownMenu(player1DropDown.x, player1DropDown.y + 40,
-			FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
-		{
-			_song.player3 = characters[Std.parseInt(character)];
-			updateHeads();
-		});
+		var player3DropDown = new FlxUIDropDownMenu(player1DropDown.x, player1DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true),
+			function(character:String)
+			{
+				_song.player3 = characters[Std.parseInt(character)];
+				updateHeads();
+			});
 		player3DropDown.selectedLabel = _song.player3;
 		blockPressWhileScrolling.push(player3DropDown);
 
-		var player2DropDown = new FlxUIDropDownMenu(player1DropDown.x, player3DropDown.y + 40,
-			FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
-		{
-			_song.player2 = characters[Std.parseInt(character)];
-			updateHeads();
-		});
+		var player2DropDown = new FlxUIDropDownMenu(player1DropDown.x, player3DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true),
+			function(character:String)
+			{
+				_song.player2 = characters[Std.parseInt(character)];
+				updateHeads();
+			});
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
 

@@ -281,7 +281,7 @@ class FreeplayState extends MusicBeatState
 			instPlaying = curSelected;
 		}
 		else if (accepted && (curDifficulty != 0 || WeekData.songHasMania[songs[curSelected].songName]))
-	{
+		{
 			var songLowercase:String = songs[curSelected].songName.toLowerCase();
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			if (!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop)))
@@ -307,12 +307,12 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume = 0;
 
 			destroyFreeplayVocals();
-	}
-	else if (controls.RESET)
-	{
+		}
+		else if (controls.RESET)
+		{
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
-	}
+		}
 		super.update(elapsed);
 	}
 

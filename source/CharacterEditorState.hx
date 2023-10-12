@@ -489,25 +489,24 @@ class CharacterEditorState extends MusicBeatState
 		animationNameFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
 		animationLoopCheckBox = new FlxUICheckBox(animationNameInputText.x + 170, animationNameInputText.y - 1, null, null, "Should it Loop?", 100);
 
-		animationDropDown = new FlxUIDropDownMenu(15, animationInputText.y - 55, FlxUIDropDownMenu.makeStrIdLabelArray(anims, true),
-			function(pressed:String)
+		animationDropDown = new FlxUIDropDownMenu(15, animationInputText.y - 55, FlxUIDropDownMenu.makeStrIdLabelArray(anims, true), function(pressed:String)
+		{
+			var selectedAnimation:Int = Std.parseInt(pressed);
+			for (anim in char.animationsArray)
 			{
-				var selectedAnimation:Int = Std.parseInt(pressed);
-				for (anim in char.animationsArray)
+				if (char.animationsArray[selectedAnimation].anim == anim.anim)
 				{
-					if (char.animationsArray[selectedAnimation].anim == anim.anim)
-					{
-						animationInputText.text = anim.anim;
-						animationNameInputText.text = anim.name;
-						animationLoopCheckBox.checked = anim.loop;
-						animationNameFramerate.value = anim.fps;
+					animationInputText.text = anim.anim;
+					animationNameInputText.text = anim.name;
+					animationLoopCheckBox.checked = anim.loop;
+					animationNameFramerate.value = anim.fps;
 
-						var indicesStr:String = anim.indices.toString();
-						animationIndicesInputText.text = indicesStr.substr(1, indicesStr.length - 2);
-						break;
-					}
+					var indicesStr:String = anim.indices.toString();
+					animationIndicesInputText.text = indicesStr.substr(1, indicesStr.length - 2);
+					break;
 				}
-			});
+			}
+		});
 
 		var addUpdateButton:FlxButton = new FlxButton(70, animationIndicesInputText.y + 30, "Add/Update", function()
 		{

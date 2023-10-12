@@ -218,7 +218,6 @@ class Main extends Sprite
 				}
 			}
 		}
-
 		@:privateAccess
 		if (FlxG.game != null)
 		{
