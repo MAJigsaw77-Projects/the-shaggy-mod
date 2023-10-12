@@ -1240,7 +1240,6 @@ class Controls extends FlxActionSet
 			Control.PAUSE => [START],
 			Control.RESET => [Y]
 		]);
-		#end
 	}
 
 	/**
