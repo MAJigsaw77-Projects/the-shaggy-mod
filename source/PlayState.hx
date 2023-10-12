@@ -4542,7 +4542,7 @@ class PlayState extends MusicBeatState
 				{
 					time += 0.15;
 				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % Main.ammo[mania], time);
 			}
 			else
 			{
