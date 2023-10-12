@@ -1238,7 +1238,7 @@ class Controls extends FlxActionSet
 			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT],
 			#end
 			Control.PAUSE => [START],
-			Control.RESET => [Y],
+			Control.RESET => [Y]
 		]);
 		#end
 	}
