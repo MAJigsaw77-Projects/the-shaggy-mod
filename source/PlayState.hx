@@ -4775,6 +4775,11 @@ class PlayState extends MusicBeatState
 			luaArray[i].call('onDestroy', []);
 			luaArray[i].stop();
 		}
+
+		#if LUA_ALLOWED
+		FunkinLua.callbacks.clear();
+		#end
+
 		super.destroy();
 	}
 
