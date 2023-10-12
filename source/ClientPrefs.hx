@@ -240,30 +240,16 @@ class ClientPrefs
 			hideTime = FlxG.save.data.hideTime;
 		}
 
+		if (FlxG.save.data.language == null)
+			FlxG.save.data.language = 0;
+
 		var save:FlxSave = new FlxSave();
 		save.bind('controls');
+
 		if (save != null && save.data.customControls != null)
-		{
 			reloadControls(save.data.customControls);
-		}
+
 		save.destroy();
-
-		if (FlxG.save.data.language == null)
-			FlxG.save.data.languaje = 0;
-
-		FlxG.updateFramerate = framerate;
-		FlxG.drawFramerate = framerate;
-
-		FlxG.save.data.noteSkin = [0, 0, 0, 0];
-		if (FlxG.save.data.s_FirstBoot == null)
-		{
-			trace('yasss');
-			reloadControls(defaultKeys);
-			FlxG.save.data.s_keyWarning = true;
-			FlxG.save.data.s_FirstBoot = false;
-			FlxG.save.flush();
-			saveSettings();
-		}
 	}
 
 	public static function reloadControls(newKeys:Array<FlxKey>)
