@@ -56,7 +56,7 @@ class DiscordClient
 
 	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void
 	{
-		Discord.changePresence('In the Menus', null);
+		DiscordClient.changePresence('In the Menus', null);
 	}
 
 	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void
