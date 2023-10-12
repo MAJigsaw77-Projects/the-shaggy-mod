@@ -1,0 +1,50 @@
+{
+	"dependencies": [
+		{
+			"name": "hxcpp",
+			"type": "haxelib"
+		},
+		{
+			"name": "lime",
+			"type": "haxelib"
+		},
+		{
+			"name": "openfl",
+			"type": "haxelib"
+		},
+		{
+			"name": "flixel",
+			"type": "haxelib"
+		},
+		{
+			"name": "flixel-addons",
+			"type": "haxelib"
+		},
+		{
+			"name": "flixel-ui",
+			"type": "haxelib"
+		},
+		{
+			"name": "hscript",
+			"type": "haxelib"
+		},
+		{
+			"name": "hxdiscord_rpc",
+			"type": "haxelib"
+		},
+		{
+			"name": "hxlua",
+			"type": "haxelib"
+		},
+		{
+			"name": "hxvlc",
+			"type": "git",
+			"ref": "main",
+			"url": "https://github.com/MAJigsaw77/hxvlc.git"
+		},
+		{
+			"name": "extension-androidtools",
+			"type": "haxelib"
+		}
+	]
+}
