@@ -904,7 +904,7 @@ class FunkinLua
 		{
 			Lib.application.window.alert(e.message, 'Error on .LUA script!');
 
-			trace('Error on .LUA script! $error');
+			trace('Error on .LUA script! ${e.message}');
 
 			stop();
 		}
@@ -952,17 +952,18 @@ class FunkinLua
 	function tweenShit(tag:String, vars:String)
 	{
 		cancelTween(tag);
+
 		var variables:Array<String> = vars.replace(' ', '').split('.');
 		var sexyProp:Dynamic = Reflect.getProperty(lePlayState, variables[0]);
+
 		if (sexyProp == null && sprites.exists(variables[0]))
 		{
 			sexyProp = sprites.get(variables[0]);
 		}
 
 		for (i in 1...variables.length)
-		{
 			sexyProp = Reflect.getProperty(sexyProp, variables[i]);
-		}
+
 		return sexyProp;
 	}
 
@@ -1054,6 +1055,7 @@ class FunkinLua
 			case 'smootherstepout':
 				return FlxEase.smootherStepOut;
 		}
+
 		return FlxEase.linear;
 	}
 
@@ -1084,7 +1086,7 @@ class FunkinLua
 		{
 			Lib.application.window.alert(e.message, 'Error on .LUA script call!');
 
-			trace('Error on .LUA script call! $error');
+			trace('Error on .LUA script call! ${e.message}');
 
 			stop();
 
@@ -1145,9 +1147,10 @@ class FunkinLua
 	public function stop():Void
 	{
 		#if LUA_ALLOWED
-		sprites.clear();
-		accessedProps.clear();
 		tweens.clear();
+		accessedProps.clear();
+		sprites.clear();
+		timers.clear();
 
 		if (lua != null)
 		{
