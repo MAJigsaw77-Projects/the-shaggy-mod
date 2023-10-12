@@ -1,8 +1,9 @@
+package;
+
 #if LUA_ALLOWED
-import llua.Lua;
-import llua.LuaL;
-import llua.State;
-import llua.Convert;
+import hxlua.Lua;
+import hxlua.LuaL;
+import hxlua.Types;
 #end
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
@@ -12,12 +13,18 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import haxe.ds.ObjectMap;
+import haxe.ds.StringMap;
+import haxe.Constraints;
+import haxe.DynamicAccess;
+import haxe.Exception;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
 #end
-import Type.ValueType;
-import Controls;
+import openfl.Lib;
+
+typedef State = cpp.RawPointer<Lua_State>;
 
 using StringTools;
 
@@ -37,29 +44,14 @@ class FunkinLua
 	public var accessedProps:Map<String, Dynamic> = [];
 	public var timers:Map<String, FlxTimer> = [];
 
-	public function new(script:String)
+	public function new(script:String):Void
 	{
 		#if LUA_ALLOWED
-		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
-		Lua.init_callbacks(lua);
 
-		// trace('Lua version: ' + Lua.version());
-		// trace("LuaJIT version: " + Lua.versionJIT());
+		Lua.register(lua, "print", cpp.Function.fromStaticFunction(print));
 
-		var result:Dynamic = LuaL.dofile(lua, script);
-		var resultStr:String = Lua.tostring(lua, result);
-		if (resultStr != null && result != 0)
-		{
-			lime.app.Application.current.window.alert(resultStr, 'Error on .LUA script!');
-			trace('Error on .LUA script! ' + resultStr);
-			lua = null;
-			return;
-		}
-		trace('Lua file loaded succesfully:' + script);
-
-		var curState:Dynamic = FlxG.state;
-		lePlayState = curState;
+		lePlayState = cast(FlxG.state, PlayState);
 
 		// Lua shit
 		set('Function_Stop', Function_Stop);
@@ -126,7 +118,7 @@ class FunkinLua
 		set('lowQuality', ClientPrefs.lowQuality);
 
 		// stuff 4 noobz like you B)
-		Lua_helper.add_callback(lua, "getProperty", function(variable:String)
+		addCallback(lua, "getProperty", function(variable:String)
 		{
 			var killMe:Array<String> = variable.split('.');
 			if (killMe.length > 1)
@@ -140,7 +132,7 @@ class FunkinLua
 			}
 			return Reflect.getProperty(lePlayState, variable);
 		});
-		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic)
+		addCallback(lua, "setProperty", function(variable:String, value:Dynamic)
 		{
 			var killMe:Array<String> = variable.split('.');
 			if (killMe.length > 1)
@@ -154,7 +146,7 @@ class FunkinLua
 			}
 			return Reflect.setProperty(lePlayState, variable, value);
 		});
-		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic)
+		addCallback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic)
 		{
 			if (Std.isOfType(Reflect.getProperty(lePlayState, obj), FlxTypedGroup))
 			{
@@ -164,7 +156,7 @@ class FunkinLua
 			var leArray:Dynamic = Reflect.getProperty(lePlayState, obj)[index];
 			if (leArray != null)
 			{
-				if (Type.typeof(variable) == ValueType.TInt)
+				if (Type.typeof(variable) == TInt)
 				{
 					return leArray[variable];
 				}
@@ -172,7 +164,7 @@ class FunkinLua
 			}
 			return null;
 		});
-		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic)
+		addCallback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic)
 		{
 			if (Std.isOfType(Reflect.getProperty(lePlayState, obj), FlxTypedGroup))
 			{
@@ -182,14 +174,14 @@ class FunkinLua
 			var leArray:Dynamic = Reflect.getProperty(lePlayState, obj)[index];
 			if (leArray != null)
 			{
-				if (Type.typeof(variable) == ValueType.TInt)
+				if (Type.typeof(variable) == TInt)
 				{
 					return leArray[variable] = value;
 				}
 				return Reflect.setProperty(leArray, variable, value);
 			}
 		});
-		Lua_helper.add_callback(lua, "removeFromGroup", function(obj:String, index:Int, dontKill:Bool = false, dontDestroy:Bool = false)
+		addCallback(lua, "removeFromGroup", function(obj:String, index:Int, dontKill:Bool = false, dontDestroy:Bool = false)
 		{
 			if (Std.isOfType(Reflect.getProperty(lePlayState, obj), FlxTypedGroup))
 			{
@@ -204,7 +196,7 @@ class FunkinLua
 			Reflect.getProperty(lePlayState, obj).remove(Reflect.getProperty(lePlayState, obj)[index]);
 		});
 
-		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String)
+		addCallback(lua, "getPropertyFromClass", function(classVar:String, variable:String)
 		{
 			var killMe:Array<String> = variable.split('.');
 			if (killMe.length > 1)
@@ -218,7 +210,7 @@ class FunkinLua
 			}
 			return Reflect.getProperty(Type.resolveClass(classVar), variable);
 		});
-		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic)
+		addCallback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic)
 		{
 			var killMe:Array<String> = variable.split('.');
 			if (killMe.length > 1)
@@ -234,11 +226,11 @@ class FunkinLua
 		});
 
 		// shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
-		Lua_helper.add_callback(lua, "accessPropertyFirst", function(tag:String, classVar:String, variable:String)
+		addCallback(lua, "accessPropertyFirst", function(tag:String, classVar:String, variable:String)
 		{
 			accessedProps.set(tag, Reflect.getProperty(classVar != null ? Type.resolveClass(classVar) : lePlayState, variable));
 		});
-		Lua_helper.add_callback(lua, "accessPropertyFromGroupFirst", function(tag:String, classVar:String, obj:String, index:Int, variable:Dynamic)
+		addCallback(lua, "accessPropertyFromGroupFirst", function(tag:String, classVar:String, obj:String, index:Int, variable:Dynamic)
 		{
 			if (Std.isOfType(Reflect.getProperty(classVar != null ? Type.resolveClass(classVar) : lePlayState, variable), FlxTypedGroup))
 			{
@@ -249,21 +241,21 @@ class FunkinLua
 			var leArray:Dynamic = Reflect.getProperty(classVar != null ? Type.resolveClass(classVar) : lePlayState, variable)[index];
 			if (leArray != null)
 			{
-				if (Type.typeof(variable) == ValueType.TInt)
+				if (Type.typeof(variable) == TInt)
 				{
 					accessedProps.set(tag, leArray[variable]);
 				}
 				accessedProps.set(tag, Reflect.getProperty(leArray, variable));
 			}
 		});
-		Lua_helper.add_callback(lua, "accessProperty", function(tag:String, variable:String)
+		addCallback(lua, "accessProperty", function(tag:String, variable:String)
 		{
 			if (accessedProps.exists(tag))
 			{
 				accessedProps.set(tag, Reflect.getProperty(accessedProps.get(tag), variable));
 			}
 		});
-		Lua_helper.add_callback(lua, "accessPropertyFromGroup", function(tag:String, index:Int, variable:Dynamic)
+		addCallback(lua, "accessPropertyFromGroup", function(tag:String, index:Int, variable:Dynamic)
 		{
 			if (!accessedProps.exists(tag))
 			{
@@ -278,14 +270,14 @@ class FunkinLua
 			var leArray:Dynamic = accessedProps.get(tag)[index];
 			if (leArray != null)
 			{
-				if (Type.typeof(variable) == ValueType.TInt)
+				if (Type.typeof(variable) == TInt)
 				{
 					accessedProps.set(tag, leArray[variable]);
 				}
 				accessedProps.set(tag, Reflect.getProperty(leArray, variable));
 			}
 		});
-		Lua_helper.add_callback(lua, "getAccessedPropertyValue", function(tag:String, variable:String)
+		addCallback(lua, "getAccessedPropertyValue", function(tag:String, variable:String)
 		{
 			if (accessedProps.exists(tag))
 			{
@@ -293,14 +285,14 @@ class FunkinLua
 			}
 			return null;
 		});
-		Lua_helper.add_callback(lua, "setAccessedPropertyValue", function(tag:String, variable:String, value:Dynamic)
+		addCallback(lua, "setAccessedPropertyValue", function(tag:String, variable:String, value:Dynamic)
 		{
 			if (accessedProps.exists(tag))
 			{
 				return Reflect.setProperty(accessedProps.get(tag), variable, value);
 			}
 		});
-		Lua_helper.add_callback(lua, "getAccessedPropertyValueFromGroup", function(tag:String, index:Int, variable:Dynamic)
+		addCallback(lua, "getAccessedPropertyValueFromGroup", function(tag:String, index:Int, variable:Dynamic)
 		{
 			if (accessedProps.exists(tag))
 			{
@@ -312,7 +304,7 @@ class FunkinLua
 				var leArray:Dynamic = accessedProps.get(tag)[index];
 				if (leArray != null)
 				{
-					if (Type.typeof(variable) == ValueType.TInt)
+					if (Type.typeof(variable) == TInt)
 					{
 						return leArray[variable];
 					}
@@ -321,7 +313,7 @@ class FunkinLua
 			}
 			return null;
 		});
-		Lua_helper.add_callback(lua, "setAccessedPropertyValueFromGroup", function(tag:String, index:Int, variable:Dynamic, value:Dynamic)
+		addCallback(lua, "setAccessedPropertyValueFromGroup", function(tag:String, index:Int, variable:Dynamic, value:Dynamic)
 		{
 			if (accessedProps.exists(tag))
 			{
@@ -333,7 +325,7 @@ class FunkinLua
 				var leArray:Dynamic = accessedProps.get(tag)[index];
 				if (leArray != null)
 				{
-					if (Type.typeof(variable) == ValueType.TInt)
+					if (Type.typeof(variable) == TInt)
 					{
 						return leArray[variable] = value;
 					}
@@ -343,7 +335,7 @@ class FunkinLua
 		});
 
 		// gay ass tweens
-		Lua_helper.add_callback(lua, "doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
+		addCallback(lua, "doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
 		{
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if (penisExam != null)
@@ -359,7 +351,7 @@ class FunkinLua
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "doTweenY", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
+		addCallback(lua, "doTweenY", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
 		{
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if (penisExam != null)
@@ -375,7 +367,7 @@ class FunkinLua
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "doTweenAlpha", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
+		addCallback(lua, "doTweenAlpha", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
 		{
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if (penisExam != null)
@@ -391,7 +383,7 @@ class FunkinLua
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "doTweenZoom", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
+		addCallback(lua, "doTweenZoom", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String, delay:Float = 0)
 		{
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if (penisExam != null)
@@ -407,7 +399,7 @@ class FunkinLua
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ease:String, delay:Float = 0)
+		addCallback(lua, "doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ease:String, delay:Float = 0)
 		{
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if (penisExam != null)
@@ -427,12 +419,12 @@ class FunkinLua
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "cancelTween", function(tag:String)
+		addCallback(lua, "cancelTween", function(tag:String)
 		{
 			cancelTween(tag);
 		});
 
-		Lua_helper.add_callback(lua, "runTimer", function(tag:String, time:Float = 1, loops:Int = 1)
+		addCallback(lua, "runTimer", function(tag:String, time:Float = 1, loops:Int = 1)
 		{
 			cancelTimer(tag);
 			timers.set(tag, new FlxTimer().start(time, function(tmr:FlxTimer)
@@ -444,12 +436,12 @@ class FunkinLua
 				call('onTimerCompleted', [tag, tmr.loops, tmr.loopsLeft]);
 			}, loops));
 		});
-		Lua_helper.add_callback(lua, "cancelTimer", function(tag:String)
+		addCallback(lua, "cancelTimer", function(tag:String)
 		{
 			cancelTimer(tag);
 		});
 
-		/*Lua_helper.add_callback(lua, "getPropertyAdvanced", function(varsStr:String) {
+		/*addCallback(lua, "getPropertyAdvanced", function(varsStr:String) {
 				var variables:Array<String> = varsStr.replace(' ', '').split(',');
 				var leClass:Class<Dynamic> = Type.resolveClass(variables[0]);
 				if(variables.length > 2) {
@@ -465,7 +457,7 @@ class FunkinLua
 				}
 				return null;
 			});
-			Lua_helper.add_callback(lua, "setPropertyAdvanced", function(varsStr:String, value:Dynamic) {
+			addCallback(lua, "setPropertyAdvanced", function(varsStr:String, value:Dynamic) {
 				var variables:Array<String> = varsStr.replace(' ', '').split(',');
 				var leClass:Class<Dynamic> = Type.resolveClass(variables[0]);
 				if(variables.length > 2) {
@@ -482,44 +474,44 @@ class FunkinLua
 		});*/
 
 		// stupid bietch ass functions
-		Lua_helper.add_callback(lua, "addScore", function(value:Int = 0)
+		addCallback(lua, "addScore", function(value:Int = 0)
 		{
 			lePlayState.songScore += value;
 			lePlayState.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "addMisses", function(value:Int = 0)
+		addCallback(lua, "addMisses", function(value:Int = 0)
 		{
 			lePlayState.songMisses += value;
 			lePlayState.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "addHits", function(value:Int = 0)
+		addCallback(lua, "addHits", function(value:Int = 0)
 		{
 			lePlayState.songHits += value;
 			lePlayState.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "setScore", function(value:Int = 0)
+		addCallback(lua, "setScore", function(value:Int = 0)
 		{
 			lePlayState.songScore = value;
 			lePlayState.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "setMisses", function(value:Int = 0)
+		addCallback(lua, "setMisses", function(value:Int = 0)
 		{
 			lePlayState.songMisses = value;
 			lePlayState.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "setHits", function(value:Int = 0)
+		addCallback(lua, "setHits", function(value:Int = 0)
 		{
 			lePlayState.songHits = value;
 			lePlayState.RecalculateRating();
 		});
 
-		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String)
+		addCallback(lua, "getColorFromHex", function(color:String)
 		{
 			if (!color.startsWith('0x'))
 				color = '0xff' + color;
 			return Std.parseInt(color);
 		});
-		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String)
+		addCallback(lua, "keyJustPressed", function(name:String)
 		{
 			var key:Bool = false;
 			switch (name)
@@ -543,7 +535,7 @@ class FunkinLua
 			}
 			return key;
 		});
-		Lua_helper.add_callback(lua, "keyPressed", function(name:String)
+		addCallback(lua, "keyPressed", function(name:String)
 		{
 			var key:Bool = false;
 			switch (name)
@@ -559,7 +551,7 @@ class FunkinLua
 			}
 			return key;
 		});
-		Lua_helper.add_callback(lua, "keyReleased", function(name:String)
+		addCallback(lua, "keyReleased", function(name:String)
 		{
 			var key:Bool = false;
 			switch (name)
@@ -575,7 +567,7 @@ class FunkinLua
 			}
 			return key;
 		});
-		Lua_helper.add_callback(lua, "addCharacterToList", function(name:String, type:String)
+		addCallback(lua, "addCharacterToList", function(name:String, type:String)
 		{
 			var charType:Int = 0;
 			switch (type.toLowerCase())
@@ -587,28 +579,28 @@ class FunkinLua
 			}
 			lePlayState.addCharacterToList(name, charType);
 		});
-		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic)
+		addCallback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic)
 		{
 			var value1:String = arg1;
 			var value2:String = arg2;
 			lePlayState.triggerEventNote(name, value1, value2, true);
 			// trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 		});
-		Lua_helper.add_callback(lua, "playSound", function(sound:String, volume:Float = 1)
+		addCallback(lua, "playSound", function(sound:String, volume:Float = 1)
 		{
 			FlxG.sound.play(Paths.sound(sound), volume);
 		});
 
-		Lua_helper.add_callback(lua, "startCountdown", function(variable:String)
+		addCallback(lua, "startCountdown", function(variable:String)
 		{
 			lePlayState.startCountdown();
 		});
-		Lua_helper.add_callback(lua, "getSongPosition", function()
+		addCallback(lua, "getSongPosition", function()
 		{
 			return Conductor.songPosition;
 		});
 
-		Lua_helper.add_callback(lua, "getCharacterX", function(type:String)
+		addCallback(lua, "getCharacterX", function(type:String)
 		{
 			switch (type.toLowerCase())
 			{
@@ -620,7 +612,7 @@ class FunkinLua
 					return lePlayState.BF_X;
 			}
 		});
-		Lua_helper.add_callback(lua, "setCharacterX", function(type:String, value:Float)
+		addCallback(lua, "setCharacterX", function(type:String, value:Float)
 		{
 			switch (type.toLowerCase())
 			{
@@ -644,7 +636,7 @@ class FunkinLua
 					});
 			}
 		});
-		Lua_helper.add_callback(lua, "getCharacterY", function(type:String)
+		addCallback(lua, "getCharacterY", function(type:String)
 		{
 			switch (type.toLowerCase())
 			{
@@ -656,7 +648,7 @@ class FunkinLua
 					return lePlayState.BF_Y;
 			}
 		});
-		Lua_helper.add_callback(lua, "setCharacterY", function(type:String, value:Float)
+		addCallback(lua, "setCharacterY", function(type:String, value:Float)
 		{
 			switch (type.toLowerCase())
 			{
@@ -680,7 +672,7 @@ class FunkinLua
 					});
 			}
 		});
-		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String)
+		addCallback(lua, "cameraSetTarget", function(target:String)
 		{
 			var isDad:Bool = false;
 			if (target == 'dad')
@@ -689,15 +681,15 @@ class FunkinLua
 			}
 			lePlayState.moveCamera(isDad);
 		});
-		Lua_helper.add_callback(lua, "setRatingPercent", function(value:Float)
+		addCallback(lua, "setRatingPercent", function(value:Float)
 		{
 			lePlayState.ratingPercent = value;
 		});
-		Lua_helper.add_callback(lua, "setRatingString", function(value:String)
+		addCallback(lua, "setRatingString", function(value:String)
 		{
 			lePlayState.ratingString = value;
 		});
-		Lua_helper.add_callback(lua, "getMouseX", function(camera:String)
+		addCallback(lua, "getMouseX", function(camera:String)
 		{
 			var cam:FlxCamera = lePlayState.camGame;
 			switch (camera.toLowerCase())
@@ -709,7 +701,7 @@ class FunkinLua
 			}
 			return FlxG.mouse.getScreenPosition(cam).x;
 		});
-		Lua_helper.add_callback(lua, "getMouseY", function(camera:String)
+		addCallback(lua, "getMouseY", function(camera:String)
 		{
 			var cam:FlxCamera = lePlayState.camGame;
 			switch (camera.toLowerCase())
@@ -721,11 +713,11 @@ class FunkinLua
 			}
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
-		Lua_helper.add_callback(lua, "spawnNoteSplashes", function(x:Float, y:Float, data:Int = 0, type:Int = 0)
+		addCallback(lua, "spawnNoteSplashes", function(x:Float, y:Float, data:Int = 0, type:Int = 0)
 		{
 			lePlayState.spawnNoteSplash(x, y, data, type);
 		});
-		Lua_helper.add_callback(lua, "characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false)
+		addCallback(lua, "characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false)
 		{
 			switch (character.toLowerCase())
 			{
@@ -740,7 +732,7 @@ class FunkinLua
 						lePlayState.boyfriend.playAnim(anim, forced);
 			}
 		});
-		Lua_helper.add_callback(lua, "characterDance", function(character:String)
+		addCallback(lua, "characterDance", function(character:String)
 		{
 			switch (character.toLowerCase())
 			{
@@ -753,7 +745,7 @@ class FunkinLua
 			}
 		});
 
-		Lua_helper.add_callback(lua, "makeLuaSprite", function(tag:String, image:String, x:Float, y:Float)
+		addCallback(lua, "makeLuaSprite", function(tag:String, image:String, x:Float, y:Float)
 		{
 			resetSpriteTag(tag);
 			var leSprite:LuaSprite = new LuaSprite(x, y);
@@ -762,7 +754,7 @@ class FunkinLua
 			sprites.set(tag, leSprite);
 			leSprite.active = false;
 		});
-		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float)
+		addCallback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float)
 		{
 			resetSpriteTag(tag);
 			var leSprite:LuaSprite = new LuaSprite(x, y);
@@ -771,7 +763,7 @@ class FunkinLua
 			sprites.set(tag, leSprite);
 		});
 
-		Lua_helper.add_callback(lua, "luaSpriteAddAnimationByPrefix", function(tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true)
+		addCallback(lua, "luaSpriteAddAnimationByPrefix", function(tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true)
 		{
 			if (sprites.exists(tag))
 			{
@@ -783,7 +775,7 @@ class FunkinLua
 				}
 			}
 		});
-		Lua_helper.add_callback(lua, "luaSpriteAddAnimationByIndices", function(tag:String, name:String, prefix:String, indices:String, framerate:Int = 24)
+		addCallback(lua, "luaSpriteAddAnimationByIndices", function(tag:String, name:String, prefix:String, indices:String, framerate:Int = 24)
 		{
 			if (sprites.exists(tag))
 			{
@@ -801,7 +793,7 @@ class FunkinLua
 				}
 			}
 		});
-		Lua_helper.add_callback(lua, "luaSpritePlayAnimation", function(tag:String, name:String, forced:Bool = false)
+		addCallback(lua, "luaSpritePlayAnimation", function(tag:String, name:String, forced:Bool = false)
 		{
 			if (sprites.exists(tag))
 			{
@@ -809,14 +801,14 @@ class FunkinLua
 			}
 		});
 
-		Lua_helper.add_callback(lua, "setLuaSpriteScrollFactor", function(tag:String, scrollX:Float, scrollY:Float)
+		addCallback(lua, "setLuaSpriteScrollFactor", function(tag:String, scrollX:Float, scrollY:Float)
 		{
 			if (sprites.exists(tag))
 			{
 				sprites.get(tag).scrollFactor.set(scrollX, scrollY);
 			}
 		});
-		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false)
+		addCallback(lua, "addLuaSprite", function(tag:String, front:Bool = false)
 		{
 			if (sprites.exists(tag))
 			{
@@ -836,12 +828,12 @@ class FunkinLua
 				}
 			}
 		});
-		Lua_helper.add_callback(lua, "removeLuaSprite", function(tag:String)
+		addCallback(lua, "removeLuaSprite", function(tag:String)
 		{
 			resetSpriteTag(tag);
 		});
 
-		Lua_helper.add_callback(lua, "getPropertyLuaSprite", function(tag:String, variable:String)
+		addCallback(lua, "getPropertyLuaSprite", function(tag:String, variable:String)
 		{
 			if (sprites.exists(tag))
 			{
@@ -859,7 +851,7 @@ class FunkinLua
 			}
 			return null;
 		});
-		Lua_helper.add_callback(lua, "setPropertyLuaSprite", function(tag:String, variable:String, value:Dynamic)
+		addCallback(lua, "setPropertyLuaSprite", function(tag:String, variable:String, value:Dynamic)
 		{
 			if (sprites.exists(tag))
 			{
@@ -876,7 +868,7 @@ class FunkinLua
 				return Reflect.setProperty(sprites.get(tag), variable, value);
 			}
 		});
-		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, ?song:String = null)
+		addCallback(lua, "startDialogue", function(dialogueFile:String, ?song:String = null)
 		{
 			if (FileSystem.exists(Paths.mods('data/' + dialogueFile + '.txt')))
 			{
@@ -888,6 +880,37 @@ class FunkinLua
 				lePlayState.dialogueIntro(shit, song);
 			}
 		});
+
+		var result:Dynamic = LuaL.dofile(lua, script);
+		var resultStr:String = Lua.tostring(lua, result);
+		if (resultStr != null && result != 0)
+		{
+			lime.app.Application.current.window.alert(resultStr, 'Error on .LUA script!');
+			trace('Error on .LUA script! ' + resultStr);
+			lua = null;
+			return;
+		}
+
+		try
+		{
+			if (LuaL.dofile(lua, script) != Lua.OK)
+			{
+				final error:String = cast(Lua.tostring(lua, -1), String);
+				Lua.pop(lua, 1);
+				throw error;
+			}
+		}
+		catch (e:Exception)
+		{
+			Lib.application.window.alert(e.message, 'Error on .LUA script!');
+
+			trace('Error on .LUA script! $error');
+
+			die();
+		}
+
+		trace('Lua file loaded succesfully:' + script);
+
 		call('onCreate', []);
 		#end
 	}
@@ -1034,98 +1057,279 @@ class FunkinLua
 		return FlxEase.linear;
 	}
 
-	public function call(event:String, args:Array<Dynamic>):Dynamic
+	public function call(name:String, ?args:Array<Dynamic>):Dynamic
 	{
-		#if LUA_ALLOWED
 		if (lua == null)
-		{
 			return Function_Continue;
-		}
 
-		Lua.getglobal(lua, event);
+		Lua.getglobal(lua, name);
 
-		for (arg in args)
+		if (Lua.type(lua, -1) != Lua.TFUNCTION)
+			return null;
+
+		if (args != null && args.length > 0)
+			for (arg in args)
+				toLua(lua, arg);
+
+		try
 		{
-			Convert.toLua(lua, arg);
-		}
-
-		var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
-		if (result != null && resultIsAllowed(lua, result))
-		{
-			/*var resultStr:String = Lua.tostring(lua, result);
-				var error:String = Lua.tostring(lua, -1);
-				Lua.pop(lua, 1); */
-			if (Lua.type(lua, -1) == Lua.LUA_TSTRING)
+			if (Lua.pcall(lua, args != null ? args.length : 0, 1, 0) != Lua.OK)
 			{
-				var error:String = Lua.tostring(lua, -1);
-				if (error == 'attempt to call a nil value')
-				{ // Makes it ignore warnings and not break stuff if you didn't put the functions on your lua file
-					return Function_Continue;
-				}
+				final error:String = cast(Lua.tostring(lua, -1), String);
+				Lua.pop(lua, 1);
+				throw error;
 			}
-			var conv:Dynamic = Convert.fromLua(lua, result);
-			// Lua.pop(lua, 1);
-			return conv;
 		}
-		#end
-		return Function_Continue;
-	}
-
-	#if LUA_ALLOWED
-	function resultIsAllowed(leLua:State, leResult:Null<Int>)
-	{ // Makes it ignore warnings
-		switch (Lua.type(leLua, leResult))
+		catch (e:Exception)
 		{
-			case Lua.LUA_TNIL | Lua.LUA_TBOOLEAN | Lua.LUA_TNUMBER | Lua.LUA_TSTRING | Lua.LUA_TTABLE:
-				return true;
-		}
-		return false;
-	}
-	#end
+			Lib.application.window.alert(e.message, 'Error on .LUA script call!');
 
-	public function set(variable:String, data:Dynamic)
+			trace('Error on .LUA script call! $error');
+
+			die();
+
+			return null;
+		}
+
+		final ret:Dynamic = toHaxe(lua, -1);
+
+		if (ret != null)
+			Lua.pop(lua, 1);
+
+		return ret;
+	}
+
+	public function set(key:String, val:Dynamic):Void
 	{
-		#if LUA_ALLOWED
 		if (lua == null)
-		{
 			return;
-		}
 
-		Convert.toLua(lua, data);
-		Lua.setglobal(lua, variable);
-		#end
+		toLua(lua, val);
+		Lua.setglobal(lua, key);
 	}
 
 	public function setTweensActive(value:Bool)
 	{
 		#if LUA_ALLOWED
 		if (lua == null)
-		{
 			return;
-		}
 
 		for (tween in tweens)
-		{
 			tween.active = value;
-		}
 		#end
 	}
 
-	public function stop()
+	public function addCallback(key:String, val:Function):Void
+	{
+		if (lua == null || (lua != null && !Reflect.isFunction(val)))
+			return;
+
+		callbacks.set(key, val);
+
+		Lua.pushstring(lua, key);
+		Lua.pushcclosure(lua, cpp.Function.fromStaticFunction(callback), 1);
+		Lua.setglobal(lua, key);
+	}
+
+	public function removeCallback(key:String):Void
+	{
+		if (lua == null)
+			return;
+
+		callbacks.remove(key);
+
+		Lua.pushnil(lua);
+		Lua.setglobal(lua, key);
+	}
+
+	public function stop():Void
 	{
 		#if LUA_ALLOWED
 		sprites.clear();
 		accessedProps.clear();
 		tweens.clear();
 
-		if (lua == null)
+		if (lua != null)
 		{
-			return;
+			/* cleanup Lua */
+			Lua.close(lua);
+			lua = null;
+		}
+		#end
+	}
+
+	private static function toLua(l:State, val:Dynamic):Void
+	{
+		switch (Type.typeof(val))
+		{
+			case TNull:
+				Lua.pushnil(l);
+			case TInt:
+				Lua.pushinteger(l, val);
+			case TFloat:
+				Lua.pushnumber(l, val);
+			case TBool:
+				Lua.pushboolean(l, val ? 1 : 0);
+			case TClass(Array):
+				Lua.createtable(l, val.length, 0);
+
+				for (i in 0...val.length)
+				{
+					Lua.pushinteger(l, i + 1);
+					toLua(l, val[i]);
+					Lua.settable(l, -3);
+				}
+			case TClass(ObjectMap) | TClass(StringMap):
+				var map:Map<String, Dynamic> = val;
+
+				Lua.createtable(l, Lambda.count(map), 0);
+
+				for (key => value in map)
+				{
+					Lua.pushstring(l, Std.isOfType(key, String) ? key : Std.string(key));
+					toLua(l, value);
+					Lua.settable(l, -3);
+				}
+			case TClass(String):
+				Lua.pushstring(l, cast(val, String));
+			case TObject:
+				Lua.createtable(l, Reflect.fields(val).length, 0);
+
+				for (key in Reflect.fields(val))
+				{
+					Lua.pushstring(l, key);
+					toLua(l, Reflect.field(val, key));
+					Lua.settable(l, -3);
+				}
+			default:
+				Sys.println('Couldn\'t convert "${Type.typeof(val)}" to Lua.');
+		}
+	}
+
+	private static function toHaxe(l:State, idx:Int):Dynamic
+	{
+		switch (Lua.type(l, idx))
+		{
+			case type if (type == Lua.TNIL):
+				return null;
+			case type if (type == Lua.TBOOLEAN):
+				return Lua.toboolean(l, idx) == 1;
+			case type if (type == Lua.TNUMBER):
+				return Lua.tonumber(l, idx);
+			case type if (type == Lua.TSTRING):
+				return cast(Lua.tostring(l, idx), String);
+			case type if (type == Lua.TTABLE):
+				var count:Int = 0;
+				var array:Bool = true;
+
+				Lua.pushnil(l);
+
+				while (Lua.next(l, idx < 0 ? idx - 1 : idx) != 0)
+				{
+					if (array)
+					{
+						if (Lua.isnumber(l, -2) != 0)
+							array = false;
+						else
+						{
+							final index:Float = Lua.tonumber(l, -2);
+							if (index < 0 || Std.int(index) != index)
+								array = false;
+						}
+					}
+
+					count++;
+					Lua.pop(l, 1);
+				}
+
+				if (count == 0)
+					return
+					{
+					};
+				else if (array)
+				{
+					var ret:Array<Dynamic> = [];
+
+					Lua.pushnil(l);
+
+					while (Lua.next(l, idx < 0 ? idx - 1 : idx) != 0)
+					{
+						ret[Std.int(Lua.tonumber(l, -2)) - 1] = toHaxe(l, -1);
+
+						Lua.pop(l, 1);
+					}
+
+					return ret;
+				}
+				else
+				{
+					var ret:DynamicAccess<Dynamic> = {};
+
+					Lua.pushnil(l);
+
+					while (Lua.next(l, idx < 0 ? idx - 1 : idx) != 0)
+					{
+						switch (Lua.type(l, -2))
+						{
+							case type if (type == Lua.TSTRING):
+								ret.set(cast(Lua.tostring(l, -2), String), toHaxe(l, -1));
+
+								Lua.pop(l, 1);
+							case type if (type == Lua.TNUMBER):
+								ret.set(Std.string(Lua.tonumber(l, -2)), toHaxe(l, -1));
+
+								Lua.pop(l, 1);
+						}
+					}
+
+					return ret;
+				}
+			default:
+				Sys.println('Couldn\'t convert "${cast (Lua.typename(l, idx), String)}" to Haxe.');
 		}
 
-		Lua.close(lua);
-		lua = null;
-		#end
+		return null;
+	}
+
+	private static function print(l:State):Int
+	{
+		final nargs:Int = Lua.gettop(l);
+
+		/* loop through each argument */
+		for (i in 0...nargs)
+			Sys.println(cast(Lua.tostring(l, i + 1), String));
+
+		/* clear the stack */
+		Lua.pop(l, nargs);
+		return 0;
+	}
+
+	private static function callback(l:State):Int
+	{
+		final nargs:Int = Lua.gettop(l);
+
+		/* loop through each argument and set it to the array */
+		var args:Array<Dynamic> = [];
+		for (i in 0...nargs)
+			args[i] = toHaxe(l, i + 1);
+
+		/* clear the stack */
+		Lua.pop(l, nargs);
+
+		final name:String = Lua.tostring(l, Lua.upvalueindex(1));
+
+		if (callbacks.exists(name))
+		{
+			var ret:Dynamic = Reflect.callMethod(null, callbacks.get(name), args);
+
+			if (ret != null)
+			{
+				toLua(l, ret);
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 }
 
