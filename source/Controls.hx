@@ -837,6 +837,31 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.NOTE_DOWN, (action, state) -> addButton(action, hitbox.hints[1], state));
 				inline forEachBound(Control.NOTE_UP, (action, state) -> addButton(action, hitbox.hints[2], state));
 				inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButton(action, hitbox.hints[3], state));
+			case 1:
+				inline forEachBound(Control.A1, (action, state) -> addButton(action, hitbox.hints[0], state));
+				inline forEachBound(Control.A2, (action, state) -> addButton(action, hitbox.hints[1], state));
+				inline forEachBound(Control.A3, (action, state) -> addButton(action, hitbox.hints[2], state));
+				inline forEachBound(Control.A5, (action, state) -> addButton(action, hitbox.hints[3], state));
+				inline forEachBound(Control.A6, (action, state) -> addButton(action, hitbox.hints[4], state));
+				inline forEachBound(Control.A7, (action, state) -> addButton(action, hitbox.hints[5], state));
+			case 2:
+				inline forEachBound(Control.A1, (action, state) -> addButton(action, hitbox.hints[0], state));
+				inline forEachBound(Control.A2, (action, state) -> addButton(action, hitbox.hints[1], state));
+				inline forEachBound(Control.A3, (action, state) -> addButton(action, hitbox.hints[2], state));
+				inline forEachBound(Control.A4, (action, state) -> addButton(action, hitbox.hints[3], state));
+				inline forEachBound(Control.A5, (action, state) -> addButton(action, hitbox.hints[4], state));
+				inline forEachBound(Control.A6, (action, state) -> addButton(action, hitbox.hints[5], state));
+				inline forEachBound(Control.A7, (action, state) -> addButton(action, hitbox.hints[6], state));
+			case 3:
+				inline forEachBound(Control.B1, (action, state) -> addButton(action, hitbox.hints[0], state));
+				inline forEachBound(Control.B2, (action, state) -> addButton(action, hitbox.hints[1], state));
+				inline forEachBound(Control.B3, (action, state) -> addButton(action, hitbox.hints[2], state));
+				inline forEachBound(Control.B4, (action, state) -> addButton(action, hitbox.hints[3], state));
+				inline forEachBound(Control.B5, (action, state) -> addButton(action, hitbox.hints[4], state));
+				inline forEachBound(Control.B6, (action, state) -> addButton(action, hitbox.hints[5], state));
+				inline forEachBound(Control.B7, (action, state) -> addButton(action, hitbox.hints[6], state));
+				inline forEachBound(Control.B8, (action, state) -> addButton(action, hitbox.hints[7], state));
+				inline forEachBound(Control.B9, (action, state) -> addButton(action, hitbox.hints[8], state));
 		}
 	}
 
