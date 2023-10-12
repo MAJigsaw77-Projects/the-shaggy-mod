@@ -24,8 +24,6 @@ import sys.io.File;
 #end
 import openfl.Lib;
 
-typedef State = cpp.RawPointer<Lua_State>;
-
 using StringTools;
 
 class FunkinLua
@@ -34,7 +32,7 @@ class FunkinLua
 	public static var Function_Continue:Int = 0;
 
 	#if LUA_ALLOWED
-	private var lua:State = null;
+	private var lua:cpp.RawPointer<Lua_State> = null;
 	#end
 
 	var lePlayState:PlayState = null;
@@ -1158,7 +1156,7 @@ class FunkinLua
 		#end
 	}
 
-	private static function toLua(l:State, val:Dynamic):Void
+	private static function toLua(l:cpp.RawPointer<Lua_State>, val:Dynamic):Void
 	{
 		switch (Type.typeof(val))
 		{
@@ -1206,7 +1204,7 @@ class FunkinLua
 		}
 	}
 
-	private static function toHaxe(l:State, idx:Int):Dynamic
+	private static function toHaxe(l:cpp.RawPointer<Lua_State>, idx:Int):Dynamic
 	{
 		switch (Lua.type(l, idx))
 		{
@@ -1291,7 +1289,7 @@ class FunkinLua
 		return null;
 	}
 
-	private static function print(l:State):Int
+	private static function print(l:cpp.RawPointer<Lua_State>):Int
 	{
 		final nargs:Int = Lua.gettop(l);
 
@@ -1304,7 +1302,7 @@ class FunkinLua
 		return 0;
 	}
 
-	private static function callback(l:State):Int
+	private static function callback(l:cpp.RawPointer<Lua_State>):Int
 	{
 		final nargs:Int = Lua.gettop(l);
 
