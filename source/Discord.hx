@@ -1,6 +1,6 @@
 package;
 
-#if FEATURE_DISCORD
+#if DISCORD_ALLOWED
 import hxdiscord_rpc.Discord as RichPresence;
 import hxdiscord_rpc.Types;
 import openfl.Lib;
