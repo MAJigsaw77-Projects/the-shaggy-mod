@@ -10,6 +10,11 @@ import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
+#if mobile
+import flixel.mobile.FlxButton;
+import flixel.mobile.FlxHitbox;
+import flixel.mobile.FlxVirtualPad;
+#end
 
 enum abstract Action(String) to String from String
 {
@@ -812,6 +817,83 @@ class Controls extends FlxActionSet
 
 		setKeyboardScheme(scheme, false);
 	}
+
+	#if mobile
+	public var trackedInputs:Array<FlxActionInput> = [];
+
+	public function addButton(action:FlxActionDigital, button:FlxButton, state:FlxInputState)
+	{
+		var input:FlxActionInputDigitalIFlxInput = new FlxActionInputDigitalIFlxInput(button, state);
+		trackedInputs.push(input);
+		action.add(input);
+	}
+
+	public function setHitbox(hitbox:FlxHitbox, mania:Int = 0):Void
+	{
+		switch (mania)
+		{
+			case 0:
+				inline forEachBound(Control.NOTE_LEFT, (action, state) -> addButton(action, hitbox.hints[0], state));
+				inline forEachBound(Control.NOTE_DOWN, (action, state) -> addButton(action, hitbox.hints[1], state));
+				inline forEachBound(Control.NOTE_UP, (action, state) -> addButton(action, hitbox.hints[2], state));
+				inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addButton(action, hitbox.hints[3], state));
+		}
+	}
+
+	public function setVPad(vPad:FlxVirtualPad, dPad:FlxDPadMode, action:FlxActionMode):Void
+	{
+		switch (dPad)
+		{
+			case UP_DOWN:
+				inline forEachBound(Control.UI_UP, (action, state) -> addButton(action, vPad.buttonUp, state));
+				inline forEachBound(Control.UI_DOWN, (action, state) -> addButton(action, vPad.buttonDown, state));
+			case LEFT_RIGHT:
+				inline forEachBound(Control.UI_LEFT, (action, state) -> addButton(action, vPad.buttonLeft, state));
+				inline forEachBound(Control.UI_RIGHT, (action, state) -> addButton(action, vPad.buttonRight, state));
+			case UP_LEFT_RIGHT:
+				inline forEachBound(Control.UI_UP, (action, state) -> addButton(action, vPad.buttonUp, state));
+				inline forEachBound(Control.UI_LEFT, (action, state) -> addButton(action, vPad.buttonLeft, state));
+				inline forEachBound(Control.UI_RIGHT, (action, state) -> addButton(action, vPad.buttonRight, state));
+			case LEFT_FULL | RIGHT_FULL:
+				inline forEachBound(Control.UI_UP, (action, state) -> addButton(action, vPad.buttonUp, state));
+				inline forEachBound(Control.UI_DOWN, (action, state) -> addButton(action, vPad.buttonDown, state));
+				inline forEachBound(Control.UI_LEFT, (action, state) -> addButton(action, vPad.buttonLeft, state));
+				inline forEachBound(Control.UI_RIGHT, (action, state) -> addButton(action, vPad.buttonRight, state));
+			case NONE: // do nothing
+		}
+
+		switch (action)
+		{
+			case A:
+				inline forEachBound(Control.ACCEPT, (action, state) -> addButton(action, vPad.buttonA, state));
+			case B:
+				inline forEachBound(Control.BACK, (action, state) -> addButton(action, vPad.buttonB, state));
+			case A_B | A_B_C | A_B_X_Y | A_B_C_X_Y_Z:
+				inline forEachBound(Control.ACCEPT, (action, state) -> addButton(action, vPad.buttonA, state));
+				inline forEachBound(Control.BACK, (action, state) -> addButton(action, vPad.buttonB, state));
+			case NONE: // do nothing
+		}
+	}
+
+	public function removeVControlsInput(tInputs:Array<FlxActionInput>):Void
+	{
+		for (action in digitalActions)
+		{
+			var i:Int = action.inputs.length;
+
+			while (i-- > 0)
+			{
+				var j:Int = tInputs.length;
+
+				while (j-- > 0)
+				{
+					if (tInputs[j] == action.inputs[i])
+						action.remove(action.inputs[i]);
+				}
+			}
+		}
+	}
+	#end
 
 	// inline
 	public function checkByName(name:Action):Bool
