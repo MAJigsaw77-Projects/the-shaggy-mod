@@ -102,7 +102,7 @@ class Main extends Sprite
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		#if (mobile || switch)
-		fpsVar.scaleX = fps.scaleY = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
+		fpsVar.scaleX = fpsVar.scaleY = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
 		#end
 		addChild(fpsVar);
 
