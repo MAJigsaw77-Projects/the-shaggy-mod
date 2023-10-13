@@ -428,6 +428,9 @@ class NotesSubstate extends MusicBeatSubstate
 			changeSelection();
 			if (!changingNote)
 			{
+				#if mobile
+				vPad.alpha = 0;
+				#end
 				grpNumbers.forEachAlive(function(spr:Alphabet)
 				{
 					spr.alpha = 0;
@@ -437,11 +440,11 @@ class NotesSubstate extends MusicBeatSubstate
 					spr.alpha = 0;
 				});
 				#if mobile
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
-			close();
-			#end
+				FlxTransitionableState.skipNextTransOut = true;
+				FlxG.resetState();
+				#else
+				close();
+				#end
 			}
 			changingNote = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -653,6 +656,9 @@ class ControlsSubstate extends MusicBeatSubstate
 			if (controls.BACK)
 			{
 				ClientPrefs.reloadControls(controlArray);
+				#if mobile
+				vPad.alpha = 0;
+				#end
 				grpOptions.forEachAlive(function(spr:Alphabet)
 				{
 					spr.alpha = 0;
@@ -666,11 +672,11 @@ class ControlsSubstate extends MusicBeatSubstate
 					}
 				}
 				#if mobile
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
-			close();
-			#end
+				FlxTransitionableState.skipNextTransOut = true;
+				FlxG.resetState();
+				#else
+				close();
+				#end
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
@@ -1009,6 +1015,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
+			#if mobile
+			vPad.alpha = 0;
+			#end
 			grpOptions.forEachAlive(function(spr:Alphabet)
 			{
 				spr.alpha = 0;
