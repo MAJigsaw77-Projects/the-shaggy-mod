@@ -156,7 +156,15 @@ class DialogueBoxPsych extends FlxSpriteGroup
 			if (bgFade.alpha > 0.5)
 				bgFade.alpha = 0.5;
 
-			if (FlxG.keys.justPressed.ANY)
+			var pressedAny:Bool = FlxG.keys.justPressed.ANY;
+
+			#if mobile
+			for (touch in FlxG.touches.list)
+				if (touch.justPressed)
+					pressedAny = true;
+			#end
+
+			if (pressedAny)
 			{
 				if (!daText.finishedText)
 				{
