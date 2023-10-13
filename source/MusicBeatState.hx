@@ -80,8 +80,15 @@ class MusicBeatState extends FlxUIState
 
 		final ammo:Int = Main.ammo[PlayState.SONG.mania];
 
-		// [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000] mania colors
-		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, []);
+		var colors:Array<FlxColor> = [];
+
+		switch (PlayState.SONG.mania)
+		{
+			case 0:
+				colors = [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000];
+		}
+
+		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, colors);
 
 		if (PlayState.SONG.mania == 2)
 			hitbox.x += 3;
