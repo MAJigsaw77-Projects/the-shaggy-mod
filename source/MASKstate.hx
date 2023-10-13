@@ -228,7 +228,7 @@ class MASKstate extends MusicBeatState
 		}
 
 		#if mobile
-		addVPad(UP_DOWN, A);
+		addVPad(UP_DOWN, A, false);
 		#end
 
 		super.create();
@@ -393,7 +393,10 @@ class MASKstate extends MusicBeatState
 			case 2: // dialogue running
 				textStep();
 			case 3: // Main question menu
-				// trace('cock');
+				#if mobile
+				if (!vPad.visible)
+					vPad.visible = true;
+				#end
 
 				mainSelect = optSelect;
 
@@ -412,6 +415,11 @@ class MASKstate extends MusicBeatState
 						optShown = 2;
 
 					var selS = 'q' + (optSelect + 1) + '-' + (optShown + 1);
+	
+					#if mobile
+					vPad.visible = false;
+					#end
+
 					switch (optID[optSelect])
 					{
 						case 'parts':
