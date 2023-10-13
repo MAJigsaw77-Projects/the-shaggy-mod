@@ -1306,15 +1306,15 @@ class PlayState extends MusicBeatState
 						skip = true;
 					}
 					
-					#if mobile
-					var justPressed:Bool = false;
+					var pressedAny:Bool = FlxG.keys.justPressed.ANY;
 					
-					for (touch in FlxG.touches.list)
+					#if mobile
+					for (touch in FlxG.touches.list)	
 						if (touch.justPressed)
-							justPressed = true;
+							pressedAny = true;
 					#end
 
-					if (FlxG.keys.justReleased.ANY #if mobile || justPressed #end || skip)
+					if (pressedAny || skip)
 					{
 						if ((curr_char <= dialogue[curr_dial].length) && !skip)
 						{
