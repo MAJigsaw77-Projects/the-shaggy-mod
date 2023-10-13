@@ -854,7 +854,7 @@ class MASKstate extends MusicBeatState
 		var pressedAny:Bool = FlxG.keys.justPressed.ANY;
 
 		#if mobile
-		for (touch in FlxG.touches.list)	
+		for (touch in FlxG.touches.list)
 			if (touch.justPressed)
 				pressedAny = true;
 		#end

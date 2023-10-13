@@ -91,7 +91,17 @@ class MusicBeatState extends FlxUIState
 			case 2:
 				colors = [0xC34B9A, 0x12FB06, 0xF9393F, 0xCECECE, 0xFFFF00, 0x00FFFF, 0x0033FF];
 			case 3:
-				colors = [0xC34B9A, 0x00FFFF, 0x12FB06, 0xF9393F, 0xCECECE, 0xFFFF00, 0x8C4AFF, 0xFF0000, 0x0033FF];
+				colors = [
+					0xC34B9A,
+					0x00FFFF,
+					0x12FB06,
+					0xF9393F,
+					0xCECECE,
+					0xFFFF00,
+					0x8C4AFF,
+					0xFF0000,
+					0x0033FF
+				];
 		}
 
 		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, colors);

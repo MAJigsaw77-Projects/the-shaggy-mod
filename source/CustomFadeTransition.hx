@@ -61,7 +61,7 @@ class CustomFadeTransition extends MusicBeatSubstate
 			leTween = FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {
 				onComplete: function(twn:FlxTween)
 				{
-					if(finishCallback != null)
+					if (finishCallback != null)
 						finishCallback();
 				},
 				ease: FlxEase.linear
