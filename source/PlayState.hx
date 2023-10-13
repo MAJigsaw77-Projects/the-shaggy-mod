@@ -716,19 +716,6 @@ class PlayState extends MusicBeatState
 			add(halloweenWhite);
 		}
 
-		var lowercaseSong:String = SONG.song.toLowerCase();
-		var file:String = Paths.txt(lowercaseSong + '/' + lowercaseSong + 'Dialogue');
-		if (OpenFlAssets.exists(file))
-		{
-			dialogue = CoolUtil.coolTextFile(file);
-		}
-		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		// doof.x += 70;
-		// doof.y = FlxG.height * 0.5;
-		doof.scrollFactor.set();
-		doof.finishThing = startCountdown;
-		doof.nextDialogueThing = startNextDialogue;
-
 		Conductor.songPosition = -5000;
 
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
@@ -868,7 +855,6 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
-		doof.cameras = [camHUD];
 
 		#if mobile
 		addHitbox(false);
@@ -899,7 +885,8 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(luaFile));
 		#end
 
-		var daSong:String = curSong.toLowerCase();
+		final daSong:String = curSong.toLowerCase();
+
 		if (isStoryMode)
 		{
 			switch (daSong)
@@ -912,7 +899,6 @@ class PlayState extends MusicBeatState
 					textIndex = '2-pre-eruption';
 					schoolIntro(0);
 				case 'kaio-ken':
-					// sEnding = 'week1 end';
 					startCountdown();
 				case 'whats-new':
 					textIndex = '5-pre-whatsnew';
@@ -920,6 +906,7 @@ class PlayState extends MusicBeatState
 					schoolIntro(1);
 				case 'blast':
 					sEnding = 'post blast';
+
 					startCountdown();
 
 					if (!FlxG.save.data.p_maskGot[0])
@@ -929,9 +916,11 @@ class PlayState extends MusicBeatState
 					}
 				case 'super-saiyan':
 					sEnding = 'week2 end';
+
 					startCountdown();
 				case 'god-eater':
 					sEnding = 'finale end';
+
 					if (!Main.skipDes)
 					{
 						godIntro();
@@ -974,6 +963,7 @@ class PlayState extends MusicBeatState
 					}
 				case 'dissasembler':
 					sEnding = 'last goodbye';
+
 					if (Main.skipDes)
 					{
 						startCountdown();
@@ -984,6 +974,7 @@ class PlayState extends MusicBeatState
 						textIndex = 'upd/3';
 						schoolIntro(0);
 					}
+
 					if (!FlxG.save.data.p_maskGot[2])
 					{
 						maskObj = new MASKcoll(3, 0, 0, 0, camFollowPos, camHUD);
@@ -994,6 +985,7 @@ class PlayState extends MusicBeatState
 					if (FlxG.save.data.p_partsGiven < 4 || FlxG.save.data.ending[2])
 					{
 						sEnding = 'wb ending';
+
 						if (Main.skipDes)
 						{
 							startCountdown();
@@ -1009,11 +1001,11 @@ class PlayState extends MusicBeatState
 					{
 						textIndex = 'upd/zeph1';
 						afterAction = 'possess';
-						// sEnding = 'wb ending';
 						schoolIntro(1);
 					}
 				case 'talladega':
 					sEnding = 'zeph ending';
+
 					if (Main.skipDes)
 					{
 						startCountdown();
@@ -1034,18 +1026,18 @@ class PlayState extends MusicBeatState
 				default:
 					startCountdown();
 			}
+
 			seenCutscene = true;
 		}
 		else
 		{
-			var cs = curSong.toLowerCase();
-
-			switch (cs)
+			switch (daSong)
 			{
 				case 'god-eater':
 					godCutEnd = true;
 					godMoveGf = true;
 					godMoveSh = true;
+
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
 						startCountdown();
@@ -1056,6 +1048,7 @@ class PlayState extends MusicBeatState
 						maskObj = new MASKcoll(1, boyfriend.x - 200, -300, 0);
 						maskCollGroup.add(maskObj);
 					}
+
 					startCountdown();
 				case 'dissasembler':
 					if (!FlxG.save.data.p_maskGot[2])
@@ -1064,12 +1057,11 @@ class PlayState extends MusicBeatState
 						maskObj.cameras = [camHUD];
 						maskCollGroup.add(maskObj);
 					}
+
 					startCountdown();
 				case 'talladega':
 					if (FlxG.save.data.ending[2])
-					{
 						startCountdown();
-					}
 				default:
 					startCountdown();
 			}
