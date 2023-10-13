@@ -227,6 +227,10 @@ class MASKstate extends MusicBeatState
 			optList[i] = readOpt[i].split(":");
 		}
 
+		#if mobile
+		addVPad(UP_DOWN, A);
+		#end
+
 		super.create();
 	}
 

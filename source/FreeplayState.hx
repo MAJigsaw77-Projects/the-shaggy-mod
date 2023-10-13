@@ -172,6 +172,8 @@ class FreeplayState extends MusicBeatState
 
 		#if mobile
 		addVPad(LEFT_FULL, A_B_X_Y);
+
+		vPad.y -= 26;
 		#end
 
 		super.create();

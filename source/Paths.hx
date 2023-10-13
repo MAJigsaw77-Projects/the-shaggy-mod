@@ -1,7 +1,7 @@
 package;
 
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.util.typeLimit.OneOfTwo;
+import flixel.system.FlxGraphicAsset;
 import flixel.FlxG;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
@@ -124,7 +124,7 @@ class Paths
 			return getPath('${song.toLowerCase()}/Inst.ogg', MUSIC, 'songs');
 	}
 
-	public static inline function image(key:String, ?library:String):OneOfTwo<FlxGraphic, String>
+	public static inline function image(key:String, ?library:String):FlxGraphicAsset
 	{
 		#if MODS_ALLOWED
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
