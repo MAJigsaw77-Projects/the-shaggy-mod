@@ -151,7 +151,7 @@ class MASKstate extends MusicBeatState
 		add(bBorder);
 
 		optsText = new FlxText(80, frameY + 50, 2000, '', 32);
-		optsText.font = 'Pixel Arial 11 Bold';
+		optsText.font = Paths.font('pixel.otf');
 		optsText.color = 0xFFFFFFFF;
 		optsText.alpha = 0;
 		updateOptions();
@@ -653,7 +653,7 @@ class MASKstate extends MusicBeatState
 			remove(onScreenText);
 
 		onScreenText = new FlxText(10, frameY + 30, 2000, '', 32);
-		onScreenText.font = 'Pixel Arial 11 Bold';
+		onScreenText.font = Paths.font('pixel.otf');
 		onScreenText.color = 0xFFFFFFFF;
 
 		add(onScreenText);

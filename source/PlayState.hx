@@ -1298,7 +1298,7 @@ class PlayState extends MusicBeatState
 						add(tbox);
 
 						dropText.text = newtxt;
-						dropText.font = 'Pixel Arial 11 Bold';
+						dropText.font = Paths.font('pixel.otf');
 						dropText.color = 0x00000000;
 						dropText.scrollFactor.set();
 						add(dropText);

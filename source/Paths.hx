@@ -123,7 +123,7 @@ class Paths
 			return getPath('${song.toLowerCase()}/Inst.ogg', MUSIC, 'songs');
 	}
 
-	public static inline function image(key:String, ?library:String):Any
+	public static function image(key:String, ?library:String):Dynamic
 	{
 		#if MODS_ALLOWED
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
@@ -144,7 +144,7 @@ class Paths
 		return null;
 	}
 
-	public static inline function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String):Bool
+	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String):Bool
 	{
 		#if MODS_ALLOWED
 		if (FileSystem.exists(mods(key)))
@@ -182,7 +182,7 @@ class Paths
 	}
 
 	#if MODS_ALLOWED
-	static private function addCustomGraphic(key:String):FlxGraphic
+	private static function addCustomGraphic(key:String):FlxGraphic
 	{
 		if (FileSystem.exists(modsImages(key)))
 		{
