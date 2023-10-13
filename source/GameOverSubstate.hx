@@ -57,7 +57,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		#if mobile
 		addVPad(NONE, A_B);
-		adsVPadCamera();
+		addVPadCamera();
 		#end
 	}
 

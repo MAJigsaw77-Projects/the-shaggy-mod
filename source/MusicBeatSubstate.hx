@@ -33,7 +33,7 @@ class MusicBeatSubstate extends FlxSubState
 	public function addVPad(dPad:FlxDPadMode, action:FlxActionMode, ?visible = true):Void
 	{
 		if (vPad != null)
-			removeVirtualPad();
+			removeVPad();
 
 		vPad = new FlxVirtualPad(dPad, action);
 		vPad.visible = visible;
@@ -55,7 +55,7 @@ class MusicBeatSubstate extends FlxSubState
 		}
 	}
 
-	public function removeVirtualPad():Void
+	public function removeVPad():Void
 	{
 		if (trackedInputsVirtualPad.length > 0)
 			controls.removeVControlsInput(trackedInputsVirtualPad);
