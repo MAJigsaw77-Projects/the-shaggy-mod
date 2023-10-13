@@ -254,6 +254,10 @@ class StoryMenuState extends MusicBeatState
 		}
 		changeWeek();
 
+		#if mobile
+		addVPad(LEFT_FULL, A_B_X_Y);
+		#end
+
 		super.create();
 	}
 
@@ -283,14 +287,18 @@ class StoryMenuState extends MusicBeatState
 			zephMenu.y = 40 + Math.sin(ztime / 60) * 10;
 		}
 
-		moNotice.text = "";
 		if (curWeek == 1)
 		{
+			#if mobile
+			moNotice.text = "First song has copyright :(\nPress X for drums cover\n";
+			#else
 			moNotice.text = "First song has copyright :(\nPress P for drums cover\n";
+			#end
+
 			if (Main.drums)
 				moNotice.text += "(drums cover active)\n";
 
-			if (FlxG.keys.justPressed.P)
+			if (FlxG.keys.justPressed.P #if mobile || vPad.buttonX.justPressed #end)
 			{
 				Main.drums = !Main.drums;
 				if (Main.drums)
@@ -299,6 +307,8 @@ class StoryMenuState extends MusicBeatState
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 		}
+		else
+			moNotice.text = '';
 
 		// FlxG.watch.addQuick('font', scoreText.font);
 
@@ -342,8 +352,12 @@ class StoryMenuState extends MusicBeatState
 			{
 				selectWeek();
 			}
-			else if (controls.RESET)
+			else if (controls.RESET #if mobile || vPad.buttonY.justPressed #end)
 			{
+				#if mobile
+				removeVPad();
+				#end
+
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
 				FlxG.sound.play(Paths.sound('scrollMenu'));

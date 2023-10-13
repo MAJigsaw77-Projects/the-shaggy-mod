@@ -7,6 +7,7 @@ import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -64,7 +65,11 @@ class OptionsState extends MusicBeatState
 		updateLanText();
 		add(lanText);
 
+		#if mobile
+		resetText = new FlxText(0, 550, 2000, "Hold C for 3 seconds.\n\n(Only progress will be reset, preferences\nwill be kept.)", 32);
+		#else
 		resetText = new FlxText(0, 550, 2000, "Hold R for 3 seconds.\n\n(Only progress will be reset, preferences\nwill be kept.)", 32);
+		#end
 		resetText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		resetText.scrollFactor.set();
 		resetText.screenCenter(X);
@@ -77,6 +82,7 @@ class OptionsState extends MusicBeatState
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
 			grpOptions.add(optionText);
 		}
+
 		changeSelection();
 
 		resetScreen = new FlxSprite().makeGraphic(4000, 4000, FlxColor.RED);
@@ -84,6 +90,10 @@ class OptionsState extends MusicBeatState
 		resetScreen.screenCenter();
 		resetScreen.alpha = 0;
 		add(resetScreen);
+
+		#if mobile
+		addVPad(UP_DOWN, A_B_C);
+		#end
 
 		super.create();
 	}
@@ -128,7 +138,7 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (FlxG.keys.pressed.R)
+		if (FlxG.keys.pressed.R #if mobile || vPad.buttonC.justPressed #end)
 		{
 			resetScreen.alpha += 1 / (120 * 2);
 			if (resetScreen.alpha >= 1)
@@ -163,15 +173,18 @@ class OptionsState extends MusicBeatState
 					FlxG.save.data.language++;
 					FlxG.save.data.language %= TextData.getLanNumber();
 					updateLanText();
-
 				case 'Controls':
+					#if mobile
+					removeVPad();
+					#end
+
 					openSubState(new ControlsSubstate());
-
 				case 'Preferences':
-					openSubState(new PreferencesSubstate());
+					#if mobile
+					removeVPad();
+					#end
 
-				case 'Reset data':
-					//
+					openSubState(new PreferencesSubstate());
 			}
 		}
 	}
@@ -261,6 +274,10 @@ class NotesSubstate extends MusicBeatSubstate
 		hsvText = new Alphabet(0, 0, "Hue    Saturation  Brightness", false, false, 0, 0.65);
 		add(hsvText);
 		changeSelection();
+
+		#if mobile
+		addVPad(LEFT_FULL, A_B_C);
+		#end
 	}
 
 	var changingNote:Bool = false;
@@ -282,7 +299,7 @@ class NotesSubstate extends MusicBeatSubstate
 					updateValue(1);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 				}
-				else if (controls.RESET)
+				else if (controls.RESET #if mobile || vPad.buttonC.justPressed #end)
 				{
 					resetValue(curSelected, typeSelected);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -341,7 +358,7 @@ class NotesSubstate extends MusicBeatSubstate
 				changeType(1);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
-			if (controls.RESET)
+			if (controls.RESET #if mobile || vPad.buttonC.justPressed #end)
 			{
 				for (i in 0...3)
 				{
@@ -419,7 +436,12 @@ class NotesSubstate extends MusicBeatSubstate
 				{
 					spr.alpha = 0;
 				});
-				close();
+				#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxG.resetState();
+			#else
+			close();
+			#end
 			}
 			changingNote = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -600,7 +622,12 @@ class ControlsSubstate extends MusicBeatSubstate
 				addBindTexts(optionText);
 			}
 		}
+
 		changeSelection();
+
+		#if mobile
+		addVPad(LEFT_FULL, A_B);
+		#end
 	}
 
 	var leaving:Bool = false;
@@ -638,7 +665,12 @@ class ControlsSubstate extends MusicBeatSubstate
 						spr.alpha = 0;
 					}
 				}
-				close();
+				#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxG.resetState();
+			#else
+			close();
+			#end
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
@@ -952,8 +984,13 @@ class PreferencesSubstate extends MusicBeatSubstate
 				break;
 			}
 		}
+
 		changeSelection();
 		reloadValues();
+
+		#if mobile
+		addVPad(LEFT_FULL, A_B);
+		#end
 	}
 
 	var nextAccept:Int = 5;
@@ -993,7 +1030,12 @@ class PreferencesSubstate extends MusicBeatSubstate
 				showCharacter.alpha = 0;
 			}
 			descText.alpha = 0;
+			#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 

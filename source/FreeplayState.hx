@@ -151,38 +151,29 @@ class FreeplayState extends MusicBeatState
 
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
+
 		changeSelection();
 		changeDiff();
-
-		var swag:Alphabet = new Alphabet(1, 0, "swag");
-
-		// JUST DOIN THIS SHIT FOR TESTING!!!
-		/* 
-			var md:String = Markdown.markdownToHtml(Assets.getText('CHANGELOG.md'));
-
-			var texFel:TextField = new TextField();
-			texFel.width = FlxG.width;
-			texFel.height = FlxG.height;
-			// texFel.
-			texFel.htmlText = md;
-
-			FlxG.stage.addChild(texFel);
-
-			// scoreText.textField.htmlText = md;
-
-			trace(md);
-		 */
 
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
 
-		var leText:String = "Press SPACE to listen to this Song / Press RESET to Reset your Score and Accuracy.";
+		#if mobile
+		final leText:String = "Press X to listen to this Song / Press Y to Reset your Score and Accuracy.";
+		#else
+		final leText:String = "Press SPACE to listen to this Song / Press RESET to Reset your Score and Accuracy.";
+		#end
 
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, 18);
 		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
+
+		#if mobile
+		addVPad(LEFT_FULL, A_B_X_Y);
+		#end
+
 		super.create();
 	}
 
@@ -237,7 +228,7 @@ class FreeplayState extends MusicBeatState
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
-		var space = FlxG.keys.justPressed.SPACE;
+		var space = FlxG.keys.justPressed.SPACE #if mobile || vPad.buttonX.justPressed #end;
 
 		if (upP)
 		{
@@ -308,11 +299,17 @@ class FreeplayState extends MusicBeatState
 
 			destroyFreeplayVocals();
 		}
-		else if (controls.RESET)
+		else if (controls.RESET #if mobile || vPad.buttonY.justPressed #end)
 		{
+			#if mobile
+			removeVPad();
+			#end
+
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
+
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
+
 		super.update(elapsed);
 	}
 

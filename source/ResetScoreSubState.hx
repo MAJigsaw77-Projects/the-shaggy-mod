@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.util.FlxColor;
+import flixel.addons.transition.FlxTransitionableState;
 
 using StringTools;
 
@@ -78,6 +79,10 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.x += 200;
 		add(noText);
 		updateOptions();
+
+		#if mobile
+		addVPad(LEFT_RIGHT, A_B);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -103,7 +108,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		if (controls.BACK)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
 		else if (controls.ACCEPT)
 		{
@@ -119,7 +129,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 				}
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
 		super.update(elapsed);
 	}

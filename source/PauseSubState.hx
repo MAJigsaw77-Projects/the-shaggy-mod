@@ -144,6 +144,11 @@ class PauseSubState extends MusicBeatSubstate
 
 		changeSelection();
 
+		#if mobile
+		addVPad(UP_DOWN, A);
+		addVPadCamera();
+		#end
+
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 

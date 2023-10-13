@@ -150,6 +150,12 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
+		#if mobile
+		addVPad(UP_DOWN, A_B);
+
+		vPad.y -= 44;
+		#end
+
 		super.create();
 	}
 

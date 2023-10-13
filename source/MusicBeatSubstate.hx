@@ -73,6 +73,12 @@ class MusicBeatSubstate extends FlxSubState
 
 		// [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000] mania colors
 		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, []);
+		if (PlayState.SONG.mania == 2)
+
+			hitbox.x += 3;
+		else if (PlayState.SONG.mania == 3)
+			hitbox.x += 1;
+
 		hitbox.visible = visible;
 		add(hitbox);
 
