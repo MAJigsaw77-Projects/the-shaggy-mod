@@ -851,8 +851,16 @@ class MASKstate extends MusicBeatState
 		// xd
 		lChar = intChar;
 
+		var pressedAny:Bool = FlxG.keys.justPressed.ANY;
+
+		#if mobile
+		for (touch in FlxG.touches.list)	
+			if (touch.justPressed)
+				pressedAny = true;
+		#end
+
 		// Press start to pair bluetooth device is ready to peir
-		if (FlxG.keys.justPressed.ANY)
+		if (pressedAny)
 		{
 			if (intChar == read.length - 1)
 			{
@@ -863,6 +871,7 @@ class MASKstate extends MusicBeatState
 				charInd = read.length - 1;
 			}
 		}
+
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
 		{
