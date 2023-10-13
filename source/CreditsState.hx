@@ -25,6 +25,22 @@ class CreditsState extends MusicBeatState
 
 	private static var creditsStuff:Array<Dynamic> = [
 		// Name - Icon name - Description - Link - BG Color
+		['Android Port'],
+		[
+			'MAJigsaw77',
+			'jigsaw',
+			'Coder',
+			'https://github.com/MAJigsaw77',
+			0xFF878787
+		],
+		[
+			'Github Credits',
+			'ghub',
+			'Check out the Github contributors',
+			'https://github.com/MAJigsaw77-Ports/the-shaggy-mod/graphs/contributors',
+			0xFF28389D
+		],
+		[''],
 		['The Shaggy mod'],
 		[
 			'srPerez',
@@ -136,13 +152,6 @@ class CreditsState extends MusicBeatState
 			'Note Splash Animations',
 			'https://twitter.com/Keoiki_',
 			0xFFFFFFFF
-		],
-		[
-			'PolybiusProxy',
-			'polybiusproxy',
-			'.MP4 Video Loader Extension',
-			'https://twitter.com/polybiusproxy',
-			0xFFE01F32
 		],
 		[''],
 		["Funkin' Crew"],
