@@ -1,7 +1,6 @@
 package;
 
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.system.FlxAssets;
 import flixel.FlxG;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
@@ -124,7 +123,7 @@ class Paths
 			return getPath('${song.toLowerCase()}/Inst.ogg', MUSIC, 'songs');
 	}
 
-	public static inline function image(key:String, ?library:String):FlxGraphicAsset
+	public static inline function image(key:String, ?library:String):Any
 	{
 		#if MODS_ALLOWED
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
@@ -158,7 +157,7 @@ class Paths
 		return false;
 	}
 
-	public static inline function getSparrowAtlas(key:String, ?library:String)
+	public static inline function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
@@ -170,7 +169,7 @@ class Paths
 		#end
 	}
 
-	public static inline function getPackerAtlas(key:String, ?library:String)
+	public static inline function getPackerAtlas(key:String, ?library:String):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
