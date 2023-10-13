@@ -1,7 +1,7 @@
 package;
 
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.system.FlxGraphicAsset;
+import flixel.system.FlxAssets;
 import flixel.FlxG;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
