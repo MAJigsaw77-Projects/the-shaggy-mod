@@ -78,11 +78,14 @@ class MusicBeatState extends FlxUIState
 		if (hitbox != null)
 			removeHitbox();
 
-		hitbox = new FlxHitbox(4, Std.int(FlxG.width / 4), FlxG.height, [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000]);
+		final ammo:Int = Main.ammo[PlayState.SONG.song.mania];
+
+		// [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000] mania colors
+		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, []);
 		hitbox.visible = visible;
 		add(hitbox);
 
-		controls.setHitbox(hitbox, 0);
+		controls.setHitbox(hitbox, PlayState.SONG.song.mania);
 		trackedInputsHitbox = controls.trackedInputs;
 		controls.trackedInputs = [];
 	}
