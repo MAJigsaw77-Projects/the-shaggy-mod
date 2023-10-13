@@ -109,7 +109,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobile
-			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
 			close();
@@ -130,7 +130,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobile
-			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
 			close();
