@@ -34,7 +34,7 @@ class FlxHitbox extends FlxSpriteGroup
 		super();
 
 		if (colors == null || (colors != null && colors.length < ammo))
-			colors = [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF];
+			colors = [for (i in 0...ammo) 0xFFFFFF];
 
 		for (i in 0...ammo)
 			add(hints[i] = createHint(i * perHintWidth, 0, perHintWidth, perHintHeight, colors[i]));
