@@ -138,7 +138,7 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (FlxG.keys.pressed.R #if mobile || vPad.buttonC.justPressed #end)
+		if (FlxG.keys.pressed.R #if mobile || vPad.buttonC.pressed #end)
 		{
 			resetScreen.alpha += 1 / (120 * 2);
 			if (resetScreen.alpha >= 1)
