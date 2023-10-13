@@ -71,10 +71,23 @@ class MusicBeatSubstate extends FlxSubState
 
 		final ammo:Int = Main.ammo[PlayState.SONG.mania];
 
-		// [0xFF00FF, 0x00FFFF, 0x00FF00, 0xFF0000] mania colors
-		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, []);
-		if (PlayState.SONG.mania == 2)
+		var colors:Array<FlxColor> = [];
 
+		switch (PlayState.SONG.mania)
+		{
+			case 0:
+				colors = [0xC34B9A, 0x00FFFF, 0x12FB06, 0xF9393F];
+			case 1:
+				colors = [0xC34B9A, 0x12FB06, 0xF9393F, 0xFFFF00, 0x00FFFF, 0x0033FF];
+			case 2:
+				colors = [0xC34B9A, 0x12FB06, 0xF9393F, 0xCECECE, 0xFFFF00, 0x00FFFF, 0x0033FF];
+			case 3:
+				colors = [0xC34B9A, 0x00FFFF, 0x12FB06, 0xF9393F, 0xCECECE, 0xFFFF00, 0x8C4AFF, 0xFF0000, 0x0033FF];
+		}
+
+		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, colors);
+
+		if (PlayState.SONG.mania == 2)
 			hitbox.x += 3;
 		else if (PlayState.SONG.mania == 3)
 			hitbox.x += 1;
