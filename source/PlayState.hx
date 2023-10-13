@@ -2535,7 +2535,7 @@ class PlayState extends MusicBeatState
 			switch (zephState)
 			{
 				case 1:
-					var tow = new FlxPoint(dad.getMidpoint().x, dad.getMidpoint().y - 1200);
+					var tow = FlxPoint.weak(dad.getMidpoint().x, dad.getMidpoint().y - 1200);
 					zephAddX -= 1.25;
 
 					var c = tow.y - (zeph.y + zephAddY);
