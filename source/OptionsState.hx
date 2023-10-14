@@ -85,6 +85,8 @@ class OptionsState extends MusicBeatState
 
 		changeSelection();
 
+		ClientPrefs.saveSettings();
+
 		resetScreen = new FlxSprite().makeGraphic(4000, 4000, FlxColor.RED);
 		resetScreen.scrollFactor.set();
 		resetScreen.screenCenter();
@@ -107,8 +109,9 @@ class OptionsState extends MusicBeatState
 	override function closeSubState()
 	{
 		super.closeSubState();
-		ClientPrefs.saveSettings();
+
 		changeSelection();
+		ClientPrefs.saveSettings();
 	}
 
 	override function update(elapsed:Float)
