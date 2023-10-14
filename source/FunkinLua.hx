@@ -713,10 +713,6 @@ class FunkinLua
 			}
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
-		addCallback("spawnNoteSplashes", function(x:Float, y:Float, data:Int = 0, type:Int = 0)
-		{
-			lePlayState.spawnNoteSplash(x, y, data, type);
-		});
 		addCallback("characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false)
 		{
 			switch (character.toLowerCase())

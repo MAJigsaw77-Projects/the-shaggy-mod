@@ -124,8 +124,6 @@ class PlayState extends MusicBeatState
 	public static var maskTrailGroup:FlxTypedGroup<FlxTrail>; // FUCK.
 	public static var maskFxGroup:FlxTypedGroup<FlxSprite>;
 
-	private var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
-
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
 
@@ -267,10 +265,8 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxCamera.defaultCameras = [camGame];
-		// FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		persistentUpdate = true;
 		persistentDraw = true;
@@ -641,14 +637,9 @@ class PlayState extends MusicBeatState
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-		add(grpNoteSplashes);
 
 		maskMouseHud = new FlxTypedGroup<FlxSprite>();
 		add(maskMouseHud);
-
-		var splash:NoteSplash = new NoteSplash(100, 100, 0);
-		grpNoteSplashes.add(splash);
-		splash.alpha = 0.0;
 
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
@@ -725,7 +716,6 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 
 		strumLineNotes.cameras = [camHUD];
-		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
@@ -3497,11 +3487,6 @@ class PlayState extends MusicBeatState
 			score = 200;
 		}
 
-		if (daRating == 'sick')
-		{
-			spawnNoteSplashOnNote(note);
-		}
-
 		if (!practiceMode && !cpuControlled)
 		{
 			songScore += score;
@@ -3968,7 +3953,6 @@ class PlayState extends MusicBeatState
 							if (!note.isSustainNote)
 							{
 								health -= 0.26; // 0.26 + 0.04 = -0.3 (-15%) of HP if you hit a hurt note
-								spawnNoteSplashOnNote(note);
 							}
 							else
 								health -= 0.06; // 0.06 + 0.04 = -0.1 (-5%) of HP if you hit a hurt sustain note
@@ -4069,25 +4053,6 @@ class PlayState extends MusicBeatState
 
 			callOnLuas('goodNoteHit', [leData, leType, isSus]);
 		}
-	}
-
-	function spawnNoteSplashOnNote(note:Note)
-	{
-		/*
-			if(ClientPrefs.noteSplashes && note != null) {
-				var strum:StrumNote = playerStrums.members[note.noteData];
-				if(strum != null) {
-					spawnNoteSplash(strum.x, strum.y, note.noteData, note.noteType);
-				}
-			}
-		 */
-	}
-
-	public function spawnNoteSplash(x:Float, y:Float, data:Int, type:Int)
-	{
-		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, type);
-		grpNoteSplashes.add(splash);
 	}
 
 	override function destroy():Void

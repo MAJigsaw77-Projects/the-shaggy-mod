@@ -1089,9 +1089,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 						}
 						OptionsState.menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 
-					case 'Note Splashes':
-						ClientPrefs.noteSplashes = !ClientPrefs.noteSplashes;
-
 					case 'Flashing Lights':
 						ClientPrefs.flashing = !ClientPrefs.flashing;
 
@@ -1315,8 +1312,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.lowQuality;
 					case 'Anti-Aliasing':
 						daValue = ClientPrefs.globalAntialiasing;
-					case 'Note Splashes':
-						daValue = ClientPrefs.noteSplashes;
 					case 'Flashing Lights':
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
