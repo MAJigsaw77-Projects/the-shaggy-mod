@@ -22,7 +22,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 	var week:Int;
 
 	// Week -1 = Freeplay
-	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
+	public function new(song:String, difficulty:Int, character:String, week:Int = -1):Void
 	{
 		this.song = song;
 		this.difficulty = difficulty;
@@ -31,15 +31,16 @@ class ResetScoreSubState extends MusicBeatSubstate
 		super();
 
 		var name:String = song;
+
 		if (week != -1)
 		{
 			name = 'Week ' + WeekData.getWeekNumber(week);
+
 			var leName:String = WeekData.weekResetName[week];
 			if (leName != null)
-			{
 				name = leName;
-			}
 		}
+
 		name += ' (' + CoolUtil.difficultyStuff[difficulty][0] + ')?';
 
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -47,12 +48,14 @@ class ResetScoreSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
-		var tooLong:Float = (name.length > 18) ? 0.8 : 1; // Fucking Winter Horrorland
+		final tooLong:Float = (name.length > 18) ? 0.8 : 1; // Fucking Winter Horrorland
+
 		var text:Alphabet = new Alphabet(0, 180, "Reset the score of", true);
 		text.screenCenter(X);
 		alphabetArray.push(text);
 		text.alpha = 0;
 		add(text);
+
 		var text:Alphabet = new Alphabet(0, text.y + 90, name, true, false, 0.05, tooLong);
 		text.screenCenter(X);
 		if (week == -1)
@@ -60,6 +63,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		alphabetArray.push(text);
 		text.alpha = 0;
 		add(text);
+
 		if (week == -1)
 		{
 			icon = new HealthIcon(character);
@@ -74,14 +78,19 @@ class ResetScoreSubState extends MusicBeatSubstate
 		yesText.screenCenter(X);
 		yesText.x -= 200;
 		add(yesText);
+
 		noText = new Alphabet(0, text.y + 150, 'No', true);
 		noText.screenCenter(X);
 		noText.x += 200;
 		add(noText);
+
 		updateOptions();
 
 		#if mobile
 		addVPad(LEFT_RIGHT, A_B);
+
+		if (FlxG.state == FreeplayState)
+			vPad.y -= 26;
 		#end
 	}
 
@@ -92,10 +101,8 @@ class ResetScoreSubState extends MusicBeatSubstate
 			bg.alpha = 0.6;
 
 		for (i in 0...alphabetArray.length)
-		{
-			var spr = alphabetArray[i];
-			spr.alpha += elapsed * 2.5;
-		}
+			alphabetArray[i].alpha += elapsed * 2.5;
+
 		if (week == -1)
 			icon.alpha += elapsed * 2.5;
 
@@ -105,6 +112,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 			onYes = !onYes;
 			updateOptions();
 		}
+
 		if (controls.BACK)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
@@ -128,6 +136,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 					Highscore.resetWeek(week, difficulty);
 				}
 			}
+
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobile
 			FlxTransitionableState.skipNextTransOut = true;
@@ -136,19 +145,21 @@ class ResetScoreSubState extends MusicBeatSubstate
 			close();
 			#end
 		}
+
 		super.update(elapsed);
 	}
 
-	function updateOptions()
+	private function updateOptions():Void
 	{
-		var scales:Array<Float> = [0.75, 1];
-		var alphas:Array<Float> = [0.6, 1.25];
-		var confirmInt:Int = onYes ? 1 : 0;
+		final scales:Array<Float> = [0.75, 1];
+		final alphas:Array<Float> = [0.6, 1.25];
+		final confirmInt:Int = onYes ? 1 : 0;
 
 		yesText.alpha = alphas[confirmInt];
 		yesText.scale.set(scales[confirmInt], scales[confirmInt]);
 		noText.alpha = alphas[1 - confirmInt];
 		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
+
 		if (week == -1)
 			icon.animation.curAnim.curFrame = confirmInt;
 	}
