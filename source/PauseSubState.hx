@@ -13,6 +13,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import openfl.system.System;
+#if (target.threaded)
+import sys.thread.Thread;
+#end
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -37,21 +40,25 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
+
 		menuItems = menuItemsOG;
 
-		for (i in 0...CoolUtil.difficultyStuff.length)
+		#if (target.threaded)
+		Thread.create(function()
 		{
-			/*
-				var diff:String = '' + CoolUtil.difficultyStuff[i][0];
-				difficultyChoices.push(diff);
-			 */
-		}
+			pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
+			pauseMusic.volume = 0;
+			pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
+			FlxG.sound.list.add(pauseMusic);
+		});
+		#else
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
 		FlxG.sound.list.add(pauseMusic);
+		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
@@ -154,7 +161,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
-		if (pauseMusic.volume < 0.5)
+		if (pauseMusic != null && pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
@@ -244,7 +251,8 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function destroy()
 	{
-		pauseMusic.destroy();
+		if (pauseMusic != null)
+			pauseMusic.destroy();
 
 		super.destroy();
 	}
