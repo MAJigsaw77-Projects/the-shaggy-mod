@@ -20,7 +20,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
-import Achievements;
 
 using StringTools;
 
