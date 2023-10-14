@@ -147,7 +147,6 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
-		// logoBl.shader = swagShader.shader;
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);

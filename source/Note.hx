@@ -29,7 +29,6 @@ class Note extends FlxSprite
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
 
-	public var colorSwap:ColorSwap;
 	public var inEditor:Bool = false;
 
 	public static var scales:Array<Float> = [0.7, 0.6, 0.55, 0.46];
@@ -50,17 +49,11 @@ class Note extends FlxSprite
 			{
 				case 3: // Hurt note
 					reloadNote('HURT');
-					colorSwap.hue = 0;
-					colorSwap.saturation = 0;
-					colorSwap.brightness = 0;
-
-				default:
-					colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-					colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-					colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 			}
+
 			noteType = value;
 		}
+
 		return value;
 	}
 
@@ -121,15 +114,6 @@ class Note extends FlxSprite
 
 		if (noteData > -1)
 		{
-			/*
-				colorSwap = new ColorSwap();
-				shader = colorSwap.shader;
-
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
-			 */
-
 			x += swidths[mania] * swagWidth * (noteData % Main.ammo[mania]);
 			if (!isSustainNote)
 			{ // Doing this 'if' check to fix the warnings on Senpai songs
