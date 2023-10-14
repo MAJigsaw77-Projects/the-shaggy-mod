@@ -135,7 +135,6 @@ class PauseSubState extends MusicBeatSubstate
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(blueballedTxt, {alpha: 1, y: blueballedTxt.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
-
 		FlxTween.tween(controls, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
@@ -153,6 +152,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		#if mobile
 		addVPad(UP_DOWN, A);
+
+		vpad.y -= 40;
+
 		addVPadCamera();
 		#end
 
