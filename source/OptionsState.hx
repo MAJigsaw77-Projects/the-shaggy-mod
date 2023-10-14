@@ -138,9 +138,10 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (FlxG.keys.pressed.R #if mobile || vPad.buttonC.pressed #end)
+		if ((FlxG.keys.pressed.R #if mobile || vPad.buttonC.pressed #end) && options[curSelected] == 'Reset data')
 		{
 			resetScreen.alpha += 1 / (120 * 2);
+
 			if (resetScreen.alpha >= 1)
 			{
 				FlxG.save.data.p_InSet = null;
@@ -153,9 +154,8 @@ class OptionsState extends MusicBeatState
 			}
 		}
 		else
-		{
 			resetScreen.alpha = 0;
-		}
+
 		if (controls.ACCEPT)
 		{
 			if (curSelected != 0 && curSelected != 3)
