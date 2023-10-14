@@ -170,8 +170,6 @@ class PlayState extends MusicBeatState
 	var phillyBlack:BGSprite;
 	var phillyBlackTween:FlxTween;
 
-	var limoKillingState:Int = 0;
-
 	var heyTimer:Float;
 
 	public var songScore:Int = 0;
@@ -2007,7 +2005,6 @@ class PlayState extends MusicBeatState
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
-	var limoSpeed:Float = 0;
 
 	// ass crack
 	var sh_r:Float = 600;
