@@ -205,11 +205,6 @@ class PlayState extends MusicBeatState
 
 	var luaArray:Array<FunkinLua> = [];
 
-	// Achievement shit
-	var keysPressed:Array<Bool> = [false, false, false, false];
-	var boyfriendIdleTime:Float = 0.0;
-	var boyfriendIdled:Bool = false;
-
 	// Lua shit
 	public var backgroundGroup:FlxTypedGroup<FlxSprite>;
 	public var foregroundGroup:FlxTypedGroup<FlxSprite>;
@@ -1881,8 +1876,6 @@ class PlayState extends MusicBeatState
 
 			if (phillyBlackTween != null)
 				phillyBlackTween.active = false;
-			if (phillyCityLightsEventTween != null)
-				phillyCityLightsEventTween.active = false;
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (i in 0...chars.length)
@@ -1915,8 +1908,6 @@ class PlayState extends MusicBeatState
 
 			if (phillyBlackTween != null)
 				phillyBlackTween.active = true;
-			if (phillyCityLightsEventTween != null)
-				phillyCityLightsEventTween.active = true;
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (i in 0...chars.length)
@@ -2259,19 +2250,8 @@ class PlayState extends MusicBeatState
 		if (!inCutscene)
 		{
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4, 0, 1) * camLerp;
+
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
-			if (!startingSong && !endingSong && boyfriend.animation.curAnim.name.startsWith('idle'))
-			{
-				boyfriendIdleTime += elapsed;
-				if (boyfriendIdleTime >= 0.15)
-				{ // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
-					boyfriendIdled = true;
-				}
-			}
-			else
-			{
-				boyfriendIdleTime = 0;
-			}
 		}
 
 		super.update(elapsed); // TEST
@@ -3010,12 +2990,6 @@ class PlayState extends MusicBeatState
 						gf.specialAnim = true;
 						gf.heyTimer = time;
 					}
-
-					if (curStage == 'mall')
-					{
-						bottomBoppers.animation.play('hey', true);
-						heyTimer = time;
-					}
 				}
 				if (value != 1)
 				{
@@ -3043,32 +3017,6 @@ class PlayState extends MusicBeatState
 								{
 									phillyBlackTween = null;
 								}
-							});
-						}
-
-						phillyCityLights.forEach(function(spr:BGSprite)
-						{
-							spr.visible = false;
-						});
-						phillyCityLightsEvent.forEach(function(spr:BGSprite)
-						{
-							spr.visible = false;
-						});
-
-						var memb:FlxSprite = phillyCityLightsEvent.members[curLightEvent - 1];
-						if (memb != null)
-						{
-							memb.visible = true;
-							memb.alpha = 1;
-							if (phillyCityLightsEventTween != null)
-								phillyCityLightsEventTween.cancel();
-
-							phillyCityLightsEventTween = FlxTween.tween(memb, {alpha: 0}, 1, {
-								onComplete: function(twn:FlxTween)
-								{
-									phillyCityLightsEventTween = null;
-								},
-								ease: FlxEase.quadInOut
 							});
 						}
 
@@ -3824,14 +3772,6 @@ class PlayState extends MusicBeatState
 						goodNoteHit(daNote);
 					}
 				});
-
-				#if ACHIEVEMENTS_ALLOWED
-				var achieve:Int = checkForAchievement([11]);
-				if (achieve > -1)
-				{
-					startAchievement(achieve);
-				}
-				#end
 			}
 			else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration
 				&& boyfriend.animation.curAnim.name.startsWith('sing')
@@ -3910,12 +3850,6 @@ class PlayState extends MusicBeatState
 				}
 				else if (canMiss)
 					badNoteHit();
-
-				for (i in 0...keysPressed.length)
-				{
-					if (!keysPressed[i] && controlArray[i])
-						keysPressed[i] = true;
-				}
 			}
 		}
 
