@@ -89,7 +89,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		#if mobile
 		addVPad(LEFT_RIGHT, A_B);
 
-		if (FlxG.state == FreeplayState)
+		if (FlxG.state is FreeplayState)
 			vPad.y -= 26;
 		#end
 	}
