@@ -3090,8 +3090,6 @@ class PlayState extends MusicBeatState
 
 						curLight = 0;
 						curLightEvent = 0;
-					}
-
 			case 'Add Camera Zoom':
 				if (ClientPrefs.camZooms && FlxG.camera.zoom < 1.35)
 				{
@@ -3499,29 +3497,6 @@ class PlayState extends MusicBeatState
 			cpuControlled = false;
 		}
 	}
-
-	#if ACHIEVEMENTS_ALLOWED
-	var achievementObj:AchievementObject = null;
-
-	function startAchievement(achieve:Int)
-	{
-		achievementObj = new AchievementObject(achieve, camOther);
-		achievementObj.onFinish = achievementEnd;
-		add(achievementObj);
-		trace('Giving achievement ' + achieve);
-	}
-
-	function achievementEnd():Void
-	{
-		endSong();
-		/*
-			achievementObj = null;
-			if(endingSong && !inCutscene) {
-				
-			}
-		 */
-	}
-	#end
 
 	private function KillNotes()
 	{
@@ -4385,92 +4360,6 @@ class PlayState extends MusicBeatState
 			setOnLuas('ratingName', ratingString);
 		}
 	}
-
-	#if ACHIEVEMENTS_ALLOWED
-	private function checkForAchievement(arrayIDs:Array<Int>):Int
-	{
-		for (i in 0...arrayIDs.length)
-		{
-			if (!Achievements.achievementsUnlocked[arrayIDs[i]][1])
-			{
-				switch (arrayIDs[i])
-				{
-					case 1 | 2 | 3 | 4 | 5 | 6 | 7:
-						if (isStoryMode
-							&& campaignMisses + songMisses < 1
-							&& CoolUtil.difficultyString() == 'Hard'
-							&& storyPlaylist.length <= 1
-							&& WeekData.getCurrentWeekNumber() == arrayIDs[i]
-							&& !changedDifficulty
-							&& !usedPractice)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 8:
-						if (ratingPercent < 0.2 && !practiceMode && !cpuControlled)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 9:
-						if (ratingPercent >= 1 && !usedPractice && !cpuControlled)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 10:
-						if (Achievements.henchmenDeath >= 100)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 11:
-						if (boyfriend.holdTimer >= 20 && !usedPractice)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 12:
-						if (!boyfriendIdled && !usedPractice)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 13:
-						if (!usedPractice)
-						{
-							var howManyPresses:Int = 0;
-							for (j in 0...keysPressed.length)
-							{
-								if (keysPressed[j])
-									howManyPresses++;
-							}
-
-							if (howManyPresses <= 2)
-							{
-								Achievements.unlockAchievement(arrayIDs[i]);
-								return arrayIDs[i];
-							}
-						}
-					case 14:
-						if (ClientPrefs.framerate <= 60 && ClientPrefs.lowQuality && !ClientPrefs.globalAntialiasing && !ClientPrefs.imagesPersist)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-					case 15:
-						if (SONG.song.toLowerCase() == 'test' && !usedPractice)
-						{
-							Achievements.unlockAchievement(arrayIDs[i]);
-							return arrayIDs[i];
-						}
-				}
-			}
-		}
-		return -1;
-	}
-	#end
 
 	public function godIntro()
 	{
