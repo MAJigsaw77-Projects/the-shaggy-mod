@@ -26,13 +26,7 @@ class CreditsState extends MusicBeatState
 	private static var creditsStuff:Array<Dynamic> = [
 		// Name - Icon name - Description - Link - BG Color
 		['Android Port'],
-		[
-			'MAJigsaw77',
-			'jigsaw',
-			'Coder',
-			'https://github.com/MAJigsaw77',
-			0xFF878787
-		],
+		['MAJigsaw77', 'jigsaw', 'Coder', 'https://github.com/MAJigsaw77', 0xFF878787],
 		[
 			'Github Credits',
 			'ghub',

@@ -1256,7 +1256,7 @@ class PlayState extends MusicBeatState
 											});
 									}
 								}
-			
+
 								talk = 0;
 								dropText.alpha = 0;
 								curr_dial = 0;
@@ -3004,39 +3004,39 @@ class PlayState extends MusicBeatState
 				gfSpeed = value;
 
 			case 'Blammed Lights':
-						if (phillyBlack.alpha != 0)
+				if (phillyBlack.alpha != 0)
+				{
+					if (phillyBlackTween != null)
+					{
+						phillyBlackTween.cancel();
+					}
+					phillyBlackTween = FlxTween.tween(phillyBlack, {alpha: 0}, 1, {
+						ease: FlxEase.quadInOut,
+						onComplete: function(twn:FlxTween)
 						{
-							if (phillyBlackTween != null)
-							{
-								phillyBlackTween.cancel();
-							}
-							phillyBlackTween = FlxTween.tween(phillyBlack, {alpha: 0}, 1, {
-								ease: FlxEase.quadInOut,
-								onComplete: function(twn:FlxTween)
-								{
-									phillyBlackTween = null;
-								}
-							});
+							phillyBlackTween = null;
 						}
+					});
+				}
 
-						var chars:Array<Character> = [boyfriend, gf, dad];
-						for (i in 0...chars.length)
+				var chars:Array<Character> = [boyfriend, gf, dad];
+				for (i in 0...chars.length)
+				{
+					if (chars[i].colorTween != null)
+					{
+						chars[i].colorTween.cancel();
+					}
+					chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {
+						onComplete: function(twn:FlxTween)
 						{
-							if (chars[i].colorTween != null)
-							{
-								chars[i].colorTween.cancel();
-							}
-							chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {
-								onComplete: function(twn:FlxTween)
-								{
-									chars[i].colorTween = null;
-								},
-								ease: FlxEase.quadInOut
-							});
-						}
+							chars[i].colorTween = null;
+						},
+						ease: FlxEase.quadInOut
+					});
+				}
 
-						curLight = 0;
-						curLightEvent = 0;
+				curLight = 0;
+				curLightEvent = 0;
 			case 'Add Camera Zoom':
 				if (ClientPrefs.camZooms && FlxG.camera.zoom < 1.35)
 				{
@@ -3881,35 +3881,35 @@ class PlayState extends MusicBeatState
 		{
 			case 1:
 				controlArray = [
-			controls.A1_P,
-			controls.A2_P,
-			controls.A3_P,
-			controls.A5_P,
-			controls.A6_P,
-			controls.A7_P
-		];
+					controls.A1_P,
+					controls.A2_P,
+					controls.A3_P,
+					controls.A5_P,
+					controls.A6_P,
+					controls.A7_P
+				];
 			case 2:
 				controlArray = [
-			controls.A1_P,
-			controls.A2_P,
-			controls.A3_P,
-			controls.A4_P,
-			controls.A5_P,
-			controls.A6_P,
-			controls.A7_P
-		];
+					controls.A1_P,
+					controls.A2_P,
+					controls.A3_P,
+					controls.A4_P,
+					controls.A5_P,
+					controls.A6_P,
+					controls.A7_P
+				];
 			case 3:
 				controlArray = [
-			controls.B1_P,
-			controls.B2_P,
-			controls.B3_P,
-			controls.B4_P,
-			controls.B5_P,
-			controls.B6_P,
-			controls.B7_P,
-			controls.B8_P,
-			controls.B9_P
-		];
+					controls.B1_P,
+					controls.B2_P,
+					controls.B3_P,
+					controls.B4_P,
+					controls.B5_P,
+					controls.B6_P,
+					controls.B7_P,
+					controls.B8_P,
+					controls.B9_P
+				];
 		}
 
 		for (i in 0...controlArray.length)

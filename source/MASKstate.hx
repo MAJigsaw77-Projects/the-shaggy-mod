@@ -414,7 +414,7 @@ class MASKstate extends MusicBeatState
 						optShown = 2;
 
 					var selS = 'q' + (optSelect + 1) + '-' + (optShown + 1);
-	
+
 					#if mobile
 					vPad.visible = false;
 					#end
