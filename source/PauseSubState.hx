@@ -153,7 +153,7 @@ class PauseSubState extends MusicBeatSubstate
 		#if mobile
 		addVPad(UP_DOWN, A);
 
-		vpad.y -= 40;
+		vPad.y -= 40;
 
 		addVPadCamera();
 		#end
