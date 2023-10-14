@@ -41,7 +41,6 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.media.Video;
-import Achievements;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.system.System;
 #if VIDEOS_ALLOWED
