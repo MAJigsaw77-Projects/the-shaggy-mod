@@ -435,8 +435,17 @@ class MASKstate extends MusicBeatState
 					}
 				}
 			case 4: // Prompt menu
+				#if mobile
+				if (!vPad.visible)
+					vPad.visible = true;
+				#end
+
 				if (controls.ACCEPT)
 				{
+					#if mobile
+					vPad.visible = false;
+					#end
+
 					loadData(afterData[optSelect + 2]);
 					textSetup();
 				}
