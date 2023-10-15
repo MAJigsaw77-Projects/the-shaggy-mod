@@ -4470,9 +4470,9 @@ class PlayState extends MusicBeatState
 
 					dad.playAnim('stand', true);
 
-					dad.setPosition(100, 100);
-					boyfriend.setPosition(770, 450);
-					gf.setPosition(400, 130);
+					dad.setPosition(DAD_X, DAD_Y);
+					boyfriend.setPosition(BF_X, BF_Y + 350);
+					gf.setPosition(GF_X, GF_Y);
 
 					cs_cam.y = boyfriend.y;
 					cs_cam.x += 100;
