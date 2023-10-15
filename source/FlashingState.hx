@@ -19,14 +19,15 @@ class FlashingState extends MusicBeatState
 
 	override function create()
 	{
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		add(bg);
+		add(new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK));
 
-		warnText = new FlxText(0, 0, FlxG.width, "Hey, watch out!\n
-			This Mod contains some flashing lights!\n
-			Press ENTER to disable them now or go to Options Menu.\n
-			Press ESCAPE to ignore this message.\n
-			You've been warned!", 32);
+		#if mobile
+		final leText:String = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress A to disable them now or go to Options Menu.\nPress B to ignore this message.\nYou've been warned!";
+		#else
+		final leText:String = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress ENTER to disable them now or go to Options Menu.\nPress ESCAPE to ignore this message.\nYou've been warned!";
+		#end
+		
+		warnText = new FlxText(0, 0, FlxG.width, leText, 32);
 		warnText.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
@@ -46,8 +47,10 @@ class FlashingState extends MusicBeatState
 			if (controls.ACCEPT || back)
 			{
 				leftState = true;
+
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
+
 				if (!back)
 				{
 					ClientPrefs.flashing = false;
@@ -79,6 +82,7 @@ class FlashingState extends MusicBeatState
 				}
 			}
 		}
+
 		super.update(elapsed);
 	}
 }
