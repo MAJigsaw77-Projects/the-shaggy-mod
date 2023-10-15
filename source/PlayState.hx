@@ -2035,7 +2035,7 @@ class PlayState extends MusicBeatState
 		{
 			if (FlxG.keys.justPressed.UP)
 				bgTarget++;
-			if (FlxG.keys.justPressed.DOWN)
+			else if (FlxG.keys.justPressed.DOWN)
 				bgTarget--;
 		}
 
@@ -2048,10 +2048,10 @@ class PlayState extends MusicBeatState
 				var rotRateSh = curStep / 9.5;
 				var rotRateGf = curStep / 9.5 / 4;
 				var derp = 12;
+
 				if (!startedCountdown)
 				{
-					camFollow.x = boyfriend.x - 300;
-					camFollow.y = boyfriend.y - 40;
+					camFollow.setPosition(boyfriend.x - 300, boyfriend.y - 40);
 					derp = 20;
 				}
 
@@ -2066,6 +2066,7 @@ class PlayState extends MusicBeatState
 						}
 						maskCreated = true;
 					}
+
 					if (curBeat < 32)
 					{
 						sh_r = 60;
@@ -2087,20 +2088,15 @@ class PlayState extends MusicBeatState
 						}
 					}
 
-					if (curBeat < 58 * 4)
-					{
-					}
-					else if (curBeat < 74 * 4)
+					if (curBeat < 74 * 4)
 					{
 						rotRateSh *= 1.2;
-					}
-					else if (curBeat < 124 * 4)
-					{
 					}
 					else if (curBeat < 140 * 4)
 					{
 						rotRateSh *= 1.2;
 					}
+
 					var bf_toy = -2000 + Math.sin(rotRate) * 20 + bfControlY;
 
 					var sh_toy = -2450 + -Math.sin(rotRateSh * 2) * sh_r * 0.45;
@@ -2112,23 +2108,20 @@ class PlayState extends MusicBeatState
 					if (godMoveBf)
 					{
 						boyfriend.y += (bf_toy - boyfriend.y) / derp;
-						rock.x = boyfriend.x - 200;
-						rock.y = boyfriend.y + 200;
+						rock.setPosition(boyfriend.x - 200, boyfriend.y + 200);
 						rock.alpha = 1;
+
 						if (true) // (!PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 						{
 							if (FlxG.keys.pressed.UP && bfControlY > 0)
 							{
 								bfControlY--;
 							}
-							if (FlxG.keys.pressed.DOWN && bfControlY < 2290)
+							else if (FlxG.keys.pressed.DOWN && bfControlY < 2290)
 							{
-								trace(bfControlY);
 								bfControlY++;
 								if (bfControlY >= 400)
-								{
 									alterRoute = 1;
-								}
 							}
 						}
 					}
@@ -2140,23 +2133,21 @@ class PlayState extends MusicBeatState
 
 						if (dad.animation.name == 'idle')
 						{
-							var pene = 0.07;
+							final pene:Float = 0.07;
+
 							dad.angle = Math.sin(rotRateSh) * sh_r * pene / 4;
 
 							legs.alpha = 1;
 							legs.angle = Math.sin(rotRateSh) * sh_r * pene; // + Math.cos(curStep) * 5;
-
-							legs.x = dad.x + 120 + Math.cos((legs.angle + 90) * (Math.PI / 180)) * 150;
-							legs.y = dad.y + 300 + Math.sin((legs.angle + 90) * (Math.PI / 180)) * 150;
+							legs.setPosition(dad.x + 120 + Math.cos((legs.angle + 90) * (Math.PI / 180)) * 150, dad.y + 300 + Math.sin((legs.angle + 90) * (Math.PI / 180)) * 150);
 						}
 						else
 						{
 							dad.angle = 0;
 							legs.alpha = 0;
 						}
-						legT.visible = true;
-						if (legs.alpha == 0)
-							legT.visible = false;
+
+						legT.alpha = legs.alpha;
 					}
 
 					if (godMoveGf)
@@ -2167,6 +2158,7 @@ class PlayState extends MusicBeatState
 						gf_rock.x = gf.x + 80;
 						gf_rock.y = gf.y + 530;
 						gf_rock.alpha = 1;
+
 						if (!gf_launched)
 						{
 							gf.scrollFactor.set(0.8, 0.8);
@@ -2175,10 +2167,12 @@ class PlayState extends MusicBeatState
 						}
 					}
 				}
+
 				if (!godCutEnd || !godMoveBf)
 				{
 					rock.alpha = 0;
 				}
+
 				if (!godMoveGf)
 				{
 					gf_rock.alpha = 0;
@@ -2187,10 +2181,10 @@ class PlayState extends MusicBeatState
 				if (dad.curCharacter == 'wbshaggy')
 				{
 					rotInd++;
-					var rot = rotInd / 6;
 
-					dad.x = DAD_X + Math.cos(rot / 3) * 20 + wb_eX;
-					dad.y = DAD_Y + Math.cos(rot / 5) * 40 + wb_eY;
+					final rot:Float = rotInd / 6;
+
+					dad.setPosition(DAD_X + Math.cos(rot / 3) * 20 + wb_eX, DAD_Y + Math.cos(rot / 5) * 40 + wb_eY);
 				}
 		}
 
@@ -2937,19 +2931,18 @@ class PlayState extends MusicBeatState
 				vocals.play();
 			}
 		}
+		#end
 
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', PlayState.cpuControlled);
+
 		callOnLuas('onUpdatePost', [elapsed]);
-		#end
 	}
 
-	public function getControl(key:String)
+	public function getControl(key:String):Bool
 	{
-		var pressed:Bool = Reflect.getProperty(controls, key);
-		// trace('Control result: ' + pressed);
-		return pressed;
+		return Reflect.getProperty(controls, key);
 	}
 
 	public function triggerEventNote(eventName:String, value1:String, value2:String, ?onLua:Bool = false)
@@ -3194,10 +3187,9 @@ class PlayState extends MusicBeatState
 					maskCollGroup.add(maskObj);
 				}
 		}
+
 		if (!onLua)
-		{
 			callOnLuas('onEvent', [eventName, value1, value2]);
-		}
 	}
 
 	function moveCameraSection(?id:Int = 0):Void
@@ -3220,16 +3212,12 @@ class PlayState extends MusicBeatState
 		if (isDad)
 		{
 			camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+
 			camFollow.x += dad.cameraPosition[0];
 			camFollow.y += dad.cameraPosition[1];
 
 			if (dad.curCharacter.startsWith('mom'))
 				vocals.volume = 1;
-
-			if (SONG.song.toLowerCase() == 'tutorial')
-			{
-				tweenCamIn();
-			}
 		}
 		else
 		{
@@ -3289,12 +3277,14 @@ class PlayState extends MusicBeatState
 		KillNotes();
 
 		callOnLuas('onEndSong', []);
+
 		if (SONG.validScore)
 		{
 			#if !switch
 			var percent:Float = ratingPercent;
 			if (Math.isNaN(percent))
 				percent = 0;
+
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 			#end
 		}
@@ -3437,6 +3427,7 @@ class PlayState extends MusicBeatState
 			notes.remove(daNote, true);
 			daNote.destroy();
 		}
+
 		unspawnNotes = [];
 		eventNotes = [];
 	}
