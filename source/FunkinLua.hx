@@ -97,7 +97,7 @@ class FunkinLua
 		set('mustHitSection', false);
 		set('botPlay', PlayState.cpuControlled);
 
-		for (i in 0...4)
+		for (i in 0...Main.ammo[PlayState.SONG.mania])
 		{
 			set('defaultPlayerStrumX' + i, 0);
 			set('defaultPlayerStrumY' + i, 0);
