@@ -25,12 +25,6 @@ using StringTools;
 
 class MASKstate extends MusicBeatState
 {
-	public static var curSelected:Int = 0;
-
-	var menuItems:FlxTypedGroup<FlxSprite>;
-	private var camGame:FlxCamera;
-	private var camAchievement:FlxCamera;
-
 	var dtBg:FlxBackdrop;
 	var dtBgBg:FlxBackdrop;
 
@@ -118,17 +112,6 @@ class MASKstate extends MusicBeatState
 		introWait = 200;
 		FlxG.sound.music.fadeOut(1, 0);
 		musicPlaying = false;
-
-		camGame = new FlxCamera();
-		camAchievement = new FlxCamera();
-		camAchievement.bgColor.alpha = 0;
-
-		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camAchievement);
-		FlxCamera.defaultCameras = [camGame];
-
-		transIn = FlxTransitionableState.defaultTransIn;
-		transOut = FlxTransitionableState.defaultTransOut;
 
 		persistentUpdate = persistentDraw = true;
 
