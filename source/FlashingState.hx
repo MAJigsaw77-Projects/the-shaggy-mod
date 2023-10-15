@@ -34,7 +34,7 @@ class FlashingState extends MusicBeatState
 			Press ESCAPE to ignore this message.\n
 			You've been warned!";
 		#end
-		
+
 		warnText = new FlxText(0, 0, FlxG.width, leText, 32);
 		warnText.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);

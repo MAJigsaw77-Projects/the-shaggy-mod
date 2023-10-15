@@ -2046,7 +2046,12 @@ class PlayState extends MusicBeatState
 
 							legs.alpha = 1;
 							legs.angle = Math.sin(rotRateSh) * sh_r * pene; // + Math.cos(curStep) * 5;
-							legs.setPosition(dad.x + 120 + Math.cos((legs.angle + 90) * (Math.PI / 180)) * 150, dad.y + 300 + Math.sin((legs.angle + 90) * (Math.PI / 180)) * 150);
+							legs.setPosition(dad.x
+								+ 120
+								+ Math.cos((legs.angle + 90) * (Math.PI / 180)) * 150,
+								dad.y
+								+ 300
+								+ Math.sin((legs.angle + 90) * (Math.PI / 180)) * 150);
 						}
 						else
 						{
@@ -3492,92 +3497,102 @@ class PlayState extends MusicBeatState
 
 	private function keyShit():Void
 	{
-		var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
-		var controlReleaseArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
+		var controlArray:Array<Bool> = [
+			controls.NOTE_LEFT_P,
+			controls.NOTE_DOWN_P,
+			controls.NOTE_UP_P,
+			controls.NOTE_RIGHT_P
+		];
+		var controlReleaseArray:Array<Bool> = [
+			controls.NOTE_LEFT_R,
+			controls.NOTE_DOWN_R,
+			controls.NOTE_UP_R,
+			controls.NOTE_RIGHT_R
+		];
 		var controlHoldArray:Array<Bool> = [controls.NOTE_LEFT, controls.NOTE_DOWN, controls.NOTE_UP, controls.NOTE_RIGHT];
 
 		switch (mania)
 		{
 			case 1:
 				controlArray = [
-			controls.A1_P,
-			controls.A2_P,
-			controls.A3_P,
-			controls.A5_P,
-			controls.A6_P,
-			controls.A7_P
-		];
+					controls.A1_P,
+					controls.A2_P,
+					controls.A3_P,
+					controls.A5_P,
+					controls.A6_P,
+					controls.A7_P
+				];
 				controlReleaseArray = [
-			controls.A1_R,
-			controls.A2_R,
-			controls.A3_R,
-			controls.A5_R,
-			controls.A6_R,
-			controls.A7_R
-		];
+					controls.A1_R,
+					controls.A2_R,
+					controls.A3_R,
+					controls.A5_R,
+					controls.A6_R,
+					controls.A7_R
+				];
 				controlHoldArray = [controls.A1, controls.A2, controls.A3, controls.A5, controls.A6, controls.A7];
 			case 2:
 				controlArray = [
-			controls.A1_P,
-			controls.A2_P,
-			controls.A3_P,
-			controls.A4_P,
-			controls.A5_P,
-			controls.A6_P,
-			controls.A7_P
-		];
+					controls.A1_P,
+					controls.A2_P,
+					controls.A3_P,
+					controls.A4_P,
+					controls.A5_P,
+					controls.A6_P,
+					controls.A7_P
+				];
 				controlReleaseArray = [
-			controls.A1_R,
-			controls.A2_R,
-			controls.A3_R,
-			controls.A4_R,
-			controls.A5_R,
-			controls.A6_R,
-			controls.A7_R
-		];
+					controls.A1_R,
+					controls.A2_R,
+					controls.A3_R,
+					controls.A4_R,
+					controls.A5_R,
+					controls.A6_R,
+					controls.A7_R
+				];
 				controlHoldArray = [
-			controls.A1,
-			controls.A2,
-			controls.A3,
-			controls.A4,
-			controls.A5,
-			controls.A6,
-			controls.A7
-		];
+					controls.A1,
+					controls.A2,
+					controls.A3,
+					controls.A4,
+					controls.A5,
+					controls.A6,
+					controls.A7
+				];
 			case 3:
 				controlArray = [
-			controls.B1_P,
-			controls.B2_P,
-			controls.B3_P,
-			controls.B4_P,
-			controls.B5_P,
-			controls.B6_P,
-			controls.B7_P,
-			controls.B8_P,
-			controls.B9_P
-		];
+					controls.B1_P,
+					controls.B2_P,
+					controls.B3_P,
+					controls.B4_P,
+					controls.B5_P,
+					controls.B6_P,
+					controls.B7_P,
+					controls.B8_P,
+					controls.B9_P
+				];
 				controlReleaseArray = [
-			controls.B1_R,
-			controls.B2_R,
-			controls.B3_R,
-			controls.B4_R,
-			controls.B5_R,
-			controls.B6_R,
-			controls.B7_R,
-			controls.B8_R,
-			controls.B9_R
-		];
+					controls.B1_R,
+					controls.B2_R,
+					controls.B3_R,
+					controls.B4_R,
+					controls.B5_R,
+					controls.B6_R,
+					controls.B7_R,
+					controls.B8_R,
+					controls.B9_R
+				];
 				controlHoldArray = [
-			controls.B1,
-			controls.B2,
-			controls.B3,
-			controls.B4,
-			controls.B5,
-			controls.B6,
-			controls.B7,
-			controls.B8,
-			controls.B9
-		];
+					controls.B1,
+					controls.B2,
+					controls.B3,
+					controls.B4,
+					controls.B5,
+					controls.B6,
+					controls.B7,
+					controls.B8,
+					controls.B9
+				];
 		}
 
 		if (!boyfriend.stunned && generatedMusic)
