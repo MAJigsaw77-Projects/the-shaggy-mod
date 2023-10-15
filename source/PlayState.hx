@@ -1476,6 +1476,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
 					case 4:
 				}
+
 				callOnLuas('onCountdownTick', [swagCounter]);
 
 				if (generatedMusic)
@@ -3191,6 +3192,12 @@ class PlayState extends MusicBeatState
 			new FlxTimer().start(0.003, function(fadear:FlxTimer)
 			{
 				final decAl:Float = 0.01;
+
+				strumLineNotes.forEach(function(spr:StrumNote)
+				{
+					spr.alpha -= decAl;
+				});
+
 				healthBarBG.alpha -= decAl;
 				healthBar.alpha -= decAl;
 				iconP1.alpha -= decAl;
