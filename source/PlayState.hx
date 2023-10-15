@@ -539,6 +539,7 @@ class PlayState extends MusicBeatState
 			shaggyT = new FlxTrail(dad, null, 3, 6, 0.3, 0.002);
 			shaggyT.visible = false;
 			add(shaggyT);
+
 			camLerp = 2;
 		}
 		else if (SONG.player2 == 'pshaggy')
@@ -2056,7 +2057,7 @@ class PlayState extends MusicBeatState
 						if (legs.alpha == 0.00001)
 							legT.alpha = 0.00001;
 						else
-							legT.alpha = 0.3;
+							legT.alpha = shaggyT.alpha;
 					}
 
 					if (godMoveGf)
@@ -4474,6 +4475,9 @@ class PlayState extends MusicBeatState
 					boyfriend.setPosition(BF_X, BF_Y + 350);
 					gf.setPosition(GF_X, GF_Y);
 
+					gf.scrollFactor.set(1, 1);
+					gf.setGraphicSize(gf.width, gf.height);
+
 					cs_cam.y = boyfriend.y;
 					cs_cam.x += 100;
 					cs_zoom = 0.8;
@@ -4576,7 +4580,6 @@ class PlayState extends MusicBeatState
 			title.antialiasing = ClientPrefs.globalAntialiasing;
 			title.scrollFactor.set();
 			title.centerOffsets();
-			// title.active = false;
 			add(title);
 
 			new FlxTimer().start(2.5, function(tmrth:FlxTimer)
