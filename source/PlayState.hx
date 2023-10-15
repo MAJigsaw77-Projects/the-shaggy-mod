@@ -2147,7 +2147,7 @@ class PlayState extends MusicBeatState
 							legs.alpha = 0;
 						}
 
-						legT.alpha = legs.alpha;
+						legT.alpha = legs.alpha == 0 ? 0 : 0.3;
 					}
 
 					if (godMoveGf)
