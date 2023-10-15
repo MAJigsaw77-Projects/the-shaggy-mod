@@ -100,7 +100,7 @@ class CharacterEditorState extends MusicBeatState
 		cameraFollowPointer.color = FlxColor.WHITE;
 		add(cameraFollowPointer);
 
-		changeBGbutton = new FlxButton(FlxG.width - 360, 25, "", function()
+		changeBGbutton = new FlxButton(FlxG.width - 360, 25, '', function()
 		{
 			onPixelBG = !onPixelBG;
 			reloadBGs();
@@ -554,7 +554,7 @@ class CharacterEditorState extends MusicBeatState
 			};
 			if (indices != null && indices.length > 0)
 			{
-				char.animation.addByIndices(newAnim.anim, newAnim.name, newAnim.indices, "", newAnim.fps, newAnim.loop);
+				char.animation.addByIndices(newAnim.anim, newAnim.name, newAnim.indices, '', newAnim.fps, newAnim.loop);
 			}
 			else
 			{
@@ -725,7 +725,7 @@ class CharacterEditorState extends MusicBeatState
 				var animIndices:Array<Int> = anim.indices;
 				if (animIndices != null && animIndices.length > 0)
 				{
-					char.animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
+					char.animation.addByIndices(animAnim, animName, animIndices, '', animFps, animLoop);
 				}
 				else
 				{

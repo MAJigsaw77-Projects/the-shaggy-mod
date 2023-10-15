@@ -136,14 +136,14 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, '', 32);
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 
 		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, '', 24);
 		diffText.font = scoreText.font;
 		add(diffText);
 
@@ -418,9 +418,9 @@ class FreeplayState extends MusicBeatState
 
 class SongMetadata
 {
-	public var songName:String = "";
+	public var songName:String = '';
 	public var week:Int = 0;
-	public var songCharacter:String = "";
+	public var songCharacter:String = '';
 	public var color:Int = -7179779;
 
 	public function new(song:String, week:Int, songCharacter:String)

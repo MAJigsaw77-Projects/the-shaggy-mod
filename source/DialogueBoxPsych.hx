@@ -73,7 +73,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		bgFade = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
 		bgFade.scrollFactor.set();
 		bgFade.visible = true;
-		bgFade.alpha = 0;
+		bgFade.alpha = 0.00001;
 		add(bgFade);
 
 		this.dialogueList = dialogueList;
@@ -117,7 +117,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 			char.updateHitbox();
 			char.antialiasing = ClientPrefs.globalAntialiasing;
 			char.scrollFactor.set();
-			char.alpha = 0;
+			char.alpha = 0.00001;
 			add(char);
 
 			var saveY:Bool = false;
@@ -261,7 +261,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 							}
 							char.alpha -= 3 * elapsed;
 							if (char.alpha < 0)
-								char.alpha = 0;
+								char.alpha = 0.00001;
 						}
 						else
 						{

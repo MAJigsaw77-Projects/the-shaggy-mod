@@ -59,7 +59,7 @@ class OptionsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		lanText = new FlxText(0, 110, 2000, "", 32);
+		lanText = new FlxText(0, 110, 2000, '', 32);
 		lanText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		lanText.scrollFactor.set();
 		updateLanText();
@@ -627,7 +627,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 			}
 		}
 
-		descText = new FlxText(50, 600, 1180, "", 32);
+		descText = new FlxText(50, 600, 1180, '', 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;

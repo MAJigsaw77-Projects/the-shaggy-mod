@@ -61,18 +61,18 @@ class PauseSubState extends MusicBeatSubstate
 		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		bg.alpha = 0;
+		bg.alpha = 0.00001;
 		bg.scrollFactor.set();
 		add(bg);
 
-		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
+		var levelInfo:FlxText = new FlxText(20, 15, 0, '', 32);
 		levelInfo.text += PlayState.displaySongName;
 		levelInfo.scrollFactor.set();
 		levelInfo.setFormat(Paths.font("vcr.ttf"), 32);
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
-		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
+		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, '', 32);
 		levelDifficulty.text += difficultyChoices[PlayState.storyDifficulty];
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
@@ -97,10 +97,10 @@ class PauseSubState extends MusicBeatSubstate
 		controls.scrollFactor.set();
 		controls.setFormat(Paths.font('vcr.ttf'), 32);
 		controls.updateHitbox();
-		controls.alpha = 0;
+		controls.alpha = 0.00001;
 		add(controls);
 
-		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
+		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, '', 32);
 		blueballedTxt.text = "Blueballed: " + PlayState.deathCounter;
 		blueballedTxt.scrollFactor.set();
 		blueballedTxt.setFormat(Paths.font('vcr.ttf'), 32);
@@ -123,9 +123,9 @@ class PauseSubState extends MusicBeatSubstate
 		botplayText.visible = PlayState.cpuControlled;
 		add(botplayText);
 
-		blueballedTxt.alpha = 0;
-		levelDifficulty.alpha = 0;
-		levelInfo.alpha = 0;
+		blueballedTxt.alpha = 0.00001;
+		levelDifficulty.alpha = 0.00001;
+		levelInfo.alpha = 0.00001;
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);

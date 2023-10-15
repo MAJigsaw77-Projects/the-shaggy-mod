@@ -27,10 +27,10 @@ class Alphabet extends FlxSpriteGroup
 	public var isMenuItem:Bool = false;
 	public var textSize:Float = 1.0;
 
-	public var text:String = "";
+	public var text:String = '';
 
-	var _finalText:String = "";
-	var _curText:String = "";
+	var _finalText:String = '';
+	var _curText:String = '';
 	var yMulti:Float = 1;
 
 	// custom shit
@@ -49,7 +49,7 @@ class Alphabet extends FlxSpriteGroup
 
 	public var typingSpeed:Float = 0.05;
 
-	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
+	public function new(x:Float, y:Float, text:String = '', ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
 	{
 		super(x, y);
 		forceX = Math.NEGATIVE_INFINITY;
@@ -60,7 +60,7 @@ class Alphabet extends FlxSpriteGroup
 		this.typed = typed;
 		isBold = bold;
 
-		if (text != "")
+		if (text != '')
 		{
 			if (typed)
 			{
@@ -87,7 +87,7 @@ class Alphabet extends FlxSpriteGroup
 		}
 		lettersArray = [];
 		splitWords = [];
-		_curText = "";
+		_curText = '';
 		loopNum = 0;
 		xPos = 0;
 		curRow = 0;
@@ -105,7 +105,7 @@ class Alphabet extends FlxSpriteGroup
 			typingSpeed = newTypingSpeed;
 		}
 
-		if (text != "")
+		if (text != '')
 		{
 			if (typed)
 			{
@@ -203,7 +203,7 @@ class Alphabet extends FlxSpriteGroup
 
 	function doSplitWords():Void
 	{
-		splitWords = _finalText.split("");
+		splitWords = _finalText.split('');
 	}
 
 	var loopNum:Int = 0;

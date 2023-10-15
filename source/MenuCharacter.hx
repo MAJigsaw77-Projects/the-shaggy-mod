@@ -36,7 +36,7 @@ class MenuCharacter extends FlxSprite
 		alpha = 1;
 
 		if (character == '')
-			alpha = 0;
+			alpha = 0.00001;
 
 		if (character == this.character)
 			return;

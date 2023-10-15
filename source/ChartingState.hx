@@ -92,8 +92,8 @@ class ChartingState extends MusicBeatState
 		['Shaggy trail alpha', "Value 1: alpha xdxdddxd\n(0 = visible, 1 = invisible)"],
 		['Shaggy burst', "Value 1: nothing"],
 		['Camera rotate on', "1: Speed multiplier\n2: Range"],
-		['Camera rotate off', ""],
-		['Toggle bg dim', ""],
+		['Camera rotate off', ''],
+		['Toggle bg dim', ''],
 		['Drop eye', "to whoever is editing this chart:\ndon't use this anywhere."]
 	];
 
@@ -239,7 +239,7 @@ class ChartingState extends MusicBeatState
 		Conductor.changeBPM(_song.bpm);
 		Conductor.mapBPMChanges(_song);
 
-		bpmTxt = new FlxText(1100, 50, 0, "", 16);
+		bpmTxt = new FlxText(1100, 50, 0, '', 16);
 		bpmTxt.scrollFactor.set();
 		add(bpmTxt);
 
@@ -704,12 +704,12 @@ class ChartingState extends MusicBeatState
 
 		var text:FlxText = new FlxText(20, 90, 0, "Value 1:");
 		tab_group_event.add(text);
-		value1InputText = new FlxUIInputText(20, 110, 100, "");
+		value1InputText = new FlxUIInputText(20, 110, 100, '');
 		blockPressWhileTypingOn.push(value1InputText);
 
 		var text:FlxText = new FlxText(20, 130, 0, "Value 2:");
 		tab_group_event.add(text);
-		value2InputText = new FlxUIInputText(20, 150, 100, "");
+		value2InputText = new FlxUIInputText(20, 150, 100, '');
 		blockPressWhileTypingOn.push(value2InputText);
 
 		tab_group_event.add(descText);

@@ -178,7 +178,7 @@ class Character extends FlxSprite
 						var animIndices:Array<Int> = anim.indices;
 						if (animIndices != null && animIndices.length > 0)
 						{
-							animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
+							animation.addByIndices(animAnim, animName, animIndices, '', animFps, animLoop);
 						}
 						else
 						{

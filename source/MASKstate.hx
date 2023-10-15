@@ -152,7 +152,7 @@ class MASKstate extends MusicBeatState
 		optsText = new FlxText(80, frameY + 50, 2000, '', 32);
 		optsText.font = Paths.font('pixel.otf');
 		optsText.color = 0xFFFFFFFF;
-		optsText.alpha = 0;
+		optsText.alpha = 0.00001;
 		updateOptions();
 
 		bfCursor = new FlxSprite(10, 0).loadGraphic(Paths.image('bfIcon'));
@@ -160,15 +160,15 @@ class MASKstate extends MusicBeatState
 		bfCursor.scale.y = 0.5;
 		bfCursor.antialiasing = ClientPrefs.globalAntialiasing;
 		bfCursor.updateHitbox();
-		bfCursor.alpha = 0;
+		bfCursor.alpha = 0.00001;
 
 		wFlash = new FlxSprite(0, 0).makeGraphic(3000, 3000, FlxColor.WHITE);
-		wFlash.alpha = 0;
+		wFlash.alpha = 0.00001;
 
 		for (i in 0...4)
 		{
 			marks[i] = new FlxSprite(100, 0).makeGraphic(32, 32, FlxColor.YELLOW);
-			marks[i].alpha = 0;
+			marks[i].alpha = 0.00001;
 			add(marks[i]);
 		}
 
@@ -204,8 +204,8 @@ class MASKstate extends MusicBeatState
 				for (l in 0...maskExpAnim[j].length)
 				{
 					var name = maskExpNames[j] + '_' + maskExpAnim[j][l];
-					maskP[i].animation.addByIndices(name + '_f', maskPartName[i] + '_f0', [an], "", 30, false);
-					maskP[i].animation.addByIndices(name + '_e', maskPartName[i] + '_e0', [an], "", 30, false);
+					maskP[i].animation.addByIndices(name + '_f', maskPartName[i] + '_f0', [an], '', 30, false);
+					maskP[i].animation.addByIndices(name + '_e', maskPartName[i] + '_e0', [an], '', 30, false);
 
 					an++;
 				}
@@ -336,7 +336,7 @@ class MASKstate extends MusicBeatState
 
 		for (i in 0...marks.length)
 		{
-			marks[i].alpha = 0;
+			marks[i].alpha = 0.00001;
 
 			if (state == 3)
 			{

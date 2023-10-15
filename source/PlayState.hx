@@ -125,7 +125,7 @@ class PlayState extends MusicBeatState
 	public static var maskFxGroup:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
-	private var curSong:String = "";
+	private var curSong:String = '';
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
@@ -191,13 +191,13 @@ class PlayState extends MusicBeatState
 
 	var songLength:Float = 0;
 
-	public static var displaySongName:String = "";
+	public static var displaySongName:String = '';
 
 	#if DISCORD_ALLOWED
 	// Discord RPC variables
-	var storyDifficultyText:String = "";
-	var detailsText:String = "";
-	var detailsPausedText:String = "";
+	var storyDifficultyText:String = '';
+	var detailsText:String = '';
+	var detailsPausedText:String = '';
 	#end
 
 	var luaArray:Array<FunkinLua> = [];
@@ -403,7 +403,7 @@ class PlayState extends MusicBeatState
 				legs.antialiasing = ClientPrefs.globalAntialiasing;
 				legs.updateHitbox();
 				legs.offset.set(legs.frameWidth / 2, 10);
-				legs.alpha = 0;
+				legs.alpha = 0.00001;
 			case 'astral-calamity' | 'talladega' | 'big-shot':
 				defaultCamZoom = SONG.song != 'Astral-calamity' ? 0.6 : 0.56;
 				curStage = 'lava';
@@ -566,7 +566,7 @@ class PlayState extends MusicBeatState
 		doorFrame = new FlxSprite(-160, 160).loadGraphic(Paths.image('doorframe'));
 		doorFrame.updateHitbox();
 		doorFrame.setGraphicSize(1);
-		doorFrame.alpha = 0;
+		doorFrame.alpha = 0.00001;
 		doorFrame.antialiasing = ClientPrefs.globalAntialiasing;
 		doorFrame.scrollFactor.set(1, 1);
 		doorFrame.active = false;
@@ -587,7 +587,7 @@ class PlayState extends MusicBeatState
 		bgDim = new FlxSprite().makeGraphic(4000, 4000, FlxColor.BLACK);
 		bgDim.scrollFactor.set(0);
 		bgDim.screenCenter();
-		bgDim.alpha = 0;
+		bgDim.alpha = 0.00001;
 		add(bgDim);
 
 		maskTrailGroup = new FlxTypedGroup<FlxTrail>();
@@ -609,10 +609,10 @@ class PlayState extends MusicBeatState
 			strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 400, "", 32);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 400, '', 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
-		timeTxt.alpha = 0;
+		timeTxt.alpha = 0.00001;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = !ClientPrefs.hideTime;
 		if (ClientPrefs.downScroll)
@@ -620,7 +620,7 @@ class PlayState extends MusicBeatState
 
 		timeBarBG = new FlxSprite(timeTxt.x, timeTxt.y + (timeTxt.height / 4)).loadGraphic(Paths.image('timeBar'));
 		timeBarBG.scrollFactor.set();
-		timeBarBG.alpha = 0;
+		timeBarBG.alpha = 0.00001;
 		timeBarBG.visible = !ClientPrefs.hideTime;
 		timeBarBG.color = FlxColor.BLACK;
 		add(timeBarBG);
@@ -630,7 +630,7 @@ class PlayState extends MusicBeatState
 		timeBar.scrollFactor.set();
 		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
 		timeBar.numDivisions = 800; // How much lag this causes?? Should i tone it down to idk, 400 or 200?
-		timeBar.alpha = 0;
+		timeBar.alpha = 0.00001;
 		timeBar.visible = !ClientPrefs.hideTime;
 		add(timeBar);
 		add(timeTxt);
@@ -699,7 +699,7 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
+		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, '', 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
@@ -1064,13 +1064,13 @@ class PlayState extends MusicBeatState
 		add(black);
 
 		var dim:FlxSprite = new FlxSprite(-500, -400).makeGraphic(FlxG.width * 4, FlxG.height * 4, FlxColor.WHITE);
-		dim.alpha = 0;
+		dim.alpha = 0.00001;
 		dim.scrollFactor.set();
 		add(dim);
 
 		if (black.alpha == 1)
 		{
-			dropText = new FlxText(140, tb_y + 25, 2000, "", 32);
+			dropText = new FlxText(140, tb_y + 25, 2000, '', 32);
 			curr_char = 0;
 			curr_dial = 0;
 			talk = 1;
@@ -1078,14 +1078,14 @@ class PlayState extends MusicBeatState
 			tbox = new FlxSprite(tb_x, tb_y, Paths.image('TextBox'));
 			fimage = dchar[0] + '_' + dface[0];
 			faceRender();
-			fsprite.alpha = 0;
-			tbox.alpha = 0;
+			fsprite.alpha = 0.00001;
+			tbox.alpha = 0.00001;
 			dcd = 7;
 
 			if (btrans == 0)
 			{
 				dcd = 2;
-				black.alpha = 0;
+				black.alpha = 0.00001;
 			}
 			else if (btrans == 2)
 			{
@@ -1204,7 +1204,7 @@ class PlayState extends MusicBeatState
 								{
 									if (skip)
 									{
-										tbox.alpha = 0;
+										tbox.alpha = 0.00001;
 									}
 									cs_wait = false;
 									cs_time++;
@@ -1241,14 +1241,14 @@ class PlayState extends MusicBeatState
 										case 'zeph bye':
 											new FlxTimer().start(1, function(cock:FlxTimer)
 											{
-												dad.alpha = 0;
+												dad.alpha = 0.00001;
 												zend_state = 1;
 											});
 									}
 								}
 
 								talk = 0;
-								dropText.alpha = 0;
+								dropText.alpha = 0.00001;
 								curr_dial = 0;
 								tb_appear = 0;
 							}
@@ -1415,7 +1415,7 @@ class PlayState extends MusicBeatState
 
 				var introAlts:Array<String> = introAssets.get('default');
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
-				var altSuffix:String = "";
+				var altSuffix:String = '';
 
 				for (value in introAssets.keys())
 				{
@@ -1816,7 +1816,7 @@ class PlayState extends MusicBeatState
 			if (!isStoryMode)
 			{
 				babyArrow.y -= 10;
-				babyArrow.alpha = 0;
+				babyArrow.alpha = 0.00001;
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 
@@ -2144,10 +2144,11 @@ class PlayState extends MusicBeatState
 						else
 						{
 							dad.angle = 0;
-							legs.alpha = 0;
+
+							legs.alpha = 0.00001;
 						}
 
-						legT.alpha = legs.alpha == 0 ? 0 : 0.3;
+						legT.alpha = legs.alpha <= 0 ? 0 : 0.3;
 					}
 
 					if (godMoveGf)
@@ -2170,12 +2171,12 @@ class PlayState extends MusicBeatState
 
 				if (!godCutEnd || !godMoveBf)
 				{
-					rock.alpha = 0;
+					rock.alpha = 0.00001;
 				}
 
 				if (!godMoveGf)
 				{
-					gf_rock.alpha = 0;
+					gf_rock.alpha = 0.00001;
 				}
 			case 'lava':
 				if (dad.curCharacter == 'wbshaggy')
@@ -2738,7 +2739,7 @@ class PlayState extends MusicBeatState
 					}
 					else
 					{
-						var altAnim:String = "";
+						var altAnim:String = '';
 
 						if (SONG.notes[Math.floor(curStep / 16)] != null)
 						{
@@ -3487,7 +3488,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		var pixelShitPart1:String = "";
+		var pixelShitPart1:String = '';
 		var pixelShitPart2:String = '';
 
 		if (curStage.startsWith('school'))
@@ -4684,7 +4685,7 @@ class PlayState extends MusicBeatState
 				case 1645:
 					cs_black = new FlxSprite(-500, -400).makeGraphic(FlxG.width * 4, FlxG.height * 4, FlxColor.BLACK);
 					cs_black.scrollFactor.set();
-					cs_black.alpha = 0;
+					cs_black.alpha = 0.00001;
 					add(cs_black);
 					cs_wait = true;
 					modCredits();

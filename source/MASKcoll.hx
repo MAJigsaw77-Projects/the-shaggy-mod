@@ -76,7 +76,7 @@ class MASKcoll extends FlxSprite
 		mouseSpr = new FlxSprite(0, 0).loadGraphic(Paths.image('MASK/picker'));
 		mouseSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		mouseSpr.offset.set(10, 10);
-		mouseSpr.alpha = 0;
+		mouseSpr.alpha = 0.00001;
 		PlayState.maskMouseHud.add(mouseSpr);
 
 		updateHitbox();
@@ -183,7 +183,7 @@ class MASKcoll extends FlxSprite
 				{
 					FlxG.sound.play(Paths.sound('maskColl'));
 					state = -1;
-					alpha = 0;
+					alpha = 0.00001;
 					fx = new FlxSprite(clickX, clickY).loadGraphic(Paths.image('MASK/fx'));
 					fx.offset.set(fx.width / 2, fx.height / 2);
 

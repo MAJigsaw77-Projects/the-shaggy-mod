@@ -44,7 +44,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		name += ' (' + CoolUtil.difficultyStuff[difficulty][0] + ')?';
 
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		bg.alpha = 0;
+		bg.alpha = 0.00001;
 		bg.scrollFactor.set();
 		add(bg);
 
@@ -53,7 +53,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		var text:Alphabet = new Alphabet(0, 180, "Reset the score of", true);
 		text.screenCenter(X);
 		alphabetArray.push(text);
-		text.alpha = 0;
+		text.alpha = 0.00001;
 		add(text);
 
 		var text:Alphabet = new Alphabet(0, text.y + 90, name, true, false, 0.05, tooLong);
@@ -61,7 +61,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		if (week == -1)
 			text.x += 60 * tooLong;
 		alphabetArray.push(text);
-		text.alpha = 0;
+		text.alpha = 0.00001;
 		add(text);
 
 		if (week == -1)
@@ -70,7 +70,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 			icon.setGraphicSize(Std.int(icon.width * tooLong));
 			icon.updateHitbox();
 			icon.setPosition(text.x - icon.width + (10 * tooLong), text.y - 30);
-			icon.alpha = 0;
+			icon.alpha = 0.00001;
 			add(icon);
 		}
 

@@ -99,11 +99,11 @@ class StoryMenuState extends MusicBeatState
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
 		scoreText.setFormat(Paths.font('vcr.ttf'), 32);
 
-		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
+		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, '', 32);
 		txtWeekTitle.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 
-		moNotice = new FlxText(FlxG.width * 0.7, 600, 0, "", 32);
+		moNotice = new FlxText(FlxG.width * 0.7, 600, 0, '', 32);
 		moNotice.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE, RIGHT);
 
 		var rankText:FlxText = new FlxText(0, 10);
@@ -236,7 +236,7 @@ class StoryMenuState extends MusicBeatState
 		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		add(tracksSprite);
 
-		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
+		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, '', 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
 		txtTracklist.color = 0xFFe55777;

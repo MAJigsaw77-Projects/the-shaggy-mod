@@ -17,7 +17,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollowPos:FlxObject;
 	var updateCamera:Bool = false;
 
-	var stageSuffix:String = "";
+	var stageSuffix:String = '';
 
 	public function new(x:Float, y:Float, camX:Float, camY:Float)
 	{
