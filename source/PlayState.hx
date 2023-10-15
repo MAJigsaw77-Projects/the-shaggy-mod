@@ -2054,10 +2054,7 @@ class PlayState extends MusicBeatState
 							legs.alpha = 0.00001;
 						}
 
-						if (legs.alpha == 0.00001)
-							legT.alpha = 0.00001;
-						else
-							legT.alpha = shaggyT.alpha;
+						legT.alpha = legs.alpha;
 					}
 
 					if (godMoveGf)
@@ -2122,7 +2119,7 @@ class PlayState extends MusicBeatState
 			switch (noticeTime)
 			{
 				case 0:
-					var no:Alphabet = new Alphabet(0, 200, 'You can unlock this in-game.', true, false);
+					var no = new Alphabet(0, 200, 'You can unlock this in-game.', true, false);
 					no.cameras = [camHUD];
 					no.screenCenter();
 					add(no);
