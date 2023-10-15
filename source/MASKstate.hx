@@ -238,8 +238,7 @@ class MASKstate extends MusicBeatState
 		for (i in 0...4)
 		{
 			maskP[i].updateHitbox();
-			maskP[i].screenCenter(X);
-			maskP[i].screenCenter(Y);
+			maskP[i].screenCenter();
 			maskP[i].y -= 150;
 		}
 		maskX = maskP[0].x;

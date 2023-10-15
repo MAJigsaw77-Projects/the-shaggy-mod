@@ -2274,14 +2274,12 @@ class PlayState extends MusicBeatState
 						zLockX = camFollow.x;
 						zLockY = camFollow.y;
 
-						zephScreen.screenCenter(X);
-						zephScreen.screenCenter(Y);
+						zephScreen.screenCenter();
 						add(zephScreen);
 						add(zeph);
 
 						zeph.scrollFactor.set(0, 0);
-						zeph.screenCenter(X);
-						zeph.screenCenter(Y);
+						zeph.screenCenter();
 
 						healthBarBG.alpha = 0;
 						healthBar.alpha = 0;
