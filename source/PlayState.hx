@@ -2051,7 +2051,7 @@ class PlayState extends MusicBeatState
 
 				if (!startedCountdown)
 				{
-					camFollow.setPosition(boyfriend.x - 300, boyfriend.y - 40);
+					camFollow.set(boyfriend.x - 300, boyfriend.y - 40);
 					derp = 20;
 				}
 
