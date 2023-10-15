@@ -1284,7 +1284,7 @@ class PlayState extends MusicBeatState
 			switch (cutTime)
 			{
 				case 0:
-					camFollow.setPosition(dad.getMidpoint().x - 100, dad.getMidpoint().y);
+					camFollow.set(dad.getMidpoint().x - 100, dad.getMidpoint().y);
 
 					camLerp = 2;
 				case 15:
@@ -2159,7 +2159,7 @@ class PlayState extends MusicBeatState
 					var c = tow.y - (zeph.y + zephAddY);
 					zephAddY += (c / Math.abs(c)) * 0.75;
 
-					camFollow.setPosition(zeph.x - 100, zeph.y + 200);
+					camFollow.set(zeph.x - 100, zeph.y + 200);
 
 					camLerp = 0.5;
 
@@ -2195,7 +2195,7 @@ class PlayState extends MusicBeatState
 						boyfriend.alpha = 0;
 					}
 				case 2:
-					camFollow.setPosition(zLockX, zLockY);
+					camFollow.set(zLockX, zLockY);
 
 					camFollowPos.setPosition(camFollow.x, camFollow.y);
 
@@ -3646,9 +3646,7 @@ class PlayState extends MusicBeatState
 
 				var alreadyHit:Array<Int> = new Array<Int>();
 
-				if (perfectMode)
-					goodNoteHit(notesHitArray[0]);
-				else if (notesHitArray.length > 0)
+				if (notesHitArray.length > 0)
 				{
 					for (i in 0...notesHitArray.length)
 					{
@@ -4194,11 +4192,8 @@ class PlayState extends MusicBeatState
 				case 1:
 					cs_zoom = 0.65;
 				case 25:
-					// scoob = new Character(1700, 290, 'scooby', false);
 					scoob.playAnim('walk', true);
-					scoob.x = 1700;
-					scoob.y = 290;
-				// scoob.playAnim('walk');
+					scoob.setPosition(1700, 290);
 				case 240:
 					scoob.playAnim('idle', true);
 				case 340:
@@ -4290,7 +4285,7 @@ class PlayState extends MusicBeatState
 					FlxG.sound.play(Paths.sound('body_fall'));
 				case 2280:
 					dad.playAnim('kneel', true);
-					sh_head = new FlxSprite(440, 100);
+					sh_head = new FlxSprite(440, 0);
 					sh_head.y = 100 + FlxG.random.int(-0, 0);
 					sh_head.frames = Paths.getSparrowAtlas('bshaggy');
 					sh_head.animation.addByPrefix('idle', "bshaggy_head_still", 30);
@@ -4363,13 +4358,10 @@ class PlayState extends MusicBeatState
 					remove(sh_body);
 					cs_sfx.stop();
 
-					sh_ang.x = -140;
-					sh_ang.y = -5;
-
-					sh_ang_eyes.x = 688;
-					sh_ang_eyes.y = 225;
-
+					sh_ang.setPosition(-140, -5);
 					add(sh_ang);
+
+					sh_ang_eyes.setPosition(688, 225);
 					add(sh_ang_eyes);
 
 					cs_bg.animation.play('stare');
@@ -4442,10 +4434,8 @@ class PlayState extends MusicBeatState
 	{
 		cs_zoom = defaultCamZoom;
 		cs_cam = new FlxObject(0, 0, 1, 1);
-		camFollow.x = boyfriend.getMidpoint().x - 100;
-		camFollow.y = boyfriend.getMidpoint().y - 100;
-		cs_cam.x = camFollow.x;
-		cs_cam.y = camFollow.y;
+		camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
+		cs_cam.setPosition(camFollow.x, camFollow.y);
 		add(cs_cam);
 		camFollow.destroy();
 		FlxG.camera.follow(cs_cam, LOCKON, 0.01);
@@ -4477,22 +4467,18 @@ class PlayState extends MusicBeatState
 					FlxG.sound.play(Paths.sound('burst'));
 					if (maskObj != null)
 						maskObj.x -= 5000;
-					// maskCollGroup.remove(maskObj);
+
 					dad.playAnim('stand', true);
-					dad.x = 100;
-					dad.y = 100;
-					boyfriend.x = 770;
-					boyfriend.y = 450;
-					gf.x = 400;
-					gf.y = 130;
-					gf.scrollFactor.set(0.95, 0.95);
-					gf.setGraphicSize(Std.int(gf.width));
+
+					dad.setPosition(100, 100);
+					boyfriend.setPosition(770, 450);
+					gf.setPosition(400, 130);
+
 					cs_cam.y = boyfriend.y;
 					cs_cam.x += 100;
 					cs_zoom = 0.8;
 					FlxG.camera.zoom = cs_zoom;
-					scoob.x = dad.x - 400;
-					scoob.y = 290;
+					scoob.setPosition(dad.x - 400, 290);
 					scoob.flipX = true;
 					remove(shaggyT);
 					FlxG.camera.follow(cs_cam, LOCKON, 1);
