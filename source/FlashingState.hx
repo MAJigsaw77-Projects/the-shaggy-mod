@@ -22,9 +22,17 @@ class FlashingState extends MusicBeatState
 		add(new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK));
 
 		#if mobile
-		final leText:String = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress A to disable them now or go to Options Menu.\nPress B to ignore this message.\nYou've been warned!";
+		final leText:String = "Hey, watch out!\n
+			This Mod contains some flashing lights!\n
+			Press A to disable them now or go to Options Menu.\n
+			Press B to ignore this message.\n
+			You've been warned!";
 		#else
-		final leText:String = "Hey, watch out!\nThis Mod contains some flashing lights!\nPress ENTER to disable them now or go to Options Menu.\nPress ESCAPE to ignore this message.\nYou've been warned!";
+		final leText:String = "Hey, watch out!\n
+			This Mod contains some flashing lights!\n
+			Press ENTER to disable them now or go to Options Menu.\n
+			Press ESCAPE to ignore this message.\n
+			You've been warned!";
 		#end
 		
 		warnText = new FlxText(0, 0, FlxG.width, leText, 32);
