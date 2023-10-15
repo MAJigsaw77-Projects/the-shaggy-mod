@@ -1357,7 +1357,6 @@ class PlayState extends MusicBeatState
 		}
 
 		inCutscene = false;
-		hudArrows = [];
 
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if (ret != FunkinLua.Function_Stop)
@@ -1737,7 +1736,6 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0] - earlyTime1, Obj2[0] - earlyTime2);
 	}
 
-	var hudArrows:Array<FlxSprite>;
 	var hudArrXPos:Array<Float>;
 	var hudArrYPos:Array<Float>;
 
@@ -1747,7 +1745,6 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i);
-			hudArrows.push(babyArrow);
 
 			switch (curStage)
 			{
@@ -3306,23 +3303,16 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode)
 		{
-			if (hudArrows != null)
+			new FlxTimer().start(0.003, function(fadear:FlxTimer)
 			{
-				new FlxTimer().start(0.003, function(fadear:FlxTimer)
-				{
-					var decAl:Float = 0.01;
-					for (i in 0...hudArrows.length)
-					{
-						hudArrows[i].alpha -= decAl;
-					}
-					healthBarBG.alpha -= decAl;
-					healthBar.alpha -= decAl;
-					iconP1.alpha -= decAl;
-					iconP2.alpha -= decAl;
-					scoreTxt.alpha -= decAl;
-					fadear.reset(0.003);
-				});
-			}
+				final decAl:Float = 0.01;
+				healthBarBG.alpha -= decAl;
+				healthBar.alpha -= decAl;
+				iconP1.alpha -= decAl;
+				iconP2.alpha -= decAl;
+				scoreTxt.alpha -= decAl;
+				fadear.reset(0.003);
+			});
 
 			if (sEnding == 'none')
 			{
