@@ -51,10 +51,12 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	public static var instance:PlayState;
+
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
-	public static var ratingStuff:Array<Dynamic> = [
+	public static final ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], // From 0% to 19%
 		['Shit', 0.4], // From 20% to 39%
 		['Bad', 0.5], // From 40% to 49%
@@ -98,8 +100,6 @@ class PlayState extends MusicBeatState
 	public var dad:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
-
-	public static var bfAccess:Boyfriend;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -203,6 +203,7 @@ class PlayState extends MusicBeatState
 	var luaArray:Array<FunkinLua> = [];
 
 	// Lua shit
+
 	public var backgroundGroup:FlxTypedGroup<FlxSprite>;
 	public var foregroundGroup:FlxTypedGroup<FlxSprite>;
 
@@ -246,8 +247,10 @@ class PlayState extends MusicBeatState
 	var zLockX:Float = 0;
 	var zLockY:Float = 0;
 
-	override public function create()
+	override public function create();
 	{
+		instance = this;
+
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
@@ -497,7 +500,6 @@ class PlayState extends MusicBeatState
 		scoob = new Character(9000, 290, 'scooby', false);
 
 		boyfriend = new Boyfriend(BF_X, BF_Y, SONG.player1);
-		bfAccess = boyfriend;
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
 
@@ -3911,18 +3913,21 @@ class PlayState extends MusicBeatState
 
 	override function destroy():Void
 	{
-		for (i in 0...luaArray.length)
+		for (script in luaArray)
 		{
-			luaArray[i].call('onDestroy', []);
-			luaArray[i].stop();
+			script.call('onDestroy', []);
+			script.stop();
 		}
 
 		#if LUA_ALLOWED
 		@:privateAccess
-		FunkinLua.callbacks.clear();
+		if (Lambda.count(FunkinLua.callbacks) > 0)
+			FunkinLua.callbacks.clear();
 		#end
 
 		super.destroy();
+
+		instance = null;
 	}
 
 	var lastStepHit:Int = -1;
@@ -3930,7 +3935,9 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
+
+		if (Math.abs(FlxG.sound.music.time - Conductor.songPosition) > 20
+			|| (SONG.needsVoices && Math.abs(vocals.time - Conductor.songPosition) > 20))
 		{
 			resyncVocals();
 		}
