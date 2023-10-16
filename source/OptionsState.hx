@@ -32,7 +32,7 @@ using StringTools;
 // TO DO: Redo the menu creation system for not being as dumb
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Language', 'Controls', 'Preferences', 'Reset data'];
+	final options:Array<String> = ['Language', 'Controls', 'Preferences', 'Reset data'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
 	private static var curSelected:Int = 0;
@@ -548,10 +548,10 @@ class ControlsSubstate extends MusicBeatSubstate
 class PreferencesSubstate extends MusicBeatSubstate
 {
 	private static var curSelected:Int = 0;
-	static var unselectableOptions:Array<String> = ['GRAPHICS', 'GAMEPLAY'];
-	static var noCheckbox:Array<String> = ['Framerate', 'Note Delay'];
+	static final unselectableOptions:Array<String> = ['GRAPHICS', 'GAMEPLAY'];
+	static final noCheckbox:Array<String> = ['Framerate', 'Note Delay'];
 
-	static var options:Array<String> = [
+	static final options:Array<String> = [
 		'GRAPHICS', 'Low Quality', 'Anti-Aliasing', 'Persistent Cached Data', 'GAMEPLAY', 'Framerate', 'Downscroll', 'Middlescroll', 'Ghost Tapping',
 		'Note Delay', 'Hide HUD', 'Hide Song Length', 'Flashing Lights', 'Camera Zooms', 'FPS Counter'
 	];

@@ -22,7 +22,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = [
+	final menuItemsOG:Array<String> = [
 		'Resume',
 		'Restart Song',
 		'Change Difficulty',
@@ -30,7 +30,12 @@ class PauseSubState extends MusicBeatSubstate
 		'Botplay',
 		'Exit to menu'
 	];
-	var difficultyChoices = ['MANIA', 'EASY', 'CANON', 'BACK'];
+	final difficultyChoices:Array<String> = [
+		'MANIA', 
+		'EASY',
+		'CANON',
+		'BACK'
+	];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;

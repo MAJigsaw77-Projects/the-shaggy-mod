@@ -11,7 +11,7 @@ using StringTools;
 class CoolUtil
 {
 	// [Difficulty name, Chart file suffix]
-	public static var difficultyStuff:Array<Dynamic> = [['Easy', '-easy'], ['Normal', ''], ['Hard', '-hard']];
+	public static final difficultyStuff:Array<Dynamic> = [['Easy', '-easy'], ['Normal', ''], ['Hard', '-hard']];
 
 	public static function difficultyString():String
 	{
@@ -21,10 +21,12 @@ class CoolUtil
 	public static function boundTo(value:Float, min:Float, max:Float):Float
 	{
 		var newValue:Float = value;
+
 		if (newValue < min)
 			newValue = min;
 		else if (newValue > max)
 			newValue = max;
+
 		return newValue;
 	}
 

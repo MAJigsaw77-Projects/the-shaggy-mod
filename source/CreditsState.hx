@@ -23,7 +23,7 @@ class CreditsState extends MusicBeatState
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
 
-	private static var creditsStuff:Array<Dynamic> = [
+	private static final creditsStuff:Array<Dynamic> = [
 		// Name - Icon name - Description - Link - BG Color
 		['Android Port'],
 		['MAJigsaw77', 'jigsaw', 'Coder', 'https://github.com/MAJigsaw77', 0xFF878787],

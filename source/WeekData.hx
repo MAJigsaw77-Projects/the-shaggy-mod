@@ -5,7 +5,7 @@ class WeekData
 	// Song names, used on both Story Mode and Freplay
 	// Go to FreeplayState.hx and add the head icons
 	// Go to StoryMenuState.hx and add the characters/backgrounds
-	public static var songsNames:Array<Dynamic> = [
+	public static final songsNames:Array<Dynamic> = [
 		['Where-are-you', 'Eruption', 'Kaio-ken'],
 		['Whats-new', 'Blast', 'Super-saiyan'],
 		['GOD-EATER'],
@@ -15,7 +15,7 @@ class WeekData
 		['']
 	];
 
-	public static var maniaSongs:Array<Dynamic> = [
+	public static final maniaSongs:Array<Dynamic> = [
 		['Kaio-ken'],
 		['Blast', 'Super-saiyan'],
 		['GOD-EATER'],
@@ -25,7 +25,7 @@ class WeekData
 		[' ']
 	];
 
-	public static var songHasMania:Map<String, Bool> = [
+	public static final songHasMania:Map<String, Bool> = [
 		'Where-are-you' => false, 'Eruption' => false, 'Kaio-ken' => true, 'Whats-new' => false, 'Blast' => true, 'Super-saiyan' => true, 'GOD-EATER' => true,
 		'Soothing-power' => false, 'Thunderstorm' => true, 'Dissasembler' => true, 'Astral-calamity' => true, 'Talladega' => true, 'BIG-SHOT' => false
 	];
@@ -33,7 +33,7 @@ class WeekData
 	// Custom week number, used for your week's score not being overwritten by a new vanilla week when the game updates
 	// I'd recommend setting your week as -99 or something that new vanilla weeks will probably never ever use
 	// null = Don't change week number, it follows the vanilla weeks number order
-	public static var weekNumber:Array<Dynamic> = [
+	public static final weekNumber:Array<Dynamic> = [
 		null, // Tutorial
 		null, // Week 1
 		null, // Week 2
@@ -49,7 +49,7 @@ class WeekData
 	// It ain't that hard, i guess
 	// Oh yeah, quick reminder that files inside the folder that ends with _high are only loaded
 	// if you have the Low Quality option disabled on "Preferences"
-	public static var loadDirectory:Array<String> = [
+	public static final loadDirectory:Array<String> = [
 		null, // Tutorial loads "tutorial" folder on assets/
 		null, // Week 1
 		null, // Week 2
@@ -62,7 +62,7 @@ class WeekData
 	// The only use for this is to display a different name for the Week when you're on the score reset menu.
 	// Set it to null to make the Week be automatically called "Week (Number)"
 	// Edit: This now also messes with Discord Rich Presence, so it's kind of relevant.
-	public static var weekResetName:Array<String> = [
+	public static final weekResetName:Array<String> = [
 		null,
 		null, // Week 1
 		null, // Week 2

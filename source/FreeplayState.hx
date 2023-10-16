@@ -22,7 +22,7 @@ using StringTools;
 class FreeplayState extends MusicBeatState
 {
 	// Character head icons for your songs
-	static var songsHeads:Array<Dynamic> = [
+	static final songsHeads:Array<Dynamic> = [
 		['dad'], // Week 1
 		['spooky', 'spooky', 'monster'], // Week 2
 		['pico'], // Week 3
