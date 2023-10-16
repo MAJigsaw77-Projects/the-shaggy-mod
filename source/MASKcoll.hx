@@ -220,10 +220,10 @@ class MASKcoll extends FlxSprite
 		}
 		if (give != null)
 		{
-			give.x += (PlayState.bfAccess.getMidpoint().x - give.x) / 30;
-			give.y += (PlayState.bfAccess.getMidpoint().y - give.y) / 30;
+			give.x += (PlayState.instance.boyfriend.getMidpoint().x - give.x) / 30;
+			give.y += (PlayState.instance.boyfriend.getMidpoint().y - give.y) / 30;
 
-			if (Math.abs(give.x - PlayState.bfAccess.getMidpoint().x) < 20)
+			if (Math.abs(give.x - PlayState.instance.boyfriend.getMidpoint().x) < 20)
 			{
 				give.scale.x -= 0.01;
 				give.scale.y -= 0.01;
