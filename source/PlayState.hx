@@ -247,7 +247,7 @@ class PlayState extends MusicBeatState
 	var zLockX:Float = 0;
 	var zLockY:Float = 0;
 
-	override public function create();
+	override public function create()
 	{
 		instance = this;
 
