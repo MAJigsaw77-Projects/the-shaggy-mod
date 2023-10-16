@@ -1336,9 +1336,7 @@ class PlayState extends MusicBeatState
 	public function startCountdown():Void
 	{
 		if (startedCountdown)
-		{
 			return;
-		}
 
 		inCutscene = false;
 
@@ -1373,19 +1371,15 @@ class PlayState extends MusicBeatState
 			startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 			{
 				if (tmr.loopsLeft % gfSpeed == 0)
-				{
 					gf.dance();
-				}
+	
 				if (tmr.loopsLeft % 2 == 0)
 				{
 					if (!boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.specialAnim)
-					{
 						boyfriend.dance();
-					}
+
 					if (!dad.animation.curAnim.name.startsWith('sing') && !dad.specialAnim)
-					{
 						dad.dance();
-					}
 				}
 				else if (dad.danceIdle
 					&& !dad.specialAnim
@@ -1395,39 +1389,17 @@ class PlayState extends MusicBeatState
 					dad.dance();
 				}
 
-				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ready', 'set', 'go']);
-				introAssets.set('school', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
-				introAssets.set('schoolEvil', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
-
-				var introAlts:Array<String> = introAssets.get('default');
-				var antialias:Bool = ClientPrefs.globalAntialiasing;
-				var altSuffix:String = '';
-
-				for (value in introAssets.keys())
-				{
-					if (value == curStage)
-					{
-						introAlts = introAssets.get(value);
-						altSuffix = '-pixel';
-					}
-				}
-
 				switch (swagCounter)
 				{
 					case 0:
 						FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
 					case 1:
-						var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
+						var ready:FlxSprite = new FlxSprite(0, 0, Paths.image('ready'));
 						ready.scrollFactor.set();
-						ready.updateHitbox();
-
-						if (curStage.startsWith('school'))
-							ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
-
 						ready.screenCenter();
-						ready.antialiasing = antialias;
+						ready.antialiasing = ClientPrefs.globalAntialiasing;
 						add(ready);
+
 						FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -1435,17 +1407,15 @@ class PlayState extends MusicBeatState
 								ready.destroy();
 							}
 						});
-						FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
+
+						FlxG.sound.play(Paths.sound('intro2'), 0.6);
 					case 2:
-						var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+						var set:FlxSprite = new FlxSprite(0, 0, Paths.image('set'));
 						set.scrollFactor.set();
-
-						if (curStage.startsWith('school'))
-							set.setGraphicSize(Std.int(set.width * daPixelZoom));
-
 						set.screenCenter();
-						set.antialiasing = antialias;
+						set.antialiasing = ClientPrefs.globalAntialiasing;
 						add(set);
+
 						FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -1453,19 +1423,15 @@ class PlayState extends MusicBeatState
 								set.destroy();
 							}
 						});
-						FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
+
+						FlxG.sound.play(Paths.sound('intro1'), 0.6);
 					case 3:
-						var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
+						var go:FlxSprite = new FlxSprite(0, 0, Paths.image('go'));
 						go.scrollFactor.set();
-
-						if (curStage.startsWith('school'))
-							go.setGraphicSize(Std.int(go.width * daPixelZoom));
-
-						go.updateHitbox();
-
 						go.screenCenter();
-						go.antialiasing = antialias;
+						go.antialiasing = ClientPrefs.globalAntialiasing;
 						add(go);
+
 						FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -1473,16 +1439,14 @@ class PlayState extends MusicBeatState
 								go.destroy();
 							}
 						});
-						FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
-					case 4:
+
+						FlxG.sound.play(Paths.sound('introGo'), 0.6);
 				}
 
 				callOnLuas('onCountdownTick', [swagCounter]);
 
 				if (generatedMusic)
-				{
 					notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
-				}
 
 				swagCounter += 1;
 			}, 5);
@@ -2022,6 +1986,47 @@ class PlayState extends MusicBeatState
 
 						if (true) // (!PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 						{
+							#if mobile
+							switch (mania)
+							{
+								case 0:
+									if ((FlxG.keys.pressed.UP || hitbox.hints[2].pressed) && bfControlY > 0)
+										bfControlY--;
+									else if ((FlxG.keys.pressed.DOWN || hitbox.hints[1].pressed) && bfControlY < 2290)
+									{
+										bfControlY++;
+										if (bfControlY >= 400)
+											alterRoute = 1;
+									}
+								case 1:
+									if ((FlxG.keys.pressed.UP || hitbox.hints[1].pressed) && bfControlY > 0)
+										bfControlY--;
+									else if ((FlxG.keys.pressed.DOWN || hitbox.hints[4].pressed) && bfControlY < 2290)
+									{
+										bfControlY++;
+										if (bfControlY >= 400)
+											alterRoute = 1;
+									}
+								case 2:
+									if ((FlxG.keys.pressed.UP || hitbox.hints[1].pressed) && bfControlY > 0)
+										bfControlY--;
+									else if ((FlxG.keys.pressed.DOWN || hitbox.hints[5].pressed) && bfControlY < 2290)
+									{
+										bfControlY++;
+										if (bfControlY >= 400)
+											alterRoute = 1;
+									}
+								case 3:
+									if ((FlxG.keys.pressed.UP || hitbox.hints[2].pressed || hitbox.hints[7].pressed) && bfControlY > 0)
+										bfControlY--;
+									else if ((FlxG.keys.pressed.DOWN || hitbox.hints[1].pressed || hitbox.hints[6].pressed) && bfControlY < 2290)
+									{
+										bfControlY++;
+										if (bfControlY >= 400)
+											alterRoute = 1;
+									}
+							}
+							#else
 							if (FlxG.keys.pressed.UP && bfControlY > 0)
 								bfControlY--;
 							else if (FlxG.keys.pressed.DOWN && bfControlY < 2290)
@@ -2030,6 +2035,7 @@ class PlayState extends MusicBeatState
 								if (bfControlY >= 400)
 									alterRoute = 1;
 							}
+							#end
 						}
 					}
 
