@@ -104,10 +104,16 @@ class Main extends Sprite
 		FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
+
 		#if (mobile || switch)
 		fpsVar.scaleX = fpsVar.scaleY = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
 		#end
+
+		#if !mobile
 		addChild(fpsVar);
+		#else
+		FlxG.game.addChild(fpsVar);
+		#end
 
 		if (fpsVar != null)
 			fpsVar.visible = ClientPrefs.showFPS;
