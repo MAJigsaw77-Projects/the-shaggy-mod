@@ -4677,7 +4677,12 @@ class PlayState extends MusicBeatState
 
 						endSong();
 					});
-					video.play(Paths.video('zoinks'));
+					video.load(Paths.video('zoinks'));
+
+					new FlxTimer().start(0.001, function(tmr:FlxTimer):Void
+					{
+						video.play();
+					});
 					#else
 					endSong();
 					#end
