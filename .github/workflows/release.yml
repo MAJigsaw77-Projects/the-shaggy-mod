@@ -17,7 +17,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: latest
+          haxe-version: 4.3.3
 
       - name: Installing Libraries
         run: |
@@ -28,7 +28,7 @@ jobs:
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
           haxelib install hxlua --quiet
-          haxelib git hxvlc https://github.com/MAJigsaw77/hxvlc.git --quiet
+          haxelib install hxvlc --quiet
           haxelib install extension-androidtools --quiet
 
       - name: Setup Git hxcpp
