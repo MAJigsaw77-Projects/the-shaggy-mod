@@ -38,9 +38,7 @@
 		},
 		{
 			"name": "hxvlc",
-			"type": "git",
-			"ref": "main",
-			"url": "https://github.com/MAJigsaw77/hxvlc.git"
+			"type": "haxelib"
 		},
 		{
 			"name": "extension-androidtools",
