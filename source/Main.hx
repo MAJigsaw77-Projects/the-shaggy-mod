@@ -105,10 +105,6 @@ class Main extends Sprite
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 
-		#if (mobile || switch)
-		fpsVar.scaleX = fpsVar.scaleY = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
-		#end
-
 		#if !mobile
 		addChild(fpsVar);
 		#else
@@ -211,6 +207,13 @@ class Main extends Sprite
 
 	private inline function onResizeGame(width:Int, height:Int):Void
 	{
+		#if mobile
+		final scale:Float = Math.min(FlxG.stage.stageWidth / FlxG.width, FlxG.stage.stageHeight / FlxG.height);
+
+		if (fpsVar != null)
+			fpsVar.scaleX = fpsVar.scaleY = (scale > 1 ? scale : 1);
+		#end
+
 		if (FlxG.cameras != null && (FlxG.cameras.list != null && FlxG.cameras.list.length > 0))
 		{
 			for (camera in FlxG.cameras.list)
