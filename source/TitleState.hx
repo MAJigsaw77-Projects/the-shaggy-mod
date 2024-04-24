@@ -84,15 +84,15 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		FlxG.switchStateState(new FreeplayState());
+		FlxG.switchState(new FreeplayState());
 		#elseif CHARTING
-		FlxG.switchStateState(new ChartingState());
+		FlxG.switchState(new ChartingState());
 		#else
 		if (FlxG.save.data.flashing == null && !FlashingState.leftState)
 		{
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.switchStateState(new FlashingState());
+			FlxG.switchState(new FlashingState());
 		}
 		else
 		{
@@ -261,7 +261,7 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				FlxG.switchStateState(new MainMenuState());
+				FlxG.switchState(new MainMenuState());
 				closedState = true;
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);

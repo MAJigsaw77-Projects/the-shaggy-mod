@@ -251,7 +251,7 @@ class FreeplayState extends MusicBeatState
 			{
 				colorTween.cancel();
 			}
-			FlxG.switchStateState(new MainMenuState());
+			FlxG.switchState(new MainMenuState());
 		}
 
 		if (space && instPlaying != curSelected)

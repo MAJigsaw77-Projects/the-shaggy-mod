@@ -368,7 +368,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			FlxG.switchStateState(new MainMenuState());
+			FlxG.switchState(new MainMenuState());
 		}
 
 		if (zephGfx != null)
@@ -403,7 +403,7 @@ class StoryMenuState extends MusicBeatState
 				case 3:
 					CoolUtil.browserLoad('https://gamejolt.com/games/fnf-shaggy-matt/648032');
 				case 6:
-					FlxG.switchStateState(new MASKstate());
+					FlxG.switchState(new MASKstate());
 				default:
 					trace(curDifficulty, WeekData.maniaSongs[curWeek]);
 					if (curDifficulty != 0 || WeekData.maniaSongs[curWeek][0] != '')

@@ -71,7 +71,7 @@ class FlashingState extends MusicBeatState
 						#end
 						new FlxTimer().start(0.5, function(tmr:FlxTimer)
 						{
-							FlxG.switchStateState(new TitleState());
+							FlxG.switchState(new TitleState());
 						});
 					});
 				}
@@ -84,7 +84,7 @@ class FlashingState extends MusicBeatState
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function(twn:FlxTween)
 						{
-							FlxG.switchStateState(new TitleState());
+							FlxG.switchState(new TitleState());
 						}
 					});
 				}

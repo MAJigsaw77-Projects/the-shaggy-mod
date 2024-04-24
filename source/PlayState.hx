@@ -2295,7 +2295,7 @@ class PlayState extends MusicBeatState
 					case 1300:
 						FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
-						FlxG.switchStateState(new CreditsState());
+						FlxG.switchState(new CreditsState());
 				}
 		}
 
@@ -2341,7 +2341,7 @@ class PlayState extends MusicBeatState
 						bef3.screenCenter(X);
 						add(bef3);
 					case 1000:
-						FlxG.switchStateState(new CreditsState());
+						FlxG.switchState(new CreditsState());
 				}
 		}
 
@@ -2372,7 +2372,7 @@ class PlayState extends MusicBeatState
 				if (FlxG.random.bool(0.1))
 				{
 					// gitaroo man easter egg
-					FlxG.switchStateState(new GitarooPause());
+					FlxG.switchState(new GitarooPause());
 				}
 				else
 				{
@@ -2394,7 +2394,7 @@ class PlayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			paused = true;
-			FlxG.switchStateState(new ChartingState());
+			FlxG.switchState(new ChartingState());
 
 			#if DISCORD_ALLOWED
 			DiscordClient.changePresence("Chart Editor", null, null, true);
@@ -2432,7 +2432,7 @@ class PlayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			paused = true;
-			FlxG.switchStateState(new CharacterEditorState(SONG.player2));
+			FlxG.switchState(new CharacterEditorState(SONG.player2));
 		}
 
 		if (startingSong)
@@ -2527,7 +2527,7 @@ class PlayState extends MusicBeatState
 
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, camFollowPos.x, camFollowPos.y));
 
-				// FlxG.switchStateState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 				#if DISCORD_ALLOWED
 				// Game Over doesn't get his own variable because it's only used here
@@ -3241,7 +3241,7 @@ class PlayState extends MusicBeatState
 					transIn = FlxTransitionableState.defaultTransIn;
 					transOut = FlxTransitionableState.defaultTransOut;
 
-					FlxG.switchStateState(new StoryMenuState());
+					FlxG.switchState(new StoryMenuState());
 
 					// if ()
 					StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
@@ -3322,7 +3322,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			trace('WENT BACK TO FREEPLAY??');
-			FlxG.switchStateState(new FreeplayState());
+			FlxG.switchState(new FreeplayState());
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			usedPractice = false;
 			changedDifficulty = false;
