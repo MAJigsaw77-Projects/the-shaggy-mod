@@ -91,8 +91,6 @@ class Main extends Sprite
 
 		FlxG.signals.gameResized.add(onResizeGame);
 		FlxG.signals.preStateCreate.add(onPreStateCreate);
-
-		// Run the garbage colector after the state switched...
 		FlxG.signals.postStateSwitch.add(System.gc);
 
 		addChild(new FlxGame(1280, 720, TitleState, 60, 60, true, false));
@@ -254,5 +252,10 @@ class Main extends Sprite
 		// Clear all the loaded fonts from the cache...
 		for (key in cache.font.keys())
 			cache.font.remove(key);
+
+		#if MODS_ALLOWED
+		if (!ClientPrefs.imagesPersist)
+			Paths.customImagesLoaded.clear();
+		#end
 	}
 }

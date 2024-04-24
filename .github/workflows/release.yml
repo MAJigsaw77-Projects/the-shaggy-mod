@@ -27,16 +27,12 @@ jobs:
           haxelib install flixel-addons --quiet
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
-          haxelib install hxlua --quiet
+          haxelib install hxluajit --quiet
           haxelib install hxvlc --quiet
           haxelib install extension-androidtools --quiet
 
       - name: Setup Git hxcpp
-        run: |
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git --quiet
-          cd $(haxelib libpath hxcpp)/tools/hxcpp
-          haxe compile.hxml
-          cd ${{github.workspace}}
+        run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git --quiet && haxelib run lime rebuild hxcpp
 
       - name: Configure Android
         run: |
@@ -72,5 +68,5 @@ jobs:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           prerelease: false
           automatic_release_tag: 'v1.0.0-android'
-          title: 'Android Release 1.0.0'
+          title: 'Android Release'
           files: ${{github.workspace}}/ShaggyMod-debug.apk

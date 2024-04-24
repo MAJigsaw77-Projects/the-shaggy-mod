@@ -197,7 +197,7 @@ class PauseSubState extends MusicBeatSubstate
 					var poop = Highscore.formatSong(name, curSelected);
 					PlayState.SONG = Song.loadFromJson(poop, name);
 					PlayState.storyDifficulty = curSelected;
-					MusicBeatState.resetState();
+					FlxG.resetState();
 					FlxG.sound.music.volume = 0;
 					PlayState.changedDifficulty = true;
 					PlayState.cpuControlled = false;
@@ -220,7 +220,7 @@ class PauseSubState extends MusicBeatSubstate
 					if (PlayState.SONG.song == 'Talladega' && PlayState.isStoryMode)
 						System.exit(0);
 				case "Restart Song":
-					MusicBeatState.resetState();
+					FlxG.resetState();
 					FlxG.sound.music.volume = 0;
 				case 'Botplay':
 					PlayState.cpuControlled = !PlayState.cpuControlled;
@@ -234,11 +234,11 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.seenCutscene = false;
 					if (PlayState.isStoryMode)
 					{
-						MusicBeatState.switchState(new StoryMenuState());
+						FlxG.switchStateState(new StoryMenuState());
 					}
 					else
 					{
-						MusicBeatState.switchState(new FreeplayState());
+						FlxG.switchStateState(new FreeplayState());
 					}
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.usedPractice = false;

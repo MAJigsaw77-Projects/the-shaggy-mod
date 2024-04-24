@@ -138,7 +138,7 @@ class OptionsState extends MusicBeatState
 		if (controls.BACK)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			FlxG.switchStateState(new MainMenuState());
 		}
 
 		if ((FlxG.keys.pressed.R #if mobile || vPad.buttonC.pressed #end) && options[curSelected] == 'Reset data')
@@ -153,7 +153,7 @@ class OptionsState extends MusicBeatState
 
 				FlxG.sound.play(Paths.sound('undSnap'));
 				FlxG.sound.music.time = 0;
-				MusicBeatState.switchState(new MainMenuState());
+				FlxG.switchStateState(new MainMenuState());
 			}
 		}
 		else

@@ -61,7 +61,7 @@
 	<haxelib name="hscript" />
 
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED" />
-	<haxelib name="hxlua" if="LUA_ALLOWED" />
+	<haxelib name="hxluajit" if="LUA_ALLOWED" />
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED" />
 
 	<haxelib name="extension-androidtools" if="android" />

@@ -105,12 +105,7 @@ class MusicBeatState extends FlxUIState
 		}
 
 		hitbox = new FlxHitbox(ammo, Std.int(FlxG.width / ammo), FlxG.height, colors);
-
-		if (PlayState.SONG.mania == 2)
-			hitbox.x += 3;
-		else if (PlayState.SONG.mania == 3)
-			hitbox.x += 1;
-
+		hitbox.screenCenter(X);
 		hitbox.visible = visible;
 		add(hitbox);
 
@@ -139,23 +134,6 @@ class MusicBeatState extends FlxUIState
 			remove(hitbox);
 	}
 	#end
-
-	override function create():Void
-	{
-		#if MODS_ALLOWED
-		if (!ClientPrefs.imagesPersist)
-			Paths.customImagesLoaded.clear();
-		#end
-
-		super.create();
-
-		// Custom made Trans out
-		if (!FlxTransitionableState.skipNextTransOut)
-		{
-			openSubState(new CustomFadeTransition(1, true));
-		}
-		FlxTransitionableState.skipNextTransOut = false;
-	}
 
 	override function update(elapsed:Float)
 	{
@@ -211,48 +189,6 @@ class MusicBeatState extends FlxUIState
 		}
 
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
-	}
-
-	public static function switchState(nextState:FlxState)
-	{
-		// Custom made Trans in
-		var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
-		if (!FlxTransitionableState.skipNextTransIn)
-		{
-			leState.openSubState(new CustomFadeTransition(0.7, false));
-			if (nextState == FlxG.state)
-			{
-				CustomFadeTransition.finishCallback = function()
-				{
-					FlxG.resetState();
-				};
-				// trace('resetted');
-			}
-			else
-			{
-				CustomFadeTransition.finishCallback = function()
-				{
-					FlxG.switchState(nextState);
-				};
-				// trace('changed state');
-			}
-			return;
-		}
-		FlxTransitionableState.skipNextTransIn = false;
-		FlxG.switchState(nextState);
-	}
-
-	public static function resetState()
-	{
-		MusicBeatState.switchState(FlxG.state);
-	}
-
-	public static function getState():MusicBeatState
-	{
-		var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
-		return leState;
 	}
 
 	public function stepHit():Void

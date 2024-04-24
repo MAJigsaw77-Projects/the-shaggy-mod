@@ -12,6 +12,6 @@ class LoadingState
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-		MusicBeatState.switchState(target);
+		FlxG.switchStateState(target);
 	}
 }

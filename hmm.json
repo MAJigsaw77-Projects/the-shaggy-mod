@@ -33,7 +33,7 @@
 			"type": "haxelib"
 		},
 		{
-			"name": "hxlua",
+			"name": "hxluajit",
 			"type": "haxelib"
 		},
 		{
