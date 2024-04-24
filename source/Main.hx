@@ -3,6 +3,8 @@ package;
 #if android
 import android.content.Context;
 #end
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.transition.TransitionData;
 import flixel.graphics.FlxGraphic;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -100,6 +102,9 @@ class Main extends Sprite
 		#end
 
 		FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+
+		FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, FlxPoint.weak(0, -1), NEW);
+		FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, FlxPoint.weak(0, 1), NEW);
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 

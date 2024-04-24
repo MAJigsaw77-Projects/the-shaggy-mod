@@ -9,9 +9,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.transition.TransitionData;
-// import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
@@ -92,6 +89,7 @@ class TitleState extends MusicBeatState
 		{
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
+
 			FlxG.switchState(new FlashingState());
 		}
 		else
@@ -118,12 +116,6 @@ class TitleState extends MusicBeatState
 	{
 		if (!initialized)
 		{
-			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, FlxPoint.weak(0, -1), NEW);
-			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, FlxPoint.weak(0, 1), NEW);
-
-			transIn = FlxTransitionableState.defaultTransIn;
-			transOut = FlxTransitionableState.defaultTransOut;
-
 			if (FlxG.sound.music == null)
 			{
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
