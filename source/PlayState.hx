@@ -157,7 +157,6 @@ class PlayState extends MusicBeatState
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
-	public var camOther:FlxCamera;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dchar:Array<String>;
@@ -258,16 +257,13 @@ class PlayState extends MusicBeatState
 		camera.angle = 0;
 
 		practiceMode = false;
-		// var gameCam:FlxCamera = FlxG.camera;
+
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
-		camOther = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
-		camOther.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camOther);
 
 		FlxCamera.defaultCameras = [camGame];
 

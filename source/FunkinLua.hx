@@ -696,9 +696,8 @@ class FunkinLua
 			{
 				case 'camhud' | 'hud':
 					cam = lePlayState.camHUD;
-				case 'camother' | 'other':
-					cam = lePlayState.camOther;
 			}
+
 			return FlxG.mouse.getScreenPosition(cam).x;
 		});
 		addCallback("getMouseY", function(camera:String)
@@ -708,9 +707,8 @@ class FunkinLua
 			{
 				case 'camhud' | 'hud':
 					cam = lePlayState.camHUD;
-				case 'camother' | 'other':
-					cam = lePlayState.camOther;
 			}
+
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
 		addCallback("characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false)

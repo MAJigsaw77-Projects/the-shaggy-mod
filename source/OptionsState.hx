@@ -323,7 +323,9 @@ class ControlsSubstate extends MusicBeatSubstate
 					}
 				}
 				#if mobile
+				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
+
 				FlxG.resetState();
 				#else
 				close();
@@ -691,7 +693,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 			}
 			descText.alpha = 0;
 			#if mobile
+			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
+
 			FlxG.resetState();
 			#else
 			close();
