@@ -51,26 +51,30 @@ class FlashingState extends MusicBeatState
 	{
 		if (!leftState)
 		{
-			var back:Bool = controls.BACK;
+			final back:Bool = controls.BACK;
+
 			if (controls.ACCEPT || back)
 			{
 				leftState = true;
-
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
 
 				if (!back)
 				{
 					ClientPrefs.flashing = false;
 					ClientPrefs.saveSettings();
+
 					FlxG.sound.play(Paths.sound('confirmMenu'));
+
 					FlxFlicker.flicker(warnText, 1, 0.1, false, true, function(flk:FlxFlicker)
 					{
 						#if mobile
 						vPad.alpha = 0;
 						#end
+
 						new FlxTimer().start(0.5, function(tmr:FlxTimer)
 						{
+							FlxTransitionableState.skipNextTransIn = true;
+							FlxTransitionableState.skipNextTransOut = true;
+
 							FlxG.switchState(new TitleState());
 						});
 					});
@@ -78,12 +82,17 @@ class FlashingState extends MusicBeatState
 				else
 				{
 					FlxG.sound.play(Paths.sound('cancelMenu'));
+
 					#if mobile
 					FlxTween.tween(vPad, {alpha: 0}, 1);
 					#end
+
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function(twn:FlxTween)
 						{
+							FlxTransitionableState.skipNextTransIn = true;
+							FlxTransitionableState.skipNextTransOut = true;
+
 							FlxG.switchState(new TitleState());
 						}
 					});
