@@ -45,6 +45,8 @@ class FlashingState extends MusicBeatState
 		#end
 
 		super.create();
+
+		FlxTransitionableState.skipNextTransOut = false;
 	}
 
 	override function update(elapsed:Float)
@@ -72,9 +74,6 @@ class FlashingState extends MusicBeatState
 
 						new FlxTimer().start(0.5, function(tmr:FlxTimer)
 						{
-							FlxTransitionableState.skipNextTransIn = true;
-							FlxTransitionableState.skipNextTransOut = true;
-
 							FlxG.switchState(new TitleState());
 						});
 					});
@@ -90,9 +89,6 @@ class FlashingState extends MusicBeatState
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function(twn:FlxTween)
 						{
-							FlxTransitionableState.skipNextTransIn = true;
-							FlxTransitionableState.skipNextTransOut = true;
-
 							FlxG.switchState(new TitleState());
 						}
 					});
