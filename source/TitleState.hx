@@ -171,8 +171,6 @@ class TitleState extends MusicBeatState
 		logoSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		add(logoSpr);
 
-		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
-
 		if (initialized)
 			skipIntro();
 		else
