@@ -37,12 +37,9 @@ class TitleState extends MusicBeatState
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var logoSpr:FlxSprite;
-
 	var curWacky:Array<String> = [];
-
 	var wackyImage:FlxSprite;
 
 	override public function create():Void
@@ -81,6 +78,7 @@ class TitleState extends MusicBeatState
 		}
 
 		FlxG.mouse.visible = false;
+
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -126,6 +124,7 @@ class TitleState extends MusicBeatState
 		}
 
 		Conductor.changeBPM(102);
+
 		persistentUpdate = true;
 
 		add(new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK));
@@ -158,17 +157,11 @@ class TitleState extends MusicBeatState
 
 		credGroup = new FlxGroup();
 		add(credGroup);
+
 		textGroup = new FlxGroup();
 
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
-
-		credTextShit = new Alphabet(0, 0, '', true);
-		credTextShit.screenCenter();
-
-		// credTextShit.alignment = CENTER;
-
-		credTextShit.visible = false;
 
 		logoSpr = new FlxSprite(0, FlxG.height * 0.4).loadGraphic(Paths.image('titlelogo'));
 		logoSpr.visible = false;
@@ -184,8 +177,6 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
-
-		// credGroup.add(credTextShit);
 	}
 
 	function getIntroTextShit():Array<Array<String>>
@@ -209,12 +200,9 @@ class TitleState extends MusicBeatState
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		if (FlxG.keys.justPressed.F)
-		{
 			FlxG.fullscreen = !FlxG.fullscreen;
-		}
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
@@ -247,29 +235,27 @@ class TitleState extends MusicBeatState
 				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
+
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
-			// FlxG.sound.music.stop();
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				FlxG.switchState(new MainMenuState());
+
 				closedState = true;
 			});
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
 		if (pressedEnter && !skippedIntro)
-		{
 			skipIntro();
-		}
 
 		if (swagShader != null)
 		{
 			if (controls.UI_LEFT)
 				swagShader.hue -= elapsed * 0.1;
-			if (controls.UI_RIGHT)
+			else if (controls.UI_RIGHT)
 				swagShader.hue += elapsed * 0.1;
 		}
 
@@ -334,39 +320,26 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					createCoolText(['Mod by'], -60);
-				// credTextShit.visible = true;
 				case 3:
 					addMoreText('Perez', -50);
 					addMoreText('Moro', -50);
 					addMoreText('Pointy', -50);
 					addMoreText('Saruky', -50);
 					addMoreText('Joan Atlas', -50);
-				// credTextShit.text += '\npresent...';
-				// credTextShit.addText();
 				case 4:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
-				// credTextShit.screenCenter();
 				case 5:
 					createCoolText(['A mod for'], -60);
 				case 7:
 					addMoreText('This game', -60);
 					logoSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
 					logoSpr.visible = false;
-				// credTextShit.visible = false;
-
-				// credTextShit.text = 'Shoutouts Tom Fulp';
-				// credTextShit.screenCenter();
 				case 9:
 					createCoolText([curWacky[0]]);
-				// credTextShit.visible = true;
 				case 11:
 					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
 				case 12:
 					deleteCoolText();
 					addMoreText('Friday');
